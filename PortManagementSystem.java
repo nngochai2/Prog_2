@@ -9,6 +9,9 @@ public class PortManagementSystem {
                 Instructor: Mr. Minh Vu & Dr. Phong Ngo
                 Group: Programming 2
                 s3978281, Nguyen Ngoc Hai
+                s3979331, Hoang Quoc Dat
+                s3979170, Nguyen Chi Nghia
+                s3978546, Bui Cong Duy
                 """
         );
 
