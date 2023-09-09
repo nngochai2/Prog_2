@@ -1,6 +1,6 @@
 import java.util.Map;
 
-public abstract class Vehicle {
+public abstract class Vehicle implements IVehicle{
     protected String vehicleID;
     protected String name;
     protected int currentFuel;

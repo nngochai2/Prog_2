@@ -1,3 +1,5 @@
+import java.util.Map;
+
 public class Truck extends Vehicle {
     private final boolean isReeferTruck;
     private final boolean isTankerTruck;
@@ -5,6 +7,21 @@ public class Truck extends Vehicle {
         super(vehicleID, name, currentFuel, carryingCapacity, fuelCapacity, currentPort, totalContainers);
         this.isReeferTruck = isReeferTruck;
         this.isTankerTruck = isTankerTruck;
+    }
+
+    @Override
+    public int getCarryCapacity() {
+        return 0;
+    }
+
+    @Override
+    public Port getCurretPort() {
+        return null;
+    }
+
+    @Override
+    public Map<Container, Integer> getContainerCounts() {
+        return null;
     }
 
     @Override
@@ -23,5 +40,10 @@ public class Truck extends Vehicle {
                     type == Container.ContainerType.OPEN_TOP ||
                     type == Container.ContainerType.OPEN_SIDE;
         }
+    }
+
+    @Override
+    public void move(Port destinationPort) {
+
     }
 }

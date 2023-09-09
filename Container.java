@@ -30,10 +30,10 @@ public class Container {
     public void unload() {
     }
 
-    public double calculateFuelConsumption() {
-        // Define fuel consumption rates
-
-    }
+//    public double calculateFuelConsumption() {
+//        // Define fuel consumption rates
+//
+//    }
 }
 
 

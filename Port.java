@@ -1,7 +1,7 @@
 import java.awt.*;
 import java.util.List;
 
-public class Port {
+public class Port implements IPort{
     private String portID;
     private String name;
     private double latitude;
@@ -46,6 +46,16 @@ public class Port {
         return storingCapacity;
     }
 
+    @Override
+    public boolean hasLandingAbility() {
+        return false;
+    }
+
+    @Override
+    public double calculateDistance(Port otherPort) {
+        return 0;
+    }
+
     public boolean isLandingAbility() {
         return landingAbility;
     }
@@ -82,6 +92,11 @@ public class Port {
     public void addContainers(int amount) {
         containersCount += amount;
         vehiclesCount++;
+    }
+
+    @Override
+    public void decreaseContainer(int amount) {
+
     }
 
     public void decreaseContainers(int amount) {
