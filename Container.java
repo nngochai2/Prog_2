@@ -32,7 +32,7 @@ public class Container {
     public double calculateFuelConsumption(Vehicle vehicle, double distanceInKm) {
         // Define fuel consumption rate
         double fuelRate = switch (type) {
-            // 'switch' allows to test the value of 'type' against different cases
+            // 'switch' is used to test the value of 'type' against different cases
 
             case DRY_STORAGE -> (vehicle instanceof Ship) ? 3.5 : 4.6;
             // If the vehicle is a ship, '3.5' is assigned to fuelRate.
