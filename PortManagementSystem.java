@@ -1,8 +1,26 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class PortManagementSystem {
+    private final List<User> users; // Store user data
+    private User loggedInUsers; // Store logged-in user data
+    private Scanner scanner;
+
+    public PortManagementSystem (){
+        users = new ArrayList<>();
+        // Load users from an external source
+    }
+
     public static void main(String[] args) {
-        // Display group information
+        PortManagementSystem portManagement = new PortManagementSystem();
+        portManagement.displayWelcomeScreen();
+        portManagement.login();
+        portManagement.scanner = new Scanner(System.in);
+    }
+    // Display group information
+    private void displayWelcomeScreen() {
+        // Display welcome information
         System.out.println("""
                 COSC2081 GROUP ASSIGNMENT
                 CONTAINER PORT MANAGEMENT SYSTEM
@@ -14,30 +32,79 @@ public class PortManagementSystem {
                 s3978546, Bui Cong Duy
                 """
         );
+    }
 
+    private void login() {
         Scanner scanner = new Scanner(System.in);
+        // Ask for login credentials
+        System.out.println("Please log in.");
 
-        // Display welcome message
-        System.out.println("Welcome to the Port Management System!");
+        System.out.println("Username: ");
+        String username = scanner.nextLine();
 
-        // Main menu loop
-        boolean exit = false;
+        System.out.println("Password: ");
+        String password = scanner.nextLine();
 
-        while (!exit) {
-            // Display options
-            System.out.println("\nMenu: ");
-            System.out.println("1. View Port Information");
-            System.out.println("2. Manage Vehicles");
-            System.out.println("3. Manage Containers");
-            System.out.println("4. Exit");
+        // Find user with the provided credentials
+        User user = authenticate(username, password);
 
-            // Require user input
-            System.out.println("Enter your option (Please enter the number: ");
+        if (user != null) {
+            loggedInUsers = user;
+            System.out.println("Login successful!");
+        }
+        else {
+            System.out.println("Invalid username or password");
+        }
+    }
+
+    private User authenticate(String username, String password) {
+        // Authenticate user information
+        for (User user : users)
+            if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
+                return user;
+            }
+        return null;
+    }
+
+    private void displayMainMenu() {
+        // When a user login in successfully, this menu will display first
+        if (loggedInUsers.getRole() == User.UserRole.ADMIN) {
+            // Display options for system admin
+            System.out.println("Welcome system admin!");
+            System.out.println(
+                    """
+                            Main Menu
+                            1. Fuel used today
+                            2. View containers' weight
+                            3. View ships in ports
+                            4. View trips today
+                            5. View trips
+                            """
+            );
+            System.out.println("Select an option: ");
             int choice = scanner.nextInt();
             scanner.nextLine();
 
-            // Perform actions based on the user choice
+            switch (choice) {
+                // Handling user choice
+                case 1:
+                    break;
+                case 2:
+                    break;
 
-          }
+            }
+
+        } else if (loggedInUsers.getRole() == User.UserRole.MANAGER) {
+            // Display options for port manager
+            System.out.println("Welcome Port Manager!");
+            System.out.println(
+                    """
+                            Main menu"
+                            1.
+                            2.
+                            3.
+                            """
+            );
+        }
     }
 }
