@@ -1,6 +1,6 @@
 import java.util.Map;
 
-public abstract class Vehicle implements IVehicle{
+public abstract class Vehicle implements IVehicle {
     protected String vehicleID;
     protected String name;
     protected int currentFuel;
@@ -9,7 +9,9 @@ public abstract class Vehicle implements IVehicle{
     protected Port currentPort;
     protected int totalContainers;
 
-    protected Map<Container.ContainerType, Integer> containerCounts; //Keep track of container types
+    protected Map<Container.ContainerType, Integer> containerCounts;
+    // Used to keep track of the number of each type of container that a vehicle is carrying, store and manage the counts of different container types.
+
 
     public Vehicle(String vehicleID, String name, int currentFuel, int carryingCapacity, int fuelCapacity, Port currentPort, int totalContainers) {
         this.vehicleID = vehicleID;
@@ -83,25 +85,36 @@ public abstract class Vehicle implements IVehicle{
     }
 
     public boolean canLoadContainer(Container.ContainerType type) {
+        // Check whether a vehicle can carry a specific container type
         return true;
     };
     public void loadContainer(Container.ContainerType type) {
+        // Increment the count of a specific container type
         if(canLoadContainer(type)) {
             containerCounts.put(type, containerCounts.get(type) + 1);
             totalContainers++;
         }
         else {
-
+            // Show error message if the container does not match the requirements
+            System.err.println("Error: This vehicle cannot load " + type + " container.");
         }
     }
 
     public void unloadContainer(Container.ContainerType type) {
         if(containerCounts.get(type) > 0) {
+            // Can only unload if there is at least one container
             containerCounts.put(type, containerCounts.get(type) - 1);
             totalContainers--;
         }
         else {
-
+            System.err.println("Error: No " + type + " container to unload.");
         }
     }
+//    public boolean canMove() {
+//        // Check whether a vehicle can make a trip or not
+//        if (currentFuel <= Container.)
+//    }
+//    public void move(Port destinationPort) {
+//        if (canMove)
+//    }
 }

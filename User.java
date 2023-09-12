@@ -10,6 +10,7 @@ public class User {
     }
 
     public enum UserRole {
+        // Declaring the roles for users
         ADMIN,
         MANAGER,
     }

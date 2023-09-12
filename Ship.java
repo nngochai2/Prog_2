@@ -22,13 +22,16 @@ public class Ship extends Vehicle {
 
     @Override
     public boolean canLoadContainer(Container.ContainerType type) {
-        //Ship can load all the containers.
+        // Ship can load all types of containers.
         return true;
     }
 
+
     @Override
     public void move(Port destinationPort) {
-
+        // Calculate the distance to the destination port
+        double distance = currentPort.calculateDistance(destinationPort);
+        // Calculate the fuel consumption
     }
 
 

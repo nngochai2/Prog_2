@@ -7,7 +7,7 @@ public class Container {
     private final double weight;
 
     public enum ContainerType {
-        //Represents the different container types.
+        // Represents the different container types.
         DRY_STORAGE,
         OPEN_TOP,
         OPEN_SIDE,
@@ -23,7 +23,7 @@ public class Container {
     }
 
     public void load(ContainerType type) {
-        //Implement loading logic based on container type.
+        // Implement loading logic based on container type.
     }
 
     public void unload() {
@@ -42,9 +42,11 @@ public class Container {
             case OPEN_SIDE -> (vehicle instanceof Ship) ? 2.7 : 3.2;
             case REFRIGERATED -> (vehicle instanceof Ship) ? 4.5 : 5.4;
             case LIQUID -> (vehicle instanceof Ship) ? 4.8 : 5.3;
-        }; // Default value
+        };
 
-        return fuelRate * weight * distanceInKm;
+        // Default value
+        double fuelRequired = fuelRate * weight * distanceInKm;
+        return fuelRequired;
     }
 }
 
