@@ -28,7 +28,7 @@ public class Ship extends Vehicle {
     }
 
     @Override
-    public boolean canLoadContainer(Container.ContainerType type) {
+    public boolean canLoadContainerType(Container.ContainerType type) {
         // Ship can load all types of containers.
         return true;
     }

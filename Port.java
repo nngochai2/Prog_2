@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Port implements IPort{
@@ -12,6 +13,7 @@ public class Port implements IPort{
     private int vehiclesCount;
     private List<Trip> pastTrips;
     private List<Trip> currentTrips;
+    private ArrayList<Container> containers;
 
     public Port(String portID, String name, double latitude, double longitude, int storingCapacity, boolean landingAbility, int containersCount, int vehiclesCount, List<Trip> pastTrips, List<Trip> currentTrips) {
         if (!portID.matches("^p\\d+$")) {
@@ -103,9 +105,22 @@ public class Port implements IPort{
         vehiclesCount--;
     }
 
-//    public double distanceCalculator(Port otherPort) {
-//        // Calculating the distance between the current port to another.
-//        double dis
+    public double distanceCalculator(Port otherPort) {
+        // Calculating the distance between the current port to another.
+
+        // Convert the coordinates to Radian
+        double lat1 = Math.toRadians(this.latitude);
+        double lon1 = Math.toRadians(this.longitude);
+        double lat2 = Math.toRadians(otherPort.latitude);
+        double lon2 = Math.toRadians(otherPort.longitude);
+
+        // Calculate the distance with provided formula
+        return (6378 * Math.acos((Math.sin(lat1) * Math.sin(lat2)) + Math.cos(lat1) * Math.cos(lat2) * Math.cos(lon2 - lon1)));
+    }
+//
+//    public int countContainersInPort() {
+//        int count = 0;
+//        for (Container co)
 //    }
 
 
