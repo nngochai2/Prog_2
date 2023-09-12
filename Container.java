@@ -3,8 +3,8 @@ import java.util.Map;
 public class Container {
     private final String containerID;
     private final ContainerType type;
-    private final String contents;
     private final double weight;
+    private String location;
 
     public enum ContainerType {
         // Represents the different container types.
@@ -15,19 +15,30 @@ public class Container {
         LIQUID
     }
 
-    public Container(String containerID, ContainerType type, String contents, double weight) {
+    public Container(String containerID, ContainerType type, double weight, String location) {
         this.containerID = containerID;
         this.type = type;
-        this.contents = contents;
         this.weight = weight;
+        this.location = location;
     }
 
-    public void load(ContainerType type) {
-        // Implement loading logic based on container type.
+    public void load(Vehicle from, Port to) {
+        // if weight < Port.storingCapacity
+            // Update Container.location
+            // Update Port.containersCount
+            // Update Vehicle.totalContainers
+        this.location = to.getPortID();
     }
 
-    public void unload() {
+    public void load(Port from, Ship to) {
+        // if weight < Ship.carryingCapacity
+            // Update Container.location
+            // Update Port.containersCount
+            // Update Ship.totalContainers
     }
+
+
+
 
     public double calculateFuelConsumption(Vehicle vehicle, double distanceInKm) {
         // Define fuel consumption rate

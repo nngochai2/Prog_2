@@ -8,8 +8,7 @@ public class Trip {
     private Port arrivalPort;
     private String status;
 
-    public Trip() {}
-
+//    Constructor
     public Trip(Vehicle vehicle, Date departureDate, Date arrivalDate, Port departurePort, Port arrivalPort, String status) {
         this.vehicle = vehicle;
         this.departureDate = departureDate;

@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Port implements IPort{
@@ -10,10 +11,12 @@ public class Port implements IPort{
     private boolean landingAbility;
     private int containersCount;
     private int vehiclesCount;
-    private List<Trip> pastTrips;
-    private List<Trip> currentTrips;
+    private ArrayList<Trip> pastTrips;
+    private ArrayList<Trip> currentTrips;
 
-    public Port(String portID, String name, double latitude, double longitude, int storingCapacity, boolean landingAbility, int containersCount, int vehiclesCount, List<Trip> pastTrips, List<Trip> currentTrips) {
+//    Constructor
+
+    public Port(String portID, String name, double latitude, double longitude, int storingCapacity, boolean landingAbility, int containersCount, int vehiclesCount, ArrayList<Trip> pastTrips, ArrayList<Trip> currentTrips) {
         this.portID = portID;
         this.name = name;
         this.latitude = latitude;
@@ -26,6 +29,7 @@ public class Port implements IPort{
         this.currentTrips = currentTrips;
     }
 
+//    Getter & Setter
     public String getPortID() {
         return portID;
     }
@@ -80,6 +84,7 @@ public class Port implements IPort{
         return landingAbility;
     }
 
+//    Methods
     public void addNewTrip(Trip trip) {
         currentTrips.add(trip);
     }
