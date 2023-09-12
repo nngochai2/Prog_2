@@ -8,11 +8,10 @@ public abstract class Vehicle implements IVehicle {
     protected int fuelCapacity;
     protected Port currentPort;
     protected int totalContainers;
-
     protected Map<Container.ContainerType, Integer> containerCounts;
     // Used to keep track of the number of each type of container that a vehicle is carrying, store and manage the counts of different container types.
 
-
+//    Constructor
     public Vehicle(String vehicleID, String name, int currentFuel, int carryingCapacity, int fuelCapacity, Port currentPort, int totalContainers) {
         this.vehicleID = vehicleID;
         this.name = name;
@@ -27,6 +26,8 @@ public abstract class Vehicle implements IVehicle {
         }
 
     }
+
+//    Getter & Setter
 
     public String getVehicleID() {
         return vehicleID;
@@ -84,7 +85,9 @@ public abstract class Vehicle implements IVehicle {
         this.totalContainers = totalContainers;
     }
 
+
     public boolean canLoadContainerType(Container.ContainerType type) {
+
         // Check whether a vehicle can carry a specific container type
         return true;
     };

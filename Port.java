@@ -11,14 +11,16 @@ public class Port implements IPort{
     private boolean landingAbility;
     private int containersCount;
     private int vehiclesCount;
-    private List<Trip> pastTrips;
-    private List<Trip> currentTrips;
     private ArrayList<Container> containers;
+    private ArrayList<Trip> pastTrips;
+    private ArrayList<Trip> currentTrips;
 
-    public Port(String portID, String name, double latitude, double longitude, int storingCapacity, boolean landingAbility, int containersCount, int vehiclesCount, List<Trip> pastTrips, List<Trip> currentTrips) {
-        if (!portID.matches("^p\\d+$")) {
+//    Constructor
+
+    public Port(String portID, String name, double latitude, double longitude, int storingCapacity, boolean landingAbility, int containersCount, int vehiclesCount, ArrayList<Trip> pastTrips, ArrayList<Trip> currentTrips) {
+ if (!portID.matches("^p\\d+$")) {
             System.out.println("Invalid port ID. It must be p-number.");
-        }
+        } else {
         this.portID = portID;
         this.name = name;
         this.latitude = latitude;
@@ -29,8 +31,10 @@ public class Port implements IPort{
         this.vehiclesCount = vehiclesCount;
         this.pastTrips = pastTrips;
         this.currentTrips = currentTrips;
+ }
     }
 
+//    Getter & Setter
     public String getPortID() {
         return portID;
     }
@@ -85,6 +89,7 @@ public class Port implements IPort{
         return landingAbility;
     }
 
+//    Methods
     public void addNewTrip(Trip trip) {
         currentTrips.add(trip);
     }
