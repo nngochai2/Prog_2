@@ -4,7 +4,6 @@ public class BasicTruck extends Vehicle {
 
     public BasicTruck(String vehicleID, String name, int currentFuel, int carryingCapacity, int fuelCapacity, Port currentPort, int totalContainers) {
         super(vehicleID, name, currentFuel, carryingCapacity, fuelCapacity, currentPort, totalContainers);
-        this.isTankerTruck = isTankerTruck;
         if (!vehicleID.matches("^tr\\d+$")) {
             System.out.println("Invalid vehicle ID. It must be tr-number.");
         }
