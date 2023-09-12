@@ -7,6 +7,9 @@ public class Truck extends Vehicle {
         super(vehicleID, name, currentFuel, carryingCapacity, fuelCapacity, currentPort, totalContainers);
         this.isReeferTruck = isReeferTruck;
         this.isTankerTruck = isTankerTruck;
+        if (!vehicleID.matches("^tr\\d+$")) {
+            System.out.println("Invalid vehicle ID. It must be tr-number.");
+        }
     }
 
     @Override

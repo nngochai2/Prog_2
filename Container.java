@@ -16,6 +16,9 @@ public class Container {
     }
 
     public Container(String containerID, ContainerType type, String contents, double weight) {
+        if (!containerID.matches("^c\\d+$")) {
+            System.out.println("Invalid container ID. It must be c-number.");
+        }
         this.containerID = containerID;
         this.type = type;
         this.contents = contents;
@@ -45,8 +48,7 @@ public class Container {
         };
 
         // Default value
-        double fuelRequired = fuelRate * weight * distanceInKm;
-        return fuelRequired;
+        return fuelRate * weight * distanceInKm;
     }
 }
 

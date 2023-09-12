@@ -14,6 +14,9 @@ public class Port implements IPort{
     private List<Trip> currentTrips;
 
     public Port(String portID, String name, double latitude, double longitude, int storingCapacity, boolean landingAbility, int containersCount, int vehiclesCount, List<Trip> pastTrips, List<Trip> currentTrips) {
+        if (!portID.matches("^p\\d+$")) {
+            System.out.println("Invalid port ID. It must be p-number.");
+        }
         this.portID = portID;
         this.name = name;
         this.latitude = latitude;
@@ -96,17 +99,13 @@ public class Port implements IPort{
 
     @Override
     public void decreaseContainer(int amount) {
-
-    }
-
-    public void decreaseContainers(int amount) {
         containersCount -= amount;
         vehiclesCount--;
     }
 
-
 //    public double distanceCalculator(Port otherPort) {
-//        //Calculating the distance between the current port to another.
+//        // Calculating the distance between the current port to another.
+//        double dis
 //    }
 
 
