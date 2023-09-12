@@ -11,12 +11,16 @@ public class Port implements IPort{
     private boolean landingAbility;
     private int containersCount;
     private int vehiclesCount;
+    private ArrayList<Container> containers;
     private ArrayList<Trip> pastTrips;
     private ArrayList<Trip> currentTrips;
 
 //    Constructor
 
     public Port(String portID, String name, double latitude, double longitude, int storingCapacity, boolean landingAbility, int containersCount, int vehiclesCount, ArrayList<Trip> pastTrips, ArrayList<Trip> currentTrips) {
+ if (!portID.matches("^p\\d+$")) {
+            System.out.println("Invalid port ID. It must be p-number.");
+        } else {
         this.portID = portID;
         this.name = name;
         this.latitude = latitude;
@@ -27,6 +31,7 @@ public class Port implements IPort{
         this.vehiclesCount = vehiclesCount;
         this.pastTrips = pastTrips;
         this.currentTrips = currentTrips;
+ }
     }
 
 //    Getter & Setter
@@ -101,17 +106,26 @@ public class Port implements IPort{
 
     @Override
     public void decreaseContainer(int amount) {
-
-    }
-
-    public void decreaseContainers(int amount) {
         containersCount -= amount;
         vehiclesCount--;
     }
 
+    public double distanceCalculator(Port otherPort) {
+        // Calculating the distance between the current port to another.
 
-//    public double distanceCalculator(Port otherPort) {
-//        //Calculating the distance between the current port to another.
+        // Convert the coordinates to Radian
+        double lat1 = Math.toRadians(this.latitude);
+        double lon1 = Math.toRadians(this.longitude);
+        double lat2 = Math.toRadians(otherPort.latitude);
+        double lon2 = Math.toRadians(otherPort.longitude);
+
+        // Calculate the distance with provided formula
+        return (6378 * Math.acos((Math.sin(lat1) * Math.sin(lat2)) + Math.cos(lat1) * Math.cos(lat2) * Math.cos(lon2 - lon1)));
+    }
+//
+//    public int countContainersInPort() {
+//        int count = 0;
+//        for (Container co)
 //    }
 
 

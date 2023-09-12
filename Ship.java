@@ -3,6 +3,13 @@ import java.util.Map;
 public class Ship extends Vehicle {
     public Ship(String vehicleID, String name, int currentFuel, int carryingCapacity, int fuelCapacity, Port currentPort, int totalContainers) {
         super(vehicleID, name, currentFuel, carryingCapacity, fuelCapacity, currentPort, totalContainers);
+        if (!vehicleID.matches("^sh\\d+$")) {
+            // '^': the pattern must start from th beginning of the ID
+            // 'sh': force the ID to start with 'sh'
+            // '\\d+': ensures that there is at least 1 digit following the 'sh'
+            // '$': the pattern must reach the end of the ID
+            System.out.println("Invalid vehicle ID. It must be sh-number.");
+        }
     }
 
     @Override
@@ -21,7 +28,7 @@ public class Ship extends Vehicle {
     }
 
     @Override
-    public boolean canLoadContainer(Container.ContainerType type) {
+    public boolean canLoadContainerType(Container.ContainerType type) {
         // Ship can load all types of containers.
         return true;
     }

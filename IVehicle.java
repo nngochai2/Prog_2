@@ -12,6 +12,6 @@ public interface IVehicle {
 
     void loadContainer(Container.ContainerType type);
     void unloadContainer(Container.ContainerType type);
-    boolean canLoadContainer(Container.ContainerType type);
+    boolean canLoadContainerType(Container.ContainerType type);
     void move(Port destinationPort);
 }

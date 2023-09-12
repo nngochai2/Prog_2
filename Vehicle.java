@@ -85,15 +85,15 @@ public abstract class Vehicle implements IVehicle {
         this.totalContainers = totalContainers;
     }
 
-//    Methods
 
-    public boolean canLoadContainer(Container.ContainerType type) {
+    public boolean canLoadContainerType(Container.ContainerType type) {
+
         // Check whether a vehicle can carry a specific container type
         return true;
     };
     public void loadContainer(Container.ContainerType type) {
         // Increment the count of a specific container type
-        if(canLoadContainer(type)) {
+        if(canLoadContainerType(type)) {
             containerCounts.put(type, containerCounts.get(type) + 1);
             totalContainers++;
         }
