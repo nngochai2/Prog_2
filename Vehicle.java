@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Map;
 
 public abstract class Vehicle implements IVehicle {
@@ -110,6 +111,13 @@ public abstract class Vehicle implements IVehicle {
             System.err.println("Error: No " + type + " container to unload.");
         }
     }
+
+//    public void listContainer(Container.ContainerType type) {
+//        if (type == Container.ContainerType.OPEN_SIDE) {
+//            int amount = 0;
+//            for (Container : containerCounts)
+//        }
+//    }
 //    public boolean canMove() {
 //        // Check whether a vehicle can make a trip or not
 //        if (currentFuel <= Container.)

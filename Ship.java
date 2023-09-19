@@ -3,6 +3,7 @@ import java.util.Map;
 public class Ship extends Vehicle {
     public Ship(String vehicleID, String name, int currentFuel, int carryingCapacity, int fuelCapacity, Port currentPort, int totalContainers) {
         super(vehicleID, name, currentFuel, carryingCapacity, fuelCapacity, currentPort, totalContainers);
+        // Check for valid ID.
         if (!vehicleID.matches("^sh\\d+$")) {
             // '^': the pattern must start from th beginning of the ID
             // 'sh': force the ID to start with 'sh'
