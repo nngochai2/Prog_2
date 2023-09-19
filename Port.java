@@ -2,12 +2,13 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Port implements IPort{
+public class Port implements IPort {
     private String portID;
     private String name;
     private double latitude;
     private double longitude;
-    private int storingCapacity;
+    private double storingCapacity;
+    private int currentTotalWeight;
     private boolean landingAbility;
     private int containersCount;
     private int vehiclesCount;
@@ -15,26 +16,29 @@ public class Port implements IPort{
     private ArrayList<Trip> pastTrips;
     private ArrayList<Trip> currentTrips;
 
-//    Constructor
+    // Constructor
 
-    public Port(String portID, String name, double latitude, double longitude, int storingCapacity, boolean landingAbility, int containersCount, int vehiclesCount, ArrayList<Trip> pastTrips, ArrayList<Trip> currentTrips) {
- if (!portID.matches("^p\\d+$")) {
+    public Port(String portID, String name, double latitude, double longitude, int storingCapacity,
+            boolean landingAbility, int containersCount, int vehiclesCount, ArrayList<Trip> pastTrips,
+            ArrayList<Trip> currentTrips) {
+        if (!portID.matches("^p\\d+$")) {
             System.out.println("Invalid port ID. It must be p-number.");
         } else {
-        this.portID = portID;
-        this.name = name;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.storingCapacity = storingCapacity;
-        this.landingAbility = landingAbility;
-        this.containersCount = containersCount;
-        this.vehiclesCount = vehiclesCount;
-        this.pastTrips = pastTrips;
-        this.currentTrips = currentTrips;
- }
+            this.portID = portID;
+            this.name = name;
+            this.latitude = latitude;
+            this.longitude = longitude;
+            this.storingCapacity = storingCapacity;
+            this.currentTotalWeight = 0;
+            this.landingAbility = landingAbility;
+            this.containersCount = containersCount;
+            this.vehiclesCount = vehiclesCount;
+            this.pastTrips = pastTrips;
+            this.currentTrips = currentTrips;
+        }
     }
 
-//    Getter & Setter
+    // Getter & Setter
     public String getPortID() {
         return portID;
     }
@@ -51,7 +55,7 @@ public class Port implements IPort{
         return longitude;
     }
 
-    public int getStoringCapacity() {
+    public double getStoringCapacity() {
         return storingCapacity;
     }
 
@@ -89,7 +93,7 @@ public class Port implements IPort{
         return landingAbility;
     }
 
-//    Methods
+    // Methods
     public void addNewTrip(Trip trip) {
         currentTrips.add(trip);
     }
@@ -99,15 +103,23 @@ public class Port implements IPort{
         pastTrips.add(trip);
     }
 
-    public void addContainers(int amount) {
-        containersCount += amount;
-        vehiclesCount++;
+    public boolean addContainers(ArrayList<Container> containers) {
+        for (Container container : containers) {
+            if (currentTotalWeight + container.getWeight() <= storingCapacity) {
+                currentTotalWeight += container.getWeight();
+            } else {
+                return false;
+            }
+        }
+        containersCount += containers.size();
+        return true;
+        // vehiclesCount++;
     }
 
     @Override
     public void decreaseContainer(int amount) {
         containersCount -= amount;
-        vehiclesCount--;
+        // vehiclesCount--;
     }
 
     public double distanceCalculator(Port otherPort) {
@@ -120,13 +132,14 @@ public class Port implements IPort{
         double lon2 = Math.toRadians(otherPort.longitude);
 
         // Calculate the distance with provided formula
-        return (6378 * Math.acos((Math.sin(lat1) * Math.sin(lat2)) + Math.cos(lat1) * Math.cos(lat2) * Math.cos(lon2 - lon1)));
+        return (6378 * Math
+                .acos((Math.sin(lat1) * Math.sin(lat2)) + Math.cos(lat1) * Math.cos(lat2) * Math.cos(lon2 - lon1)));
     }
-//
-//    public int countContainersInPort() {
-//        int count = 0;
-//        for (Container co)
-//    }
 
+    //
+    // public int countContainersInPort() {
+    // int count = 0;
+    // for (Container co)
+    // }
 
 }
