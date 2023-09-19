@@ -28,6 +28,13 @@ public abstract class Vehicle implements IVehicle {
         this.containerCounts = containerCounts;
     }
 
+    public enum VehicleType {
+        SHIP,
+        BASIC_TRUCK,
+        TANKER_TRUCK,
+        REEFER_TRUCK
+    }
+
     public String getVehicleID() {
         return vehicleID;
     }
@@ -124,7 +131,7 @@ public abstract class Vehicle implements IVehicle {
         return totalWeight;
     }
 
-    // Calculate the total weight for each type of containers
+    // Calculate the total weight for each type of containers (return a HashMap, might be useful)
 //    public Map<Container.ContainerType, Double> calculateWeightForEachType() { // The method returns a 'Map' the associates each ContainerType with its total weight as 'Double'
 //        // Initialize a new HashMap
 //        Map<Container.ContainerType, Double> weightForEachType = new HashMap<>();
@@ -180,6 +187,7 @@ public abstract class Vehicle implements IVehicle {
             System.out.println("Vehicle is overloaded.");
             return false;
         }
+
         // Calculate estimated fuel consumption
         double estimatedFuelConsumption = estimatedFuelConsumption(currentPort);
 

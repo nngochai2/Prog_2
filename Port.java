@@ -1,6 +1,8 @@
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Port implements IPort{
     private String portID;
@@ -11,11 +13,12 @@ public class Port implements IPort{
     private boolean landingAbility;
     private int containersCount;
     private int vehiclesCount;
-    private List<Trip> pastTrips;
-    private List<Trip> currentTrips;
+    private ArrayList<Trip> pastTrips;
+    private ArrayList<Trip> currentTrips;
     private ArrayList<Container> containers;
+    private ArrayList<Vehicle> vehicles;
 
-    public Port(String portID, String name, double latitude, double longitude, int storingCapacity, boolean landingAbility, int containersCount, int vehiclesCount, List<Trip> pastTrips, List<Trip> currentTrips) {
+    public Port(String portID, String name, double latitude, double longitude, int storingCapacity, boolean landingAbility, int containersCount, int vehiclesCount, ArrayList<Trip> pastTrips, ArrayList<Trip> currentTrips, ArrayList<Container> containers, ArrayList<Vehicle> vehicles) {
         if (!portID.matches("^p\\d+$")) {
             System.out.println("Invalid port ID. It must be p-number.");
         }
@@ -29,8 +32,9 @@ public class Port implements IPort{
         this.vehiclesCount = vehiclesCount;
         this.pastTrips = pastTrips;
         this.currentTrips = currentTrips;
+        this.containers = containers;
+        this.vehicles = vehicles;
     }
-
 
     public String getPortID() {
         return portID;
@@ -118,11 +122,45 @@ public class Port implements IPort{
         // Calculate the distance with provided formula
         return 6378 * Math.acos((Math.sin(lat1) * Math.sin(lat2)) + Math.cos(lat1) * Math.cos(lat2) * Math.cos(lon2 - lon1));
     }
-//
-//    public int countContainersInPort() {
-//        int count = 0;
-//        for (Container co)
-//    }
 
+    // Count the total number of containers
+    public int countTotalContainers() {
+        return containers.size();
+    }
 
+    // Calculate the total weight
+    public double calculateTotalWeight() {
+        double totalWeight = 0.0;
+        for (Container container : containers) {
+            totalWeight += container.getWeight();
+        }
+        return totalWeight;
+    }
+
+    // Count the vehicles divided by types
+    public Map<Vehicle.VehicleType, Integer> countVehicleByType() {
+        Map<Vehicle.VehicleType, Integer> vehicleCounts = new HashMap<>();
+
+        // Initialize counts
+        for (Vehicle.VehicleType type : Vehicle.VehicleType.values()) {
+            vehicleCounts.put(type, 0);
+        }
+
+        // Making a for loop and counting by type
+        for (Vehicle vehicle : vehicles) {
+            if (vehicle instanceof Ship) {
+                vehicleCounts.put(Vehicle.VehicleType.SHIP, vehicleCounts.get(Vehicle.VehicleType.SHIP) + 1);
+            } else if (vehicle instanceof BasicTruck) {
+                vehicleCounts.put(Vehicle.VehicleType.BASIC_TRUCK, vehicleCounts.getOrDefault(Vehicle.VehicleType.BASIC_TRUCK, 0) + 1);
+
+                // Check for ReeferTruck or TankerTruck and update accordingly
+                if (vehicle instanceof ReeferTruck) {
+                    vehicleCounts.put(Vehicle.VehicleType.REEFER_TRUCK, vehicleCounts.getOrDefault(Vehicle.VehicleType.REEFER_TRUCK, 0) + 1);
+                } else if (vehicle instanceof TankerTruck) {
+                    vehicleCounts.put(Vehicle.VehicleType.TANKER_TRUCK, vehicleCounts.getOrDefault(Vehicle.VehicleType.TANKER_TRUCK, 0) + 1);
+                }
+            }
+        }
+        return vehicleCounts;
+    }
 }
