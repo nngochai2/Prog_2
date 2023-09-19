@@ -28,23 +28,40 @@ public class Container {
 
     public void load(Vehicle from, Port to) {
         // if weight < Port.storingCapacity
-            // Update Container.location
-            // Update Port.containersCount
-            // Update Vehicle.totalContainers
+        // Update Container.location
+        // Update Port.containersCount
+        // Update Vehicle.totalContainers
         this.location = to.getPortID();
     }
 
     public void load(Port from, Ship to) {
         // if weight < Ship.carryingCapacity
-            // Update Container.location
-            // Update Port.containersCount
-            // Update Ship.totalContainers
+        // Update Container.location
+        // Update Port.containersCount
+        // Update Ship.totalContainers
     }
 
+    public String getContainerID() {
+        return this.containerID;
+    }
 
+    public ContainerType getType() {
+        return this.type;
+    }
 
+    public String getLocation() {
+        return this.location;
+    }
 
-    public double calculateFuelConsumption(Vehicle vehicle, double distanceInKm) {
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public double getWeight() {
+        return this.weight;
+    }
+
+    public double calculateFuelConsumption(Vehicle vehicle) {
         // Define fuel consumption rate
         double fuelRate = switch (type) {
             // 'switch' is used to test the value of 'type' against different cases
@@ -60,8 +77,6 @@ public class Container {
         };
 
         // Default value
-        return fuelRate * weight * distanceInKm;
+        return fuelRate * weight;
     }
 }
-
-

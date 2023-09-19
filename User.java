@@ -1,7 +1,6 @@
 import java.util.List;
 import java.util.Date;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.text.SimpleDateFormat;
 
 public abstract class User {
@@ -37,30 +36,29 @@ public abstract class User {
         return (this.username.equals(username) && this.password.equals(password));
     }
 
-    // Chua lam dc xong
     public void calculateDailyFuelUsage(Date date, ArrayList<Trip> trips) {
         // This method is responsible for calculating daily fuel usage
         double totalFuelUsage = 0;
         for (Trip trip : trips) {
-            if (date.after(trip.getDepartureDate()) && date.before(trip.getArrivalDate())) {
+            if ((date.after(trip.getDepartureDate()) && date.before(trip.getArrivalDate()))
+                    || (date.equals(trip.getDepartureDate())) || (date.equals(trip.getArrivalDate()))) {
                 Vehicle vehicle = trip.getVehicle();
-                ArrayList<Container> containers = trip.getContainers();
-
+                ArrayList<Container> containers = trip.getContainersOnTrip();
                 // Get the distance traveled during the trip
                 double distance = trip.getDeparturePort().calculateDistance(trip.getArrivalPort());
 
                 // Calculate the fuel consumption for the trip
                 for (Container container : containers) {
-                    double weight = container.getWeight();
-                    double fuelRate = vehicle.getFuelConsumptionRate(container.getType());
-                    totalFuelUsage += weight * fuelRate;
+                    double fuelRate = container.calculateFuelConsumption(vehicle);
+                    totalFuelUsage += fuelRate;
                 }
+                totalFuelUsage *= distance;
             }
         }
         System.out.println("Total fuel used on " + date + " is: " + totalFuelUsage + " gallons");
     }
 
-    public void calculateContainerWeights(List<Container> containers) {
+    public void calculateContainerWeights(ArrayList<Container> containers) {
         // This method is responsible for calculating total container weights
         double totalWeight = 0;
         for (Container container : containers) {
@@ -81,7 +79,7 @@ public abstract class User {
         for (Trip trip : trips) {
             if ((date.after(trip.getDepartureDate()) && date.before(trip.getArrivalDate()))
                     || (date.equals(trip.getDepartureDate())) || (date.equals(trip.getArrivalDate()))) {
-                System.out.println("Trip ID: " + trip.getTripId());
+                System.out.println("Trip ID: " + trip.getId());
                 System.out.println("Departure Date: " + sdf.format(trip.getDepartureDate()));
                 System.out.println("Arrival Date: " + sdf.format(trip.getArrivalDate()));
                 System.out.println("Vehicle ID: " + trip.getVehicle().getVehicleID());
@@ -100,7 +98,7 @@ public abstract class User {
         for (Trip trip : trips) {
             if ((startDate.equals(trip.getDepartureDate()) || startDate.after(trip.getDepartureDate()))
                     && (endDate.before(trip.getArrivalDate())) || endDate.equals(trip.getArrivalDate())) {
-                System.out.println("Trip ID: " + trip.getTripId());
+                System.out.println("Trip ID: " + trip.getId());
                 System.out.println("Departure Date: " + sdf.format(trip.getDepartureDate()));
                 System.out.println("Arrival Date: " + sdf.format(trip.getArrivalDate()));
                 System.out.println("Vehicle ID: " + trip.getVehicle().getVehicleID());
