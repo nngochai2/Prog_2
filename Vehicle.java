@@ -1,4 +1,6 @@
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Map;
 
 public abstract class Vehicle implements IVehicle {
@@ -10,11 +12,11 @@ public abstract class Vehicle implements IVehicle {
     protected Port currentPort;
     protected int totalContainers;
 
+    protected ArrayList<Container> containers;
     protected Map<Container.ContainerType, Integer> containerCounts;
     // Used to keep track of the number of each type of container that a vehicle is carrying, store and manage the counts of different container types.
 
-
-    public Vehicle(String vehicleID, String name, int currentFuel, int carryingCapacity, int fuelCapacity, Port currentPort, int totalContainers) {
+    public Vehicle(String vehicleID, String name, int currentFuel, int carryingCapacity, int fuelCapacity, Port currentPort, int totalContainers, ArrayList<Container> containers, Map<Container.ContainerType, Integer> containerCounts) {
         this.vehicleID = vehicleID;
         this.name = name;
         this.currentFuel = currentFuel;
@@ -22,11 +24,8 @@ public abstract class Vehicle implements IVehicle {
         this.fuelCapacity = fuelCapacity;
         this.currentPort = currentPort;
         this.totalContainers = totalContainers;
-
-        for (Container.ContainerType type : Container.ContainerType.values()) {
-            containerCounts.put(type, 0);
-        }
-
+        this.containers = containers;
+        this.containerCounts = containerCounts;
     }
 
     public String getVehicleID() {
@@ -55,6 +54,10 @@ public abstract class Vehicle implements IVehicle {
 
     public int getTotalContainers() {
         return totalContainers;
+    }
+
+    public ArrayList<Container> getContainers() {
+        return containers;
     }
 
     public void setVehicleID(String vehicleID) {
@@ -112,17 +115,77 @@ public abstract class Vehicle implements IVehicle {
         }
     }
 
-//    public void listContainer(Container.ContainerType type) {
-//        if (type == Container.ContainerType.OPEN_SIDE) {
-//            int amount = 0;
-//            for (Container : containerCounts)
+    // Calculate the total weight of container on a container
+    public double calculateTotalWeight() {
+        double totalWeight = 0.0;
+        for (Container container : containers) {
+            totalWeight += container.getWeight();
+        }
+        return totalWeight;
+    }
+
+    // Calculate the total weight for each type of containers
+//    public Map<Container.ContainerType, Double> calculateWeightForEachType() { // The method returns a 'Map' the associates each ContainerType with its total weight as 'Double'
+//        // Initialize a new HashMap
+//        Map<Container.ContainerType, Double> weightForEachType = new HashMap<>();
+//
+//        // Iterates over all possible container types defined in the enum
+//        for (Container.ContainerType type : Container.ContainerType.values()) {
+//            double totalWeightForType = 0.0;
+//
+//            // Iterates over all the containers stored in the ArrayList
+//            for (Container container : containers) {
+//                if (container.getType() == type) {
+//                    totalWeightForType += container.getWeight();
+//                }
+//            }
+//            weightForEachType.put(type, totalWeightForType);
 //        }
+//        return weightForEachType;
 //    }
-//    public boolean canMove() {
-//        // Check whether a vehicle can make a trip or not
-//        if (currentFuel <= Container.)
-//    }
-//    public void move(Port destinationPort) {
-//        if (canMove)
-//    }
+
+    public double calculateTotalWeightForEachType(Container.ContainerType containerType) {
+        // Calculate the total weight for the given container type
+        double totalWeight = 0.0;
+        for (Container container : containers) {
+            if (container.getType() == containerType) {
+                totalWeight += container.getWeight();
+            }
+        }
+        return totalWeight;
+    }
+
+    public double estimatedFuelConsumption(Port destinationPort) {
+        double distance = currentPort.distanceCalculator(destinationPort);
+        double fuelConsumption = 0.0;
+        for (Container container : containers) {
+            double containerFuelConsumption = container.calculateFuelConsumption(this, distance);
+            fuelConsumption += containerFuelConsumption;
+        }
+        return fuelConsumption;
+    }
+
+    // Check whether a vehicle can start a trip or not
+    public boolean canMove() {
+        if (currentFuel == 0) {
+            System.out.println("Vehicle is out of fuel!");
+            return false;
+        }
+
+        // Calculate total weight of all containers on a vehicle
+        double totalWeight = calculateTotalWeight();
+
+        // Check if the total weight exceeds the carrying capacity
+        if (totalWeight > carryingCapacity) {
+            System.out.println("Vehicle is overloaded.");
+            return false;
+        }
+        // Calculate estimated fuel consumption
+        double estimatedFuelConsumption = estimatedFuelConsumption(currentPort);
+
+        if (currentFuel < estimatedFuelConsumption) {
+            System.out.println("This vehicle can't leave. Not enough fuel!");
+        }
+        return true;
+    }
 }

@@ -25,6 +25,24 @@ public class Container {
         this.weight = weight;
     }
 
+    public String getContainerID() {
+        return containerID;
+    }
+
+    public ContainerType getType() {
+        return type;
+    }
+
+    public String getContents() {
+        return contents;
+    }
+
+    public double getWeight() {
+        return weight;
+    }
+
+
+
     public void load(ContainerType type) {
         // Implement loading logic based on container type.
     }

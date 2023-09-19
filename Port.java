@@ -31,6 +31,7 @@ public class Port implements IPort{
         this.currentTrips = currentTrips;
     }
 
+
     public String getPortID() {
         return portID;
     }
@@ -115,7 +116,7 @@ public class Port implements IPort{
         double lon2 = Math.toRadians(otherPort.longitude);
 
         // Calculate the distance with provided formula
-        return (6378 * Math.acos((Math.sin(lat1) * Math.sin(lat2)) + Math.cos(lat1) * Math.cos(lat2) * Math.cos(lon2 - lon1)));
+        return 6378 * Math.acos((Math.sin(lat1) * Math.sin(lat2)) + Math.cos(lat1) * Math.cos(lat2) * Math.cos(lon2 - lon1));
     }
 //
 //    public int countContainersInPort() {
