@@ -35,6 +35,8 @@ public abstract class Vehicle implements IVehicle {
         REEFER_TRUCK
     }
 
+    public abstract VehicleType getVehicleType();
+
     public String getVehicleID() {
         return vehicleID;
     }
@@ -132,7 +134,7 @@ public abstract class Vehicle implements IVehicle {
     }
 
     // Calculate the total weight for each type of containers (return a HashMap, might be useful)
-//    public Map<Container.ContainerType, Double> calculateWeightForEachType() { // The method returns a 'Map' the associates each ContainerType with its total weight as 'Double'
+//    public Map<Container.ContainerType, Double> calculateTotalWeightForEachType() { // The method returns a 'Map' the associates each ContainerType with its total weight as 'Double'
 //        // Initialize a new HashMap
 //        Map<Container.ContainerType, Double> weightForEachType = new HashMap<>();
 //

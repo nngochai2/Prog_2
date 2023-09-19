@@ -66,6 +66,11 @@ public class Port implements IPort{
         return 0;
     }
 
+    @Override
+    public void addContainers(int amount) {
+
+    }
+
     public boolean isLandingAbility() {
         return landingAbility;
     }
@@ -99,9 +104,24 @@ public class Port implements IPort{
         pastTrips.add(trip);
     }
 
-    public void addContainers(int amount) {
-        containersCount += amount;
-        vehiclesCount++;
+    // Add containers
+    public int addContainers(List<Container> containersToAdd) {
+        // Calculate the total weight of containers being added
+        double totalWeightToAdd = containersToAdd.stream()
+                .mapToDouble(Container::getWeight)
+                .sum();
+
+        // Calculate the total weight of containers currently in the port
+        double currentTotalWeight = calculateTotalWeight();
+
+        // Check if adding these containers would exceed the storing capacity
+        if (currentTotalWeight + totalWeightToAdd <= storingCapacity) {
+            containers.addAll(containersToAdd); // Add the containers to the port
+            containersCount += containersToAdd.size(); // Update the containers count
+            return containersToAdd.size(); // Return the number of containers added
+        } else {
+            return 0; // Adding containers would exceed the storing capacity, return 0
+        }
     }
 
     @Override
@@ -126,6 +146,24 @@ public class Port implements IPort{
     // Count the total number of containers
     public int countTotalContainers() {
         return containers.size();
+    }
+
+    // Count the numbers of containers divided by type
+    public Map<Container.ContainerType, Integer> countContainersByType() {
+        Map<Container.ContainerType, Integer> containerCounts = new HashMap<>();
+
+        // Initialize counts
+        for (Container.ContainerType type : Container.ContainerType.values()) {
+            containerCounts.put(type, 0);
+        }
+
+        // Loop through containers and count by type
+        for (Container container : containers) {
+            Container.ContainerType type = container.getType();
+            containerCounts.put(type, containerCounts.getOrDefault(type, 0) + 1);
+        }
+
+        return containerCounts;
     }
 
     // Calculate the total weight

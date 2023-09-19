@@ -8,4 +8,5 @@ public interface IPort {
     double calculateDistance(Port otherPort); // Calculate distance between ports
     void addContainers(int amount); // Add containers to the port
     void decreaseContainer(int amount); // Decrease containers at the port
+
 }
