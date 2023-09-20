@@ -42,19 +42,11 @@ public class Container {
     }
 
     public String getContainerID() {
-        return this.containerID;
-    }
-
-    public String getContainerID() {
         return containerID;
     }
 
     public ContainerType getType() {
         return type;
-    }
-
-    public String getContents() {
-        return contents;
     }
 
     public double getWeight() {
@@ -75,9 +67,6 @@ public class Container {
         this.location = location;
     }
 
-    public double getWeight() {
-        return this.weight;
-    }
 
     public double calculateFuelConsumption(Vehicle vehicle) {
         // Define fuel consumption rate
