@@ -1,8 +1,9 @@
+import java.util.ArrayList;
 import java.util.Map;
 
 public class Ship extends Vehicle {
-    public Ship(String vehicleID, String name, int currentFuel, int carryingCapacity, int fuelCapacity, Port currentPort, int totalContainers) {
-        super(vehicleID, name, currentFuel, carryingCapacity, fuelCapacity, currentPort, totalContainers);
+    public Ship(String vehicleID, String name, int currentFuel, int carryingCapacity, int fuelCapacity, Port currentPort, int totalContainers, ArrayList<Container> containers, Map<Container.ContainerType, Integer> containerCounts) {
+        super(vehicleID, name, currentFuel, carryingCapacity, fuelCapacity, currentPort, totalContainers, containers, containerCounts);
         if (!vehicleID.matches("^sh\\d+$")) {
             // '^': the pattern must start from th beginning of the ID
             // 'sh': force the ID to start with 'sh'
@@ -11,6 +12,11 @@ public class Ship extends Vehicle {
             System.out.println("Invalid vehicle ID. It must be sh-number.");
         }
     }
+
+    @Override
+    public VehicleType getVehicleType() {
+        return VehicleType.SHIP;
+}
 
     @Override
     public int getCarryCapacity() {
@@ -32,8 +38,6 @@ public class Ship extends Vehicle {
         // Ship can load all types of containers.
         return true;
     }
-
-
     @Override
     public void move(Port destinationPort) {
         // Calculate the distance to the destination port

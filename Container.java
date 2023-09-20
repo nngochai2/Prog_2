@@ -45,8 +45,26 @@ public class Container {
         return this.containerID;
     }
 
+    public String getContainerID() {
+        return containerID;
+    }
+
     public ContainerType getType() {
-        return this.type;
+        return type;
+    }
+
+    public String getContents() {
+        return contents;
+    }
+
+    public double getWeight() {
+        return weight;
+    }
+
+
+
+    public void load(ContainerType type) {
+        // Implement loading logic based on container type.
     }
 
     public String getLocation() {
