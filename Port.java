@@ -80,9 +80,10 @@ public class Port implements IPort {
     }
 
     @Override
-    public void addContainers(int amount) {
-
+    public boolean addContainers(ArrayList<Container> containers) {
+        return false;
     }
+
 
     public boolean isLandingAbility() {
         return landingAbility;
