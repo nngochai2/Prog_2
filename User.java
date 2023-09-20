@@ -38,7 +38,7 @@ public abstract class User {
 
     public void calculateDailyFuelUsage(Date date, ArrayList<Trip> trips) {
         // This method is responsible for calculating daily fuel usage
-        double totalFuelUsage = 0;
+        double dailyFuelUsage = 0;
         for (Trip trip : trips) {
             if ((date.after(trip.getDepartureDate()) && date.before(trip.getArrivalDate()))
                     || (date.equals(trip.getDepartureDate())) || (date.equals(trip.getArrivalDate()))) {
@@ -50,12 +50,17 @@ public abstract class User {
                 // Calculate the fuel consumption for the trip
                 for (Container container : containers) {
                     double fuelRate = container.calculateFuelConsumption(vehicle);
-                    totalFuelUsage += fuelRate;
+                    dailyFuelUsage += fuelRate;
                 }
-                totalFuelUsage *= distance;
+                // Calculate the number of days the trip lasts
+                long millisecondsInADay = 24 * 60 * 60 * 1000;
+                long tripDurationInDays = (trip.getDepartureDate().getTime() - trip.getArrivalDate().getTime())
+                        / millisecondsInADay;
+                // Calculate daily fuel consumption for this trip
+                dailyFuelUsage *= distance / tripDurationInDays;
             }
         }
-        System.out.println("Total fuel used on " + date + " is: " + totalFuelUsage + " gallons");
+        System.out.println("Total fuel used on " + date + " is: " + dailyFuelUsage + " gallons");
     }
 
     public void calculateContainerWeights(ArrayList<Container> containers) {
