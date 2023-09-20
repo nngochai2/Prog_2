@@ -42,10 +42,6 @@ public class Container {
     }
 
     public String getContainerID() {
-        return this.containerID;
-    }
-
-    public String getContainerID() {
         return containerID;
     }
 
@@ -53,15 +49,9 @@ public class Container {
         return type;
     }
 
-    public String getContents() {
-        return contents;
-    }
-
     public double getWeight() {
         return weight;
     }
-
-
 
     public void load(ContainerType type) {
         // Implement loading logic based on container type.
@@ -73,10 +63,6 @@ public class Container {
 
     public void setLocation(String location) {
         this.location = location;
-    }
-
-    public double getWeight() {
-        return this.weight;
     }
 
     public double calculateFuelConsumption(Vehicle vehicle) {
