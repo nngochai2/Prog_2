@@ -4,12 +4,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Port implements IPort{
+public class Port implements IPort {
     private String portID;
     private String name;
     private double latitude;
     private double longitude;
-    private int storingCapacity;
+    private double storingCapacity;
+    private int currentTotalWeight;
     private boolean landingAbility;
     private int containersCount;
     private int vehiclesCount;
@@ -17,10 +18,21 @@ public class Port implements IPort{
     private ArrayList<Trip> currentTrips;
     private ArrayList<Container> containers;
     private ArrayList<Vehicle> vehicles;
-
     public Port(String portID, String name, double latitude, double longitude, int storingCapacity, boolean landingAbility, int containersCount, int vehiclesCount, ArrayList<Trip> pastTrips, ArrayList<Trip> currentTrips, ArrayList<Container> containers, ArrayList<Vehicle> vehicles) {
         if (!portID.matches("^p\\d+$")) {
             System.out.println("Invalid port ID. It must be p-number.");
+        } else {
+            this.portID = portID;
+            this.name = name;
+            this.latitude = latitude;
+            this.longitude = longitude;
+            this.storingCapacity = storingCapacity;
+            this.currentTotalWeight = 0;
+            this.landingAbility = landingAbility;
+            this.containersCount = containersCount;
+            this.vehiclesCount = vehiclesCount;
+            this.pastTrips = pastTrips;
+            this.currentTrips = currentTrips;
         }
         this.portID = portID;
         this.name = name;
@@ -36,6 +48,7 @@ public class Port implements IPort{
         this.vehicles = vehicles;
     }
 
+    // Getter & Setter
     public String getPortID() {
         return portID;
     }
@@ -52,7 +65,7 @@ public class Port implements IPort{
         return longitude;
     }
 
-    public int getStoringCapacity() {
+    public double getStoringCapacity() {
         return storingCapacity;
     }
 
@@ -95,6 +108,7 @@ public class Port implements IPort{
         return landingAbility;
     }
 
+    // Methods
     public void addNewTrip(Trip trip) {
         currentTrips.add(trip);
     }
@@ -127,7 +141,7 @@ public class Port implements IPort{
     @Override
     public void decreaseContainer(int amount) {
         containersCount -= amount;
-        vehiclesCount--;
+        // vehiclesCount--;
     }
 
     public double distanceCalculator(Port otherPort) {
@@ -156,6 +170,7 @@ public class Port implements IPort{
         for (Container.ContainerType type : Container.ContainerType.values()) {
             containerCounts.put(type, 0);
         }
+
 
         // Loop through containers and count by type
         for (Container container : containers) {

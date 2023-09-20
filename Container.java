@@ -3,8 +3,8 @@ import java.util.Map;
 public class Container {
     private final String containerID;
     private final ContainerType type;
-    private final String contents;
     private final double weight;
+    private String location;
 
     public enum ContainerType {
         // Represents the different container types.
@@ -15,14 +15,34 @@ public class Container {
         LIQUID
     }
 
-    public Container(String containerID, ContainerType type, String contents, double weight) {
+    public Container(String containerID, ContainerType type, String location, double weight) {
         if (!containerID.matches("^c\\d+$")) {
             System.out.println("Invalid container ID. It must be c-number.");
         }
+
         this.containerID = containerID;
         this.type = type;
-        this.contents = contents;
         this.weight = weight;
+        this.location = location;
+    }
+
+    public void load(Vehicle from, Port to) {
+        // if weight < Port.storingCapacity
+        // Update Container.location
+        // Update Port.containersCount
+        // Update Vehicle.totalContainers
+        this.location = to.getPortID();
+    }
+
+    public void load(Port from, Ship to) {
+        // if weight < Ship.carryingCapacity
+        // Update Container.location
+        // Update Port.containersCount
+        // Update Ship.totalContainers
+    }
+
+    public String getContainerID() {
+        return this.containerID;
     }
 
     public String getContainerID() {
@@ -47,10 +67,19 @@ public class Container {
         // Implement loading logic based on container type.
     }
 
-    public void unload() {
+    public String getLocation() {
+        return this.location;
     }
 
-    public double calculateFuelConsumption(Vehicle vehicle, double distanceInKm) {
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public double getWeight() {
+        return this.weight;
+    }
+
+    public double calculateFuelConsumption(Vehicle vehicle) {
         // Define fuel consumption rate
         double fuelRate = switch (type) {
             // 'switch' is used to test the value of 'type' against different cases
@@ -66,8 +95,6 @@ public class Container {
         };
 
         // Default value
-        return fuelRate * weight * distanceInKm;
+        return fuelRate * weight;
     }
 }
-
-
