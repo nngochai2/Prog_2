@@ -216,18 +216,39 @@ public class Admin extends User {
         scanner.close();
     }
 
-    // public void addContainer(Container container) {
-    // // Check if there is already an existing container with the same ID
-    // for (Container exisitngContainer : containers) {
-    // if(exisitngContainer.getContainerID().equals(container.getContainerID())) {
-    // System.out.println("A container with the same ID has already exists!");
-    // return;
-    // }
-    // }
-    // containers.add(container);
-    // System.out.println("New container with ID " + container.getContainerID() + "
-    // has been added successfully.");
-    // }
+//    public void addContainer(Container container) {
+//        // Check if there is already an existing container with the same ID
+//        for (Container exisitngContainer : containers) {
+//            if(exisitngContainer.getContainerID().equals(container.getContainerID())) {
+//                System.out.println("A container with the same ID has already exists!");
+//                return;
+//            }
+//        }
+//        containers.add(container);
+//        System.out.println("New container with ID " + container.getContainerID() + " has been added successfully.");
+//    }
+    // Add a container to the system
+    public void addContainer() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Enter the container ID: ");
+        String containerID = scanner.nextLine();
+
+        System.out.println("Enter the container type (e.g., DRY_STORAGE, OPEN_TOP, OPEN_SIDE, REFRIGERATED, LIQUID): ");
+        String containerTypeStr = scanner.nextLine();
+        Container.ContainerType containerType = Container.ContainerType.valueOf(containerTypeStr);
+
+        System.out.println("Enter the weight of the container: ");
+        double weight = scanner.nextDouble();
+
+        // Create a new Container object based on the collected information.
+        Container newContainer = new Container(containerID, containerType, weight);
+
+        // Add the new container to your ArrayList or data structure.
+        containers.add(newContainer);
+
+        System.out.println("Container " + containerID + " has been added successfully.");
+    }
 
     // Remove a container from the system
     public void removeContainer(String containerID) {
