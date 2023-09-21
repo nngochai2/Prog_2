@@ -1,5 +1,3 @@
-import java.util.Map;
-
 public class Container {
     private final String containerID;
     private final ContainerType type;
@@ -15,7 +13,7 @@ public class Container {
         LIQUID
     }
 
-    public Container(String containerID, ContainerType type, String location, double weight) {
+    public Container(String containerID, ContainerType type, double weight) {
         if (!containerID.matches("^c\\d+$")) {
             System.out.println("Invalid container ID. It must be c-number.");
         }
