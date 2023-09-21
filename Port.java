@@ -39,7 +39,9 @@ public class Port implements IPort {
         }
     }
 
-    public Port(String portID, String name, double latitude, double longitude, int storingCapacity, boolean landingAbility, int containersCount, int vehiclesCount, ArrayList<Trip> pastTrips, ArrayList<Trip> currentTrips) {
+    public Port(String portID, String name, double latitude, double longitude, int storingCapacity,
+            boolean landingAbility, int containersCount, int vehiclesCount, ArrayList<Trip> pastTrips,
+            ArrayList<Trip> currentTrips) {
     }
 
     // Getter & Setter
@@ -108,14 +110,6 @@ public class Port implements IPort {
 
     public void setLandingAbility(boolean landingAbility) {
         this.landingAbility = landingAbility;
-    }
-
-    public ArrayList<Container> getContainers() {
-        return this.containers;
-    }
-
-    public ArrayList<Vehicle> getVehicles() {
-        return this.vehicles;
     }
 
     public void setVehicles(ArrayList<Vehicle> vehicles) {

@@ -3,10 +3,10 @@ import java.util.List;
 import java.util.Scanner;
 
 public class PortManagementSystem {
-    private static List<Port> ports = new ArrayList<>();
-    private static List<Vehicle> vehicles = new ArrayList<>();
-    private static List<Container> containers = new ArrayList<>();
+    private final List<User> users; // Store user data
+    private User loggedInUsers; // Store logged-in user data
     private Scanner scanner;
+
     public PortManagementSystem() {
         users = new ArrayList<>();
         // Load users from an external source
@@ -15,28 +15,8 @@ public class PortManagementSystem {
     public static void main(String[] args) {
         PortManagementSystem portManagement = new PortManagementSystem();
         portManagement.displayWelcomeScreen();
+        portManagement.login();
         portManagement.scanner = new Scanner(System.in);
-
-        Scanner scanner = new Scanner(System.in);
-
-        while (true) {
-            System.out.println("Select an option:");
-            System.out.println("1. Add a new Port");
-            System.out.println("2. Remove an existing Port");
-            System.out.println("3. Add a new Vehicle");
-            System.out.println("4. Remove an existing Vehicle");
-            System.out.println("5. Add a new Container");
-            System.out.println("6. Remove an existing Container");
-            System.out.println("0. Exit");
-
-            int choice = scanner.nextInt();
-
-            switch (choice) {
-                case 1:
-
-            }
-        }
-
     }
 
     // Display group information
