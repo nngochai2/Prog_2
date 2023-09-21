@@ -9,6 +9,13 @@ public class BasicTruck extends Vehicle {
         }
     }
 
+    public BasicTruck(String vehicleID, double capacity) {
+    }
+
+    public BasicTruck() {
+
+    }
+
     @Override
     public VehicleType getVehicleType() {
         return VehicleType.BASIC_TRUCK;

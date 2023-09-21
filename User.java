@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.text.SimpleDateFormat;
 
 public abstract class User {
+    private final String userID;
     private final String username;
     private final String password;
     private final UserRole role;
 
-    public User(String username, String password, UserRole role) {
+    public User(String userID, String username, String password, UserRole role) {
+        this.userID = userID;
         this.username = username;
         this.password = password;
         this.role = role;
@@ -29,6 +31,10 @@ public abstract class User {
 
     public String getPassword() {
         return this.password;
+    }
+
+    public String getUserID() {
+        return userID;
     }
 
     public boolean login(String username, String password) {

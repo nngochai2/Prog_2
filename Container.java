@@ -53,8 +53,6 @@ public class Container {
         return weight;
     }
 
-
-
     public void load(ContainerType type) {
         // Implement loading logic based on container type.
     }
@@ -66,8 +64,7 @@ public class Container {
     public void setLocation(String location) {
         this.location = location;
     }
-
-
+    
     public double calculateFuelConsumption(Vehicle vehicle) {
         // Define fuel consumption rate
         double fuelRate = switch (type) {

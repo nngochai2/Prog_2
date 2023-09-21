@@ -9,6 +9,10 @@ public class ReeferTruck extends BasicTruck {
         }
     }
 
+    public ReeferTruck(String vehicleID, double capacity) {
+        super();
+    }
+
     @Override
     public VehicleType getVehicleType() {
         return VehicleType.REEFER_TRUCK;
