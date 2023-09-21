@@ -7,7 +7,7 @@ public class PortManagementSystem {
     private User loggedInUsers; // Store logged-in user data
     private Scanner scanner;
 
-    public PortManagementSystem (){
+    public PortManagementSystem() {
         users = new ArrayList<>();
         // Load users from an external source
     }
