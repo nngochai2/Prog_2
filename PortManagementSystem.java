@@ -18,6 +18,7 @@ public class PortManagementSystem {
         portManagement.login();
         portManagement.scanner = new Scanner(System.in);
     }
+
     // Display group information
     private void displayWelcomeScreen() {
         // Display welcome information
@@ -30,8 +31,7 @@ public class PortManagementSystem {
                 s3979331, Hoang Quoc Dat
                 s3979170, Nguyen Chi Nghia
                 s3978546, Bui Cong Duy
-                """
-        );
+                """);
     }
 
     private void login() {
@@ -51,8 +51,7 @@ public class PortManagementSystem {
         if (user != null) {
             loggedInUsers = user;
             System.out.println("Login successful!");
-        }
-        else {
+        } else {
             System.out.println("Invalid username or password");
         }
     }
@@ -79,8 +78,7 @@ public class PortManagementSystem {
                             3. View ships in ports
                             4. View trips today
                             5. View trips
-                            """
-            );
+                            """);
             System.out.println("Select an option: ");
             int choice = scanner.nextInt();
             scanner.nextLine();
@@ -103,8 +101,7 @@ public class PortManagementSystem {
                             1.
                             2.
                             3.
-                            """
-            );
+                            """);
         }
     }
 }
