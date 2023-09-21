@@ -32,6 +32,7 @@ public abstract class Vehicle implements IVehicle {
 
     }
 
+    // Define the vehicle types
     public enum VehicleType {
         SHIP,
         BASIC_TRUCK,
@@ -120,6 +121,7 @@ public abstract class Vehicle implements IVehicle {
         }
     }
 
+    // Unload a container from a vehicle
     public void unloadContainer(Container.ContainerType type) {
         if(containerCounts.get(type) > 0) {
             // Can only unload if there is at least one container
@@ -160,7 +162,8 @@ public abstract class Vehicle implements IVehicle {
 //        return weightForEachType;
 //    }
 
-    public double calculateTotalWeightForEachType(Container.ContainerType containerType) {
+    // Calculate total weight
+    public double calculateTotalWeight(Container.ContainerType containerType) {
         // Calculate the total weight for the given container type
         double totalWeight = 0.0;
         for (Container container : containers) {
@@ -171,6 +174,7 @@ public abstract class Vehicle implements IVehicle {
         return totalWeight;
     }
 
+    // Estimate the fuel consumption based on the containers carried by a vehicle
     public double estimatedFuelConsumption(Port destinationPort) {
         double distance = currentPort.distanceCalculator(destinationPort);
         double fuelConsumption = 0.0;
@@ -202,6 +206,7 @@ public abstract class Vehicle implements IVehicle {
 
         if (currentFuel < estimatedFuelConsumption) {
             System.out.println("This vehicle can't leave. Not enough fuel!");
+            return false;
         }
         return true;
     }
