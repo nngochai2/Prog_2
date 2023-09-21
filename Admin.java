@@ -216,17 +216,18 @@ public class Admin extends User {
         scanner.close();
     }
 
-//    public void addContainer(Container container) {
-//        // Check if there is already an existing container with the same ID
-//        for (Container exisitngContainer : containers) {
-//            if(exisitngContainer.getContainerID().equals(container.getContainerID())) {
-//                System.out.println("A container with the same ID has already exists!");
-//                return;
-//            }
-//        }
-//        containers.add(container);
-//        System.out.println("New container with ID " + container.getContainerID() + " has been added successfully.");
-//    }
+    // public void addContainer(Container container) {
+    // // Check if there is already an existing container with the same ID
+    // for (Container exisitngContainer : containers) {
+    // if(exisitngContainer.getContainerID().equals(container.getContainerID())) {
+    // System.out.println("A container with the same ID has already exists!");
+    // return;
+    // }
+    // }
+    // containers.add(container);
+    // System.out.println("New container with ID " + container.getContainerID() + "
+    // has been added successfully.");
+    // }
     // Add a container to the system
     public void addContainer() {
         Scanner scanner = new Scanner(System.in);
