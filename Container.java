@@ -62,7 +62,7 @@ public class Container {
     public void setLocation(String location) {
         this.location = location;
     }
-
+    
     public double calculateFuelConsumption(Vehicle vehicle) {
         // Define fuel consumption rate
         double fuelRate = switch (type) {

@@ -1,7 +1,7 @@
 public class Manager extends User {
     private Port managedPort;
 
-    public Manager(String username, String password, Port managedPort) {
+    public Manager(String userID, String username, String password, Port managedPort) {
         super(userID, username, password, UserRole.MANAGER);
         this.managedPort = managedPort;
     }
