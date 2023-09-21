@@ -28,6 +28,10 @@ public abstract class Vehicle implements IVehicle {
         this.containerCounts = containerCounts;
     }
 
+    public Vehicle() {
+
+    }
+
     public enum VehicleType {
         SHIP,
         BASIC_TRUCK,
@@ -171,8 +175,8 @@ public abstract class Vehicle implements IVehicle {
         double distance = currentPort.distanceCalculator(destinationPort);
         double fuelConsumption = 0.0;
         for (Container container : containers) {
-            double containerFuelConsumption = container.calculateFuelConsumption(this, distance);
-            fuelConsumption += containerFuelConsumption;
+            double containerFuelConsumption = container.calculateFuelConsumption(this);
+            fuelConsumption += containerFuelConsumption * distance;
         }
         return fuelConsumption;
     }

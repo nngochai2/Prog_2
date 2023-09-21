@@ -9,6 +9,9 @@ public class TankerTruck extends BasicTruck {
         }
     }
 
+    public TankerTruck(String vehicleID, double capacity) {
+    }
+
     public VehicleType getVehicleType() {
         return VehicleType.TANKER_TRUCK;
     }
