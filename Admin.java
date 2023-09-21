@@ -9,7 +9,9 @@ public class Admin extends User {
     private ArrayList<Manager> managers;
     private ArrayList<Trip> trips;
 
-    public Admin(String userID, String username, String password, UserRole role, ArrayList<Port> ports, ArrayList<Vehicle> vehicles, ArrayList<Container> containers, ArrayList<Manager> managers, ArrayList<Trip> trips) {
+    public Admin(String userID, String username, String password, UserRole role, ArrayList<Port> ports,
+            ArrayList<Vehicle> vehicles, ArrayList<Container> containers, ArrayList<Manager> managers,
+            ArrayList<Trip> trips) {
         super(userID, username, password, role);
         this.ports = ports;
         this.vehicles = vehicles;
@@ -95,7 +97,7 @@ public class Admin extends User {
         System.out.println("Enter the Port Name: ");
         String name = scanner.nextLine();
 
-        for (Port existingPort: ports) {
+        for (Port existingPort : ports) {
             if (existingPort.getName().equals(name)) {
                 System.out.println("A port with the same name already exists!");
                 return;
@@ -124,10 +126,12 @@ public class Admin extends User {
         boolean landingAbility = scanner.nextBoolean();
 
         // Create a new Port object with the collected information
-        Port newPort = new Port(portID, name, latitude, longitude, storingCapacity, landingAbility, 0, 0, new ArrayList<>(), new ArrayList<>());
+        Port newPort = new Port(portID, name, latitude, longitude, storingCapacity, landingAbility, 0, 0,
+                new ArrayList<>(), new ArrayList<>());
 
         ports.add(newPort);
         System.out.println("New port with ID " + newPort.getPortID() + " has been added successfully.");
+        scanner.close();
     }
 
     // Remove an existing port
@@ -187,7 +191,8 @@ public class Admin extends User {
         String vehicleTypeStr = scanner.nextLine();
         Vehicle.VehicleType vehicleType = Vehicle.VehicleType.valueOf(vehicleTypeStr);
 
-        // You can add more prompts for other vehicle attributes such as capacity, fuel capacity, etc.
+        // You can add more prompts for other vehicle attributes such as capacity, fuel
+        // capacity, etc.
         // Example:
         System.out.println("Enter the vehicle capacity: ");
         double capacity = Double.parseDouble(scanner.nextLine());
@@ -208,19 +213,21 @@ public class Admin extends User {
         // Add the new vehicle to the list of vehicles
         vehicles.add(newVehicle);
         System.out.println("New vehicle with ID " + vehicleID + " has been added successfully.");
+        scanner.close();
     }
 
-//    public void addContainer(Container container) {
-//        // Check if there is already an existing container with the same ID
-//        for (Container exisitngContainer : containers) {
-//            if(exisitngContainer.getContainerID().equals(container.getContainerID())) {
-//                System.out.println("A container with the same ID has already exists!");
-//                return;
-//            }
-//        }
-//        containers.add(container);
-//        System.out.println("New container with ID " + container.getContainerID() + " has been added successfully.");
-//    }
+    // public void addContainer(Container container) {
+    // // Check if there is already an existing container with the same ID
+    // for (Container exisitngContainer : containers) {
+    // if(exisitngContainer.getContainerID().equals(container.getContainerID())) {
+    // System.out.println("A container with the same ID has already exists!");
+    // return;
+    // }
+    // }
+    // containers.add(container);
+    // System.out.println("New container with ID " + container.getContainerID() + "
+    // has been added successfully.");
+    // }
 
     // Remove a container from the system
     public void removeContainer(String containerID) {
@@ -257,14 +264,13 @@ public class Admin extends User {
             }
         }
 
-
         System.out.println("Enter the new manager's user: ");
         String username = scanner.nextLine();
-
 
         System.out.println("Enter the manager's password: ");
         String password = scanner.nextLine();
 
+        scanner.close();
     }
 
     // Remove a manager from the system
