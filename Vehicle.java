@@ -28,6 +28,10 @@ public abstract class Vehicle implements IVehicle {
         this.containerCounts = containerCounts;
     }
 
+    public Vehicle() {
+
+    }
+
     public enum VehicleType {
         SHIP,
         BASIC_TRUCK,

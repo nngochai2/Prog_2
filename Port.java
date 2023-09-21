@@ -34,18 +34,9 @@ public class Port implements IPort {
             this.pastTrips = pastTrips;
             this.currentTrips = currentTrips;
         }
-        this.portID = portID;
-        this.name = name;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.storingCapacity = storingCapacity;
-        this.landingAbility = landingAbility;
-        this.containersCount = containersCount;
-        this.vehiclesCount = vehiclesCount;
-        this.pastTrips = pastTrips;
-        this.currentTrips = currentTrips;
-        this.containers = containers;
-        this.vehicles = vehicles;
+    }
+
+    public Port(String portID, String name, double latitude, double longitude, int storingCapacity, boolean landingAbility, int containersCount, int vehiclesCount, ArrayList<Trip> pastTrips, ArrayList<Trip> currentTrips) {
     }
 
     // Getter & Setter
@@ -69,6 +60,18 @@ public class Port implements IPort {
         return storingCapacity;
     }
 
+    public int getCurrentTotalWeight() {
+        return currentTotalWeight;
+    }
+
+    public ArrayList<Container> getContainers() {
+        return containers;
+    }
+
+    public ArrayList<Vehicle> getVehicles() {
+        return vehicles;
+    }
+
     @Override
     public boolean hasLandingAbility() {
         return false;
@@ -80,8 +83,8 @@ public class Port implements IPort {
     }
 
     @Override
-    public void addContainers(int amount) {
-
+    public boolean addContainers(ArrayList<Container> containers) {
+        return false;
     }
 
     public boolean isLandingAbility() {

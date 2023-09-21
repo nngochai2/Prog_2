@@ -13,6 +13,10 @@ public class Ship extends Vehicle {
         }
     }
 
+    public Ship(String vehicleID, double capacity) {
+        super();
+    }
+
     @Override
     public VehicleType getVehicleType() {
         return VehicleType.SHIP;
