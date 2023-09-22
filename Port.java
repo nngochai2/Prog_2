@@ -77,6 +77,50 @@ public class Port implements IPort {
         return vehicles;
     }
 
+    public void setPortID(String portID) {
+        this.portID = portID;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public void setStoringCapacity(double storingCapacity) {
+        this.storingCapacity = storingCapacity;
+    }
+
+    public void setCurrentTotalWeight(int currentTotalWeight) {
+        this.currentTotalWeight = currentTotalWeight;
+    }
+
+    public void setContainersCount(int containersCount) {
+        this.containersCount = containersCount;
+    }
+
+    public void setVehiclesCount(int vehiclesCount) {
+        this.vehiclesCount = vehiclesCount;
+    }
+
+    public void setPastTrips(ArrayList<Trip> pastTrips) {
+        this.pastTrips = pastTrips;
+    }
+
+    public void setCurrentTrips(ArrayList<Trip> currentTrips) {
+        this.currentTrips = currentTrips;
+    }
+
+    public void setContainers(ArrayList<Container> containers) {
+        this.containers = containers;
+    }
+
     @Override
     public boolean hasLandingAbility() {
         return false;

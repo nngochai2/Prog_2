@@ -1,7 +1,7 @@
 public class Container {
-    private final String containerID;
-    private final ContainerType type;
-    private final double weight;
+    private String containerID;
+    private ContainerType type;
+    private double weight;
     private String location;
 
     public enum ContainerType {
@@ -13,11 +13,10 @@ public class Container {
         LIQUID
     }
 
-    public Container(String containerID, ContainerType type, double weight) {
+    public Container(String containerID, ContainerType type, double weight, String location) {
         if (!containerID.matches("^c\\d+$")) {
             System.out.println("Invalid container ID. It must be c-number.");
         }
-
         this.containerID = containerID;
         this.type = type;
         this.weight = weight;
@@ -51,6 +50,8 @@ public class Container {
         return weight;
     }
 
+
+
     public void load(ContainerType type) {
         // Implement loading logic based on container type.
     }
@@ -62,7 +63,19 @@ public class Container {
     public void setLocation(String location) {
         this.location = location;
     }
-    
+
+    public void setWeight(double weight) {
+        this.weight = weight;
+    }
+
+    public void setContainerID(String containerID) {
+        this.containerID = containerID;
+    }
+
+    public void setContainerType(ContainerType containerType) {
+        this.type = containerType;
+    }
+
     public double calculateFuelConsumption(Vehicle vehicle) {
         // Define fuel consumption rate
         double fuelRate = switch (type) {

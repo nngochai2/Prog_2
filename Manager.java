@@ -10,8 +10,19 @@ public class Manager extends User {
     // this.managedPort.addContainer(container);
     // }
 
+    // =================================GETTER AND SETTER METHODS=======================================================
+    public Port getManagedPort() {
+        return managedPort;
+    }
+
+    public void setManagedPort(Port managedPort) {
+        this.managedPort = managedPort;
+    }
+
     @Override
     public void displayMenu() {
         System.out.println("Manager Menu for port: " + managedPort.getName());
     }
+
+
 }
