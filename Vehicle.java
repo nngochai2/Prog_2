@@ -28,10 +28,6 @@ public abstract class Vehicle implements IVehicle {
         this.containerCounts = containerCounts;
     }
 
-    public Vehicle() {
-
-    }
-
     // Define the vehicle types
     public enum VehicleType {
         SHIP,
@@ -209,5 +205,20 @@ public abstract class Vehicle implements IVehicle {
             return false;
         }
         return true;
+    }
+
+    // Add or update a container count in the map
+    public void updateContainerCount(Container.ContainerType type, int count) {
+        containerCounts.put(type, count);
+    }
+
+    // Get the container count for a specific type
+    public int getContainerCount(Container.ContainerType type) {
+        return containerCounts.getOrDefault(type, 0);
+    }
+
+    // Remove a container count from the map
+    public void removeContainerCount(Container.ContainerType type) {
+        containerCounts.remove(type);
     }
 }

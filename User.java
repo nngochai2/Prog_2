@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.text.SimpleDateFormat;
 
 public abstract class User {
-    private final String userID;
-    private final String username;
-    private final String password;
-    private final UserRole role;
+    private String userID;
+    private String username;
+    private String password;
+    private UserRole role;
 
     public User(String userID, String username, String password, UserRole role) {
         this.userID = userID;
@@ -37,7 +37,23 @@ public abstract class User {
         return userID;
     }
 
-//    public boolean login(String username, String password) {
+    public void setUserID(String userID) {
+        this.userID = userID;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setRole(UserRole role) {
+        this.role = role;
+    }
+
+    //    public boolean login(String username, String password) {
 //        // This method is responsible for verifying the username and password
 //        return (this.username.equals(username) && this.password.equals(password));
 //    }

@@ -89,7 +89,7 @@ public class Admin extends User implements IAdmin{
 
     // Calculate the total amount of fuel used in one day
     @Override
-    public void calculateDailyFuelUsage(Date date, ArrayList<Trip> trips) {
+    public void calculateDailyFuelUsage(Date date) {
         // This method is responsible for calculating daily fuel usage
         double dailyFuelUsage = 0;
         for (Trip trip : trips) {
@@ -119,12 +119,12 @@ public class Admin extends User implements IAdmin{
 
     // =========================================TRIP FUNCTIONS==========================================================
     @Override
-    public void listTripsOnDate() {
+    public void listTripsOnDate(Date date) {
 
     }
 
     @Override
-    public void listTripsFromDateToDate() {
+    public void listTripsFromDateToDate(Date startDate, Date endDate) {
 
     }
 
@@ -857,13 +857,137 @@ public class Admin extends User implements IAdmin{
     // Load a container on a vehicle
     @Override
     public void loadContainerOntoVehicle() {
+        Scanner scanner = new Scanner(System.in);
 
+        // Display available vehicles (ships and trucks)
+        System.out.println("Available Vehicles (Ships and Trucks):");
+        for (Port port : this.ports) {
+            for (Vehicle vehicle : port.getVehicles()) {
+                System.out.println("Vehicle ID: " + vehicle.getVehicleID() + " - Name: " + vehicle.getName());
+            }
+        }
+
+        // Ask the admin to select a vehicle to load containers onto
+        System.out.println("Enter the Vehicle ID to load container(s) onto: ");
+        String selectedVehicleID = scanner.next();
+
+        // Find the vehicle with matched ID
+        Vehicle selectedVehicle = null;
+        for (Port port : this.ports) {
+            for (Vehicle vehicle : port.getVehicles()) {
+                if (vehicle.getVehicleID().equals(selectedVehicleID)) {
+                    selectedVehicle = vehicle;
+                    break;
+                }
+            }
+            if (selectedVehicle != null) {
+                break;
+            }
+        }
+
+        if (selectedVehicle != null) {
+            // Display available containers for the admin to choose
+            System.out.println("Available Containers: ");
+            for (Container container : containers) {
+                System.out.println("Container ID: " + container.getContainerID() + " - Type: " + container.getType());
+            }
+
+            // Ask the admin to select containers to load onto the vehicle
+            System.out.println("Enter the Container IDs to load onto the vehicle (comma-separated):");
+            String selectedContainerIDs = scanner.next();
+            String[] containerIDs = selectedContainerIDs.split(",");
+
+            // Load the selected containers onto the vehicle
+            for (String containerID : containerIDs) {
+                Container containerToAdd = null;
+                for (Container container : containers) {
+                    if (container.getContainerID().equals(containerID.trim())) {
+                        containerToAdd = container;
+                        break;
+                    }
+                }
+                if (containerToAdd != null) {
+                    // Check if the vehicle can carry the container type
+                    if (selectedVehicle.canLoadContainerType(containerToAdd.getType())) {
+                        selectedVehicle.loadContainer(containerToAdd.getType());
+                        System.out.println("Container " + containerID + " loaded onto Vehicle " + selectedVehicleID);
+                    } else {
+                        System.out.println("Error: This vehicle cannot load " + containerToAdd.getType() + " container.");
+                    }
+                } else {
+                    System.out.println("Container " + containerID + " not found.");
+                }
+            }
+        } else {
+            System.out.println("Vehicle with ID " + selectedVehicleID + " not found.");
+        }
+
+        scanner.close();
     }
 
     @Override
     public void unloadContainerFromVehicle() {
+        Scanner scanner = new Scanner(System.in);
 
+        // Display available vehicles (ships and trucks)
+        System.out.println("Available Vehicles (Ships and Trucks):");
+        for (Port port : this.ports) {
+            for (Vehicle vehicle : port.getVehicles()) {
+                System.out.println("Vehicle ID: " + vehicle.getVehicleID() + " - Name: " + vehicle.getName());
+            }
+        }
+
+        // Ask the admin to select a vehicle to unload containers from
+        System.out.println("Enter the Vehicle ID to unload containers from:");
+        String selectedVehicleID = scanner.next();
+
+        // Find the selected vehicle
+        Vehicle selectedVehicle = null;
+        for (Port port : this.ports) {
+            for (Vehicle vehicle : port.getVehicles()) {
+                if (vehicle.getVehicleID().equals(selectedVehicleID)) {
+                    selectedVehicle = vehicle;
+                    break;
+                }
+            }
+            if (selectedVehicle != null) {
+                break; // Vehicle found, exit the loop
+            }
+        }
+
+        if (selectedVehicle != null) {
+            // Check if the vehicle has any containers to unload
+            if (selectedVehicle.getTotalContainers() > 0) {
+                // Display containers loaded on the selected vehicle
+                System.out.println("Containers loaded on Vehicle " + selectedVehicleID + ":");
+                for (Container type : selectedVehicle.getContainerCounts().keySet()) {
+                    int count = selectedVehicle.getContainerCounts().get(type);
+                    System.out.println(type + " Containers: " + count);
+                }
+
+                // Ask the admin to select a container type to unload
+                System.out.println("Enter the Container Type to unload (e.g., DRY_STORAGE):");
+                String selectedContainerTypeStr = scanner.next();
+                Container.ContainerType selectedContainerType = Container.ContainerType.valueOf(selectedContainerTypeStr);
+
+                // Check if the selected container type is loaded on the vehicle
+                if (selectedVehicle.getContainerCount(selectedContainerType) > 0) {
+                    // Decrement the count of the specified container type
+                    selectedVehicle.updateContainerCount(selectedContainerType, selectedVehicle.getContainerCount(selectedContainerType) - 1);
+                    System.out.println("Container of type " + selectedContainerType + " unloaded from vehicle " + selectedVehicle.getVehicleID());
+                } else {
+                    System.err.println("Error: No " + selectedContainerType + " container to unload from vehicle " + selectedVehicle.getVehicleID());
+                }
+            } else {
+                System.out.println("Vehicle " + selectedVehicleID + " does not have any containers loaded.");
+            }
+        } else {
+            System.out.println("Vehicle with ID " + selectedVehicleID + " not found.");
+        }
+
+        scanner.close();
     }
+
 
 
     // Add a new manager to the system
@@ -922,13 +1046,135 @@ public class Admin extends User implements IAdmin{
 
     @Override
     public void editManagerDetails() {
+        Scanner scanner = new Scanner(System.in);
 
+        while (true) {
+            // Collect the manager's user ID to edit
+            System.out.println("Enter the manager's user ID to edit:");
+            String managerUserID = scanner.nextLine();
+
+            // Find the manager with the specified user ID
+            Manager managerToEdit = null;
+            for (Manager manager : managers) {
+                if (manager.getUserID().equals(managerUserID)) {
+                    managerToEdit = manager;
+                    break;
+                }
+            }
+
+            // Check if the manager with the specified user ID was found
+            if (managerToEdit != null) {
+                System.out.println("Manager found:");
+                System.out.println("User ID: " + managerToEdit.getUserID());
+                System.out.println("Username: " + managerToEdit.getUsername());
+
+                // Ask for confirmation
+                while (true) {
+                    System.out.println("Do you want to edit this manager? (yes/no): ");
+                    String confirmation = scanner.nextLine().toLowerCase();
+
+                    if (confirmation.equals("yes")) {
+                        System.out.println("Edit Manager Details:");
+                        System.out.println("1. Edit Username");
+                        System.out.println("2. Edit Password");
+                        System.out.println("3. Save and Exit");
+
+                        System.out.println("Enter your choice: ");
+                        int choice = scanner.nextInt();
+                        scanner.nextLine();  // Consume newline
+
+                        switch (choice) {
+                            case 1 -> {
+                                System.out.println("Enter the new username: ");
+                                String newUsername = scanner.nextLine();
+                                managerToEdit.setUsername(newUsername);
+                                System.out.println("Username updated.");
+                            }
+                            case 2 -> {
+                                System.out.println("Enter the new password: ");
+                                String newPassword = scanner.nextLine();
+                                managerToEdit.setPassword(newPassword);
+                                System.out.println("Password updated.");
+                            }
+                            case 3 -> {
+                                System.out.println("Manager details updated and saved.");
+                                return;
+                            }
+                            default -> System.out.println("Invalid choice. Please enter a valid option.");
+                        }
+                    } else if (confirmation.equals("no")) {
+                        System.out.println("Editing canceled. The manager was not edited.");
+                        break;
+                    } else {
+                        System.out.println("Invalid input. Please enter 'yes' or 'no'.");
+                    }
+                }
+            } else {
+                System.out.println("Manager with user ID " + managerUserID + " not found. Editing failed.");
+                System.out.println("Do you want to try editing another manager? (yes/no): ");
+                String tryAgain = scanner.nextLine().toLowerCase();
+
+                if (!tryAgain.equals("yes")) {
+                    return; // Exit the function if the admin doesn't want to try again
+                }
+            }
+        }
     }
+
 
     @Override
     public void deleteManager() {
+        Scanner scanner = new Scanner(System.in);
 
+        while (true) {
+            // Collect the manager's user ID to delete
+            System.out.println("Enter the manager's user ID to delete:");
+            String managerUserID = scanner.nextLine();
+
+            // Find the manager with the specified user ID
+            Manager managerToDelete = null;
+            for (Manager manager : managers) {
+                if (manager.getUserID().equals(managerUserID)) {
+                    managerToDelete = manager;
+                    break;
+                }
+            }
+
+            // Check if the manager with the specified user ID was found
+            if (managerToDelete != null) {
+                System.out.println("Manager found:");
+                System.out.println("User ID: " + managerToDelete.getUserID());
+                System.out.println("Username: " + managerToDelete.getUsername());
+
+                // Ask for confirmation
+                while (true) {
+                    System.out.println("Are you sure you want to delete this manager? (yes/no): ");
+                    String confirmation = scanner.nextLine().toLowerCase();
+
+                    if (confirmation.equals("yes")) {
+                        // Delete the manager from the list
+                        managers.remove(managerToDelete);
+                        System.out.println("Manager deleted successfully.");
+                        return; // Exit the function after deletion
+                    } else if (confirmation.equals("no")) {
+                        System.out.println("Deletion canceled. The manager was not deleted.");
+                        break; // Exit the confirmation loop
+                    } else {
+                        System.out.println("Invalid input. Please enter 'yes' or 'no'.");
+                    }
+                }
+            } else {
+                System.out.println("Manager with user ID " + managerUserID + " not found. Deletion failed.");
+                System.out.println("Do you want to try deleting another manager? (yes/no): ");
+                String tryAgain = scanner.nextLine().toLowerCase();
+
+                if (!tryAgain.equals("yes")) {
+                    return; // Exit the function if the admin doesn't want to try again
+                }
+            }
+        }
     }
+
 
     @Override
     public void generateTrafficReport() {
