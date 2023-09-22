@@ -6,9 +6,9 @@ import java.util.Map;
 public abstract class Vehicle implements IVehicle {
     protected String vehicleID;
     protected String name;
-    protected int currentFuel;
-    protected int carryingCapacity;
-    protected int fuelCapacity;
+    protected double currentFuel;
+    protected double carryingCapacity;
+    protected double fuelCapacity;
     protected Port currentPort;
     protected int totalContainers;
     protected ArrayList<Container> containers;
@@ -51,15 +51,15 @@ public abstract class Vehicle implements IVehicle {
         return name;
     }
 
-    public int getCurrentFuel() {
+    public double getCurrentFuel() {
         return currentFuel;
     }
 
-    public int getCarryingCapacity() {
+    public double getCarryingCapacity() {
         return carryingCapacity;
     }
 
-    public int getFuelCapacity() {
+    public double getFuelCapacity() {
         return fuelCapacity;
     }
 

@@ -22,7 +22,7 @@ public class BasicTruck extends Vehicle {
     }
 
     @Override
-    public int getCarryCapacity() {
+    public double getCarryCapacity() {
         return 0;
     }
 

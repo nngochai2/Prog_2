@@ -1,0 +1,35 @@
+import java.util.ArrayList;
+import java.util.Date;
+
+public interface IManager {
+    void displayMenu(); // Common method to view dashboard
+
+    void viewPortDetails(); // Common method to view port details
+
+    void login(String username, String password); // Common method for login
+
+    void calculateDailyFuelUsage(Date date, ArrayList<Trip> trips); // Common method to generate daily fuel usage report
+
+    void calculateContainerWeights(); // Admin can calculate the weight of their targeted port(s) or the total weight
+                                      // of every ports
+
+    void listShipsInPort(); // Common method to list all ships in a port
+
+    void listTripsOnDate(); // Common method to list all trips on a given date
+
+    void listTripsFromDateToDate(); // Common method to list all trips in range(date, anotherDate)
+
+    void viewVehicleDetails(); // Common method to view vehicle details
+
+    void viewTripDetails(); // Common method to view trip details
+
+    void addContainer(); // Exclusive method for manager to add a new container
+
+    void editContainerDetails(); // Exclusive method for manager to edit container details
+
+    void deleteContainer(); // Exclusive method for manager to delete a container
+
+    void loadContainerOntoVehicle(); // Exclusive method for manager to load a container onto a vehicle
+
+    void unloadContainerFromVehicle(); // Exclusive method for manager to unload a container from a vehicle
+}

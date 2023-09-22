@@ -17,7 +17,7 @@ public class TankerTruck extends BasicTruck {
     }
 
     @Override
-    public int getCarryCapacity() {
+    public double getCarryCapacity() {
         return super.getCarryCapacity();
     }
 
