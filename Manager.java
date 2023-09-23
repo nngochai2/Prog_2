@@ -56,7 +56,6 @@ public class Manager extends User implements IManager {
     }
 
     @Override
-=======
     public void calculateDailyFuelUsage(Date date) {
         double dailyFuelUsage = 0;
         List<Trip> trips = this.managedPort.getCurrentTrips();
@@ -84,7 +83,7 @@ public class Manager extends User implements IManager {
         System.out.println("Total fuel used on " + date + " is: " + dailyFuelUsage + " gallons in the port: "
                 + managedPort.getName());
 
-=======
+
     }
 
     @Override
