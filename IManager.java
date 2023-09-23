@@ -3,8 +3,11 @@ import java.util.*;
 public interface IManager {
 
     User login(String username, String password); // Common method for login
+<<<<<<< Updated upstream
 =======
     void login(String username, String password); // Common method for login
+=======
+>>>>>>> Stashed changes
 
 
     void displayMenu(); // Common method to view dashboard
@@ -27,9 +30,12 @@ public interface IManager {
 
     void listTripsFromDateToDate(); // Common method to list all trips in range(date,
     // anotherDate)
+<<<<<<< Updated upstream
 =======
     void listTripsFromDateToDate(Date startDate, Date endDate); // Common method to list all trips in range(date,
                                                                 // anotherDate)
+=======
+>>>>>>> Stashed changes
 
 
     void viewVehicleDetails(); // Common method to view vehicle details
