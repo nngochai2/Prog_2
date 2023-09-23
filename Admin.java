@@ -584,56 +584,85 @@ public class Admin extends User implements IAdmin{
         System.out.println("Enter the vehicle ID: ");
         String vehicleID = scanner.nextLine();
 
-        
+        // Check if there is already a vehicle with the same ID
         for (Vehicle vehicle : vehicles) {
-            // Check if there is already a vehicle with the same ID
-            if (vehicleID.matches("^sh\\d+$") && vehicleID.matches("^tr\\d+$")) {  // Firstly, check whether the ID is correct or not
-                if (vehicle.getVehicleID().equals(vehicleID)) {
-                    System.out.println("Error. There is already a vehicle with the same ID");
-                    return;
-                }
+            if (vehicle.getVehicleID().equals(vehicleID)) {
+                System.out.println("Error. There is already a vehicle with the same ID");
+                return;
             }
         }
 
         // Require vehicle type
         System.out.println("Enter the vehicle type (SHIP, BASIC_TRUCK, REEFER_TRUCK, TANKER_TRUCK): ");
         String vehicleTypeStr = scanner.nextLine();
-        Vehicle.VehicleType vehicleType = Vehicle.VehicleType.valueOf(vehicleTypeStr);
+        Vehicle.VehicleType vehicleType;
+        try {
+            vehicleType = Vehicle.VehicleType.valueOf(vehicleTypeStr);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Invalid vehicle type.");
+            return;
+        }
 
         // Enter vehicle name
         System.out.println("Enter the vehicle name: ");
         String name = scanner.nextLine();
 
-        // Enter vehicle name
+        // Enter current fuel
         System.out.println("Enter the current fuel: ");
-        double currentFuel = Double.parseDouble(scanner.nextLine());
+        double currentFuel;
+        try {
+            currentFuel = Double.parseDouble(scanner.nextLine());
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid current fuel value. Please enter a valid number.");
+            return;
+        }
 
-        // Enter vehicle capacity
-        System.out.println("Enter the vehicle capacity: ");
-        double capacity = Double.parseDouble(scanner.nextLine());
+        // Enter carrying capacity
+        System.out.println("Enter the carrying capacity: ");
+        double carryingCapacity;
+        try {
+            carryingCapacity = Double.parseDouble(scanner.nextLine());
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid carrying capacity value. Please enter a valid number.");
+            return;
+        }
 
-        // Enter vehicle fuel capacity
-        System.out.println("Enter the vehicle capacity: ");
-        double fuelCapacity = Double.parseDouble(scanner.nextLine());
+        // Enter fuel capacity
+        System.out.println("Enter the fuel capacity: ");
+        double fuelCapacity;
+        try {
+            fuelCapacity = Double.parseDouble(scanner.nextLine());
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid fuel capacity value. Please enter a valid number.");
+            return;
+        }
 
         // Create the new vehicle based on user input
         Vehicle newVehicle;
         switch (vehicleType) {
-            case SHIP -> newVehicle = new Ship(vehicleID, capacity);
-            case BASIC_TRUCK -> newVehicle = new BasicTruck(vehicleID, capacity);
-            case REEFER_TRUCK -> newVehicle = new ReeferTruck(vehicleID, capacity);
-            case TANKER_TRUCK -> newVehicle = new TankerTruck(vehicleID, capacity);
-            default -> {
+            case SHIP:
+                newVehicle = new Ship(vehicleID, name, currentFuel, carryingCapacity, fuelCapacity, null, 0, new ArrayList<>(), new HashMap<>());
+                break;
+            case BASIC_TRUCK:
+                newVehicle = new BasicTruck(vehicleID, name, currentFuel, carryingCapacity, fuelCapacity, null, 0, new ArrayList<>(), new HashMap<>());
+                break;
+            case REEFER_TRUCK:
+                newVehicle = new ReeferTruck(vehicleID, name, currentFuel, carryingCapacity, fuelCapacity, null, 0, new ArrayList<>(), new HashMap<>());
+                break;
+            case TANKER_TRUCK:
+                newVehicle = new TankerTruck(vehicleID, name, currentFuel, carryingCapacity, fuelCapacity, null, 0, new ArrayList<>(), new HashMap<>());
+                break;
+            default:
                 System.out.println("Invalid vehicle type.");
                 return;
-            }
         }
 
         // Add the new vehicle to the list of vehicles
         vehicles.add(newVehicle);
         System.out.println("New vehicle with ID " + vehicleID + " has been added successfully.");
-        scanner.close();
     }
+
+
 
     // Remove a vehicle from the system
     @Override
@@ -698,12 +727,11 @@ public class Admin extends User implements IAdmin{
 
                     if (confirmation.equals("yes")) {
                         System.out.println("Edit Vehicle Details:");
-                        System.out.println("1. Edit Vehicle Type");
-                        System.out.println("2. Edit Vehicle Name");
-                        System.out.println("3. Edit Current Fuel");
-                        System.out.println("4. Edit Carrying Capacity");
-                        System.out.println("5. Edit Fuel Capacity");
-                        System.out.println("6. Save and Exit");
+                        System.out.println("1. Edit Vehicle Name");
+                        System.out.println("2. Edit Current Fuel");
+                        System.out.println("3. Edit Carrying Capacity");
+                        System.out.println("4. Edit Fuel Capacity");
+                        System.out.println("5. Save and Exit");
 
                         System.out.println("Enter your choice: ");
                         int choice = scanner.nextInt();
@@ -711,59 +739,30 @@ public class Admin extends User implements IAdmin{
 
                         switch (choice) {
                             case 1 -> {
-                                System.out.println("Enter the new vehicle type (SHIP, BASIC_TRUCK, REEFER_TRUCK, TANKER_TRUCK): ");
-                                String newVehicleTypeStr = scanner.nextLine();
-                                Vehicle.VehicleType newVehicleType = Vehicle.VehicleType.valueOf(newVehicleTypeStr);
-
-                                Vehicle newVehicle = null;
-
-                                // Copy common attributes from the old vehicle to the new one
-                                switch (newVehicleType) {
-                                    case SHIP -> newVehicle = new Ship(oldVehicle.getVehicleID(), oldVehicle.getCarryingCapacity());
-                                    case BASIC_TRUCK -> newVehicle = new BasicTruck(oldVehicle.getVehicleID(), oldVehicle.getCarryingCapacity());
-                                    case REEFER_TRUCK -> newVehicle = new ReeferTruck(oldVehicle.getVehicleID(), oldVehicle.getCarryingCapacity());
-                                    case TANKER_TRUCK -> newVehicle = new TankerTruck(oldVehicle.getVehicleID(), oldVehicle.getCarryingCapacity());
-                                }
-
-                                if (newVehicle != null) {
-                                    // Replace the old vehicle with the new one in the list
-                                    int index = vehicles.indexOf(oldVehicle);
-                                    if (index != -1) {
-                                        vehicles.set(index, newVehicle);
-                                        System.out.println("Vehicle " + vehicleID + " has been updated with the new type.");
-                                    } else {
-                                        System.out.println("Failed to update vehicle type. Vehicle not found.");
-                                    }
-                                } else {
-                                    System.out.println("Invalid vehicle type.");
-                                }
-                            }
-
-                            case 2 -> {
                                 System.out.println("Enter the new vehicle name: ");
                                 String newName = scanner.nextLine();
                                 vehicleToEdit.setName(newName);
                                 System.out.println("Vehicle name updated.");
                             }
-                            case 3 -> {
+                            case 2 -> {
                                 System.out.println("Enter the new current fuel: ");
                                 int newCurrentFuel = scanner.nextInt();
                                 vehicleToEdit.setCurrentFuel(newCurrentFuel);
                                 System.out.println("Current fuel updated.");
                             }
-                            case 4 -> {
+                            case 3 -> {
                                 System.out.println("Enter the new carrying capacity: ");
                                 int newCarryingCapacity = scanner.nextInt();
                                 vehicleToEdit.setCarryingCapacity(newCarryingCapacity);
                                 System.out.println("Carrying capacity updated.");
                             }
-                            case 5 -> {
+                            case 4 -> {
                                 System.out.println("Enter the new fuel capacity: ");
                                 int newFuelCapacity = scanner.nextInt();
                                 vehicleToEdit.setFuelCapacity(newFuelCapacity);
                                 System.out.println("Fuel capacity updated.");
                             }
-                            case 6 -> {
+                            case 5 -> {
                                 System.out.println("Vehicle details updated and saved.");
                                 return;
                             }

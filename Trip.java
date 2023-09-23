@@ -62,6 +62,10 @@ public class Trip {
         return vehicle;
     }
 
+    public void setContainersOnTrip(ArrayList<Container> containersOnTrip) {
+        this.containersOnTrip = containersOnTrip;
+    }
+
     // Get an unmodifiable view of the containers associated with this trip
     public ArrayList<Container> getContainersOnTrip() {
         return containersOnTrip;
