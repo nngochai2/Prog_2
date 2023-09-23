@@ -36,6 +36,7 @@ public class Port implements IPort {
             this.vehiclesCount = vehiclesCount;
             this.pastTrips = pastTrips;
             this.currentTrips = currentTrips;
+            this.containers = new ArrayList<>();
         }
     }
 
@@ -131,11 +132,6 @@ public class Port implements IPort {
         return 0;
     }
 
-    @Override
-    public boolean addContainers(ArrayList<Container> containers) {
-        return false;
-    }
-
     public boolean isLandingAbility() {
         return landingAbility;
     }
@@ -183,6 +179,7 @@ public class Port implements IPort {
     }
 
     // Add containers
+    @Override
     public int addContainers(List<Container> containersToAdd) {
         // Calculate the total weight of containers being added
         double totalWeightToAdd = containersToAdd.stream()
@@ -203,9 +200,8 @@ public class Port implements IPort {
     }
 
     @Override
-    public void decreaseContainer(int amount) {
-        containersCount -= amount;
-        // vehiclesCount--;
+    public void removeContainer(Container container) {
+        containers.remove(container);
     }
 
     public double distanceCalculator(Port otherPort) {

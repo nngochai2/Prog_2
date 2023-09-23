@@ -53,6 +53,14 @@ public abstract class User {
         this.role = role;
     }
 
+    // Check if the provided username and password match the store value
+    public User login(String username, String password) {
+        if (this.username.equals(username) && this.password.equals(password)) {
+            return this;
+        }
+        return null;
+    }
+
     //    public boolean login(String username, String password) {
 //        // This method is responsible for verifying the username and password
 //        return (this.username.equals(username) && this.password.equals(password));

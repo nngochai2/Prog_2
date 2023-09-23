@@ -1,7 +1,5 @@
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Locale;
-import java.util.Scanner;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class Admin extends User implements IAdmin{
 
@@ -11,9 +9,8 @@ public class Admin extends User implements IAdmin{
     private ArrayList<Manager> managers;
     private ArrayList<Trip> trips;
 
-    public Admin(String userID, String username, String password, UserRole role, ArrayList<Port> ports,
-            ArrayList<Vehicle> vehicles, ArrayList<Container> containers, ArrayList<Manager> managers,
-            ArrayList<Trip> trips) {
+
+    public Admin(String userID, String username, String password, UserRole role, ArrayList<Port> ports, ArrayList<Vehicle> vehicles, ArrayList<Container> containers, ArrayList<Manager> managers, ArrayList<Trip> trips) {
         super(userID, username, password, role);
         this.ports = ports;
         this.vehicles = vehicles;
@@ -83,8 +80,8 @@ public class Admin extends User implements IAdmin{
     }
 
     @Override
-    public void login(String username, String password) {
-
+    public Admin login(String username, String password) {
+        return (Admin) super.login(username, password);
     }
 
     // Calculate the total amount of fuel used in one day
@@ -120,18 +117,127 @@ public class Admin extends User implements IAdmin{
     // =========================================TRIP FUNCTIONS==========================================================
     @Override
     public void listTripsOnDate(Date date) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Scanner scanner = new Scanner(System.in);
 
+        // Prompt the admin to select a port
+        System.out.println("Select a port to list trips:");
+        ArrayList<Port> ports = this.ports;
+        System.out.println("List of Ports:");
+
+        // View all ports' details
+        for (Port port : ports) {
+            System.out.println("Port ID: " + port.getPortID());
+            System.out.println("Name: " + port.getName());
+        }
+
+        // Read the selected port ID from the admin
+        System.out.print("Enter the ID of the port: ");
+        String portID = scanner.nextLine();
+
+        // Find the selected port
+        Port selectedPort = null;
+        for (Port port : this.ports) {
+            if (port.getPortID().equals(portID)) {
+                selectedPort = port;
+                break;
+            }
+        }
+
+        if (selectedPort != null) {
+            List<Trip> trips = selectedPort.getCurrentTrips();
+            for (Trip trip : trips) {
+                if ((date.after(trip.getDepartureDate()) && date.before(trip.getArrivalDate()))
+                        || (date.equals(trip.getDepartureDate())) || (date.equals(trip.getArrivalDate()))) {
+                    System.out.println("Trip ID: " + trip.getId());
+                    System.out.println("Departure Date: " + sdf.format(trip.getDepartureDate()));
+                    System.out.println("Arrival Date: " + sdf.format(trip.getArrivalDate()));
+                    System.out.println("Vehicle ID: " + trip.getVehicle().getVehicleID());
+                    System.out.println("Departure Port: " + trip.getDeparturePort());
+                    System.out.println("Arrival Port: " + trip.getArrivalPort());
+                    System.out.println("Status: " + trip.getStatus());
+                    System.out.println("-----------------------------");
+                }
+            }
+        } else {
+            System.out.println("Port with ID " + portID + " not found.");
+        }
     }
 
     @Override
-    public void listTripsFromDateToDate(Date startDate, Date endDate) {
+    public void listTripsFromDateToDate() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Scanner scanner = new Scanner(System.in);
 
+        // Prompt the admin to select a port
+        System.out.println("Select a port to list trips:");
+        for (Port port : ports) {
+            System.out.println("Port ID: " + port.getPortID());
+            System.out.println("Name: " + port.getName());
+        }
+
+        // Read the selected port ID from the admin
+        System.out.print("Enter the ID of the port: ");
+        String portID = scanner.nextLine();
+
+        // Find the selected port
+        Port selectedPort = null;
+        for (Port port : this.ports) {
+            if (port.getPortID().equals(portID)) {
+                selectedPort = port;
+                break;
+            }
+        }
+
+        if (selectedPort != null) {
+            List<Trip> trips = selectedPort.getCurrentTrips();
+
+            // Read the start and end dates from the admin
+            System.out.print("Enter the start date (yyyy-MM-dd): ");
+            Date startDate = parseDate(scanner.nextLine(), sdf);
+
+            System.out.print("Enter the end date (yyyy-MM-dd): ");
+            Date endDate = parseDate(scanner.nextLine(), sdf);
+
+            System.out.println("Trips from " + sdf.format(startDate) + " to " + sdf.format(endDate) + " in Port " + selectedPort.getName() + ":");
+
+            for (Trip trip : trips) {
+                Date tripStartDate = trip.getDepartureDate();
+                Date tripEndDate = trip.getArrivalDate();
+
+                // Check if trip falls within the specified date range
+                if ((tripStartDate.equals(startDate) || tripStartDate.after(startDate))
+                        && (tripEndDate.equals(endDate) || tripEndDate.before(endDate))) {
+                    // Print trip details
+                    System.out.println("Trip ID: " + trip.getId());
+                    System.out.println("Departure Date: " + sdf.format(trip.getDepartureDate()));
+                    System.out.println("Arrival Date: " + sdf.format(trip.getArrivalDate()));
+                    System.out.println("Vehicle ID: " + trip.getVehicle().getVehicleID());
+                    System.out.println("Departure Port: " + trip.getDeparturePort());
+                    System.out.println("Arrival Port: " + trip.getArrivalPort());
+                    System.out.println("Status: " + trip.getStatus());
+                    System.out.println("-----------------------------");
+                }
+            }
+        } else {
+            System.out.println("Port with ID " + portID + " not found.");
+        }
+    }
+
+    // Check date format
+    private Date parseDate(String dateStr, SimpleDateFormat sdf) {
+        try {
+            return sdf.parse(dateStr);
+        } catch (Exception e) {
+            System.err.println("Invalid date format. Please use yyyy-MM-dd format.");
+            return null;
+        }
     }
 
 
     @Override
     public void viewTripDetails() {
-
+        // Might be unnecessary
     }
 
     // =========================================PORT FUNCTIONS==========================================================
@@ -694,7 +800,7 @@ public class Admin extends User implements IAdmin{
         String containerTypeStr = scanner.nextLine();
         Container.ContainerType containerType = Container.ContainerType.valueOf(containerTypeStr);
 
-        System.out.println("Enter the weight of the container: ");
+        System.out.println("Enter the weight of the container (in kilograms): ");
         double weight = scanner.nextDouble();
 
         // Require the container location (a port ID is required since container can not be set directly on a vehicle
@@ -729,7 +835,6 @@ public class Admin extends User implements IAdmin{
     public void editContainerDetails() {
         Scanner scanner = new Scanner(System.in);
         while (true) {
-
             // Collect the container ID to edit
             System.out.println("Enter the container ID to edit:");
             String containerID = scanner.nextLine();

@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 
 public interface IPort {
     String getPortID(); // Get the port's unique ID
@@ -15,8 +16,8 @@ public interface IPort {
 
     double calculateDistance(Port otherPort); // Calculate distance between ports
 
-    boolean addContainers(ArrayList<Container> containers); // Add containers to the port
+    int addContainers(List<Container> containersToAdd); // Add containers to the port
 
-    void decreaseContainer(int amount); // Decrease containers at the port
+    void removeContainer(Container container); // Decrease containers at the port
 
 }

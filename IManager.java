@@ -1,7 +1,7 @@
 import java.util.*;
 
 public interface IManager {
-    void login(String username, String password); // Common method for login
+    User login(String username, String password); // Common method for login
 
     void displayMenu(); // Common method to view dashboard
 
@@ -16,7 +16,7 @@ public interface IManager {
 
     void listTripsOnDate(Date date); // Common method to list all trips on a given date
 
-    void listTripsFromDateToDate(Date startDate, Date endDate); // Common method to list all trips in range(date,
+    void listTripsFromDateToDate(); // Common method to list all trips in range(date,
     // anotherDate)
 
     void viewVehicleDetails(); // Common method to view vehicle details
