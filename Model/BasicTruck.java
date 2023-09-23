@@ -1,19 +1,14 @@
 
 package Model;
-
 import java.util.ArrayList;
 import java.util.Map;
-
 
 import Model.Container.ContainerType;
 import Model.Vehicle.VehicleType;
 
 public class BasicTruck extends Vehicle {
-    public BasicTruck(String vehicleID, String name, double currentFuel, double carryingCapacity, double fuelCapacity,
-            Port currentPort, int totalContainers, ArrayList<Container> containers,
-            Map<Container.ContainerType, Integer> containerCounts) {
-        super(vehicleID, name, currentFuel, carryingCapacity, fuelCapacity, currentPort, totalContainers, containers,
-                containerCounts);
+    public BasicTruck(String vehicleID, String name, double currentFuel, double carryingCapacity) {
+        super(vehicleID, name, currentFuel, carryingCapacity);
 
         if (!vehicleID.matches("^tr\\d+$")) {
             System.out.println("Invalid vehicle ID. It must be tr-number.");

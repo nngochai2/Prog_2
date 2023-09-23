@@ -18,7 +18,7 @@ public class Ship extends Vehicle {
 
 
     public Ship(String vehicleID, String name, double currentFuel, double carryingCapacity, double fuelCapacity, Port currentPort, int totalContainers, ArrayList<Container> containers, Map<Container.ContainerType, Integer> containerCounts) {
-        super(vehicleID, name, currentFuel, carryingCapacity, fuelCapacity, currentPort, totalContainers, containers, containerCounts);
+        super(vehicleID, name, currentFuel, carryingCapacity);
         if (!vehicleID.matches("^sh\\d+$")) {
             // '^': the pattern must start from th beginning of the ID
             // 'sh': force the ID to start with 'sh'
@@ -52,6 +52,7 @@ public class Ship extends Vehicle {
     public boolean canLoadContainerType(Container.ContainerType type) {
 
         // Ship can load all types of containers.
+        return false;
     }
     @Override
     public void move(Port destinationPort) {
