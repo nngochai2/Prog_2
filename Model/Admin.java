@@ -9,19 +9,15 @@ import Model.Vehicle.VehicleType;
 
 public class Admin extends User implements IAdmin {
 
-
     private ArrayList<Port> ports;
     private ArrayList<Vehicle> vehicles;
     private ArrayList<Container> containers;
     private ArrayList<Manager> managers;
     private ArrayList<Trip> trips;
 
-
-
-    public Admin(String userID, String username, String password, UserRole role, ArrayList<Port> ports, ArrayList<Vehicle> vehicles, ArrayList<Container> containers, ArrayList<Manager> managers, ArrayList<Trip> trips) {
     public Admin(String userID, String username, String password, UserRole role, ArrayList<Port> ports,
-            ArrayList<Vehicle> vehicles, ArrayList<Container> containers, ArrayList<Manager> managers,
-            ArrayList<Trip> trips) {
+                 ArrayList<Vehicle> vehicles, ArrayList<Container> containers, ArrayList<Manager> managers,
+                 ArrayList<Trip> trips) {
         super(userID, username, password, role);
         this.ports = ports;
         this.vehicles = vehicles;
@@ -30,9 +26,8 @@ public class Admin extends User implements IAdmin {
         this.trips = trips;
     }
 
-
-    // =================================GETTER AND SETTER METHODS=======================================================
-
+    // =================================GETTER AND SETTER
+    // METHODS=======================================================
     public ArrayList<Port> getPorts() {
         return this.ports;
     }
@@ -126,8 +121,8 @@ public class Admin extends User implements IAdmin {
         System.out.println("Total fuel used on " + date + " is: " + dailyFuelUsage + " gallons");
     }
 
-
-    // =========================================TRIP FUNCTIONS==========================================================
+    // =========================================TRIP
+    // FUNCTIONS==========================================================
 
     @Override
     public void listTripsFromDateToDate() {
@@ -164,9 +159,8 @@ public class Admin extends User implements IAdmin {
             System.out.print("Enter the end date (yyyy-MM-dd): ");
             Date endDate = parseDate(scanner.nextLine(), sdf);
 
-
-            System.out.println("Trips from " + sdf.format(startDate) + " to " + sdf.format(endDate) + " in Port " + selectedPort.getName() + ":");
-
+            System.out.println("Trips from " + sdf.format(startDate) + " to " + sdf.format(endDate) + " in Port "
+                    + selectedPort.getName() + ":");
 
             for (Trip trip : trips) {
                 Date tripStartDate = trip.getDepartureDate();
@@ -176,7 +170,6 @@ public class Admin extends User implements IAdmin {
                 if ((tripStartDate.equals(startDate) || tripStartDate.after(startDate))
                         && (tripEndDate.equals(endDate) || tripEndDate.before(endDate)
                         || (tripStartDate.equals(startDate) && tripEndDate.equals(endDate)))) {
-
                     // Print trip details
                     System.out.println("Trip ID: " + trip.getId());
                     System.out.println("Departure Date: " + sdf.format(trip.getDepartureDate()));
@@ -208,9 +201,8 @@ public class Admin extends User implements IAdmin {
         // Might be unnecessary
     }
 
-
-    // =========================================PORT FUNCTIONS==========================================================
-
+    // =========================================PORT
+    // FUNCTIONS==========================================================
 
     // Calculate the total weight of containers (in one port/in all ports)
     @Override
@@ -335,7 +327,6 @@ public class Admin extends User implements IAdmin {
                 break;
             }
         }
-
 
         if (specificPort != null) {
             ArrayList<Ship> shipsInPort = new ArrayList<>();
@@ -538,8 +529,9 @@ public class Admin extends User implements IAdmin {
         }
     }
 
+    // ======================================VEHICLE
+    // FUNCTIONS==========================================================
 
-    // ======================================VEHICLE FUNCTIONS==========================================================
     @Override
     public void viewVehicleDetails() {
 
@@ -547,11 +539,8 @@ public class Admin extends User implements IAdmin {
 
     // Add a vehicle
     @Override
-<<<<<<< Updated upstream
-    public void addVehicle() {}
-=======
     public void addVehicle() {
->>>>>>> Stashed changes
+
 //        Scanner scanner = new Scanner(System.in);
 //
 //        // Require user input
@@ -615,18 +604,7 @@ public class Admin extends User implements IAdmin {
 //        Vehicle newVehicle;
 //        switch (vehicleType) {
 //            case SHIP:
-<<<<<<< Updated upstream
-//                newVehicle = new Ship(vehicleID, name, currentFuel, carryingCapacity, fuelCapacity, null, 0, new ArrayList<>(), new HashMap<>());
-//                break;
-//            case BASIC_TRUCK:
-//                newVehicle = new BasicTruck(vehicleID, name, currentFuel, carryingCapacity, fuelCapacity, null, 0, new ArrayList<>(), new HashMap<>());
-//                break;
-//            case REEFER_TRUCK:
-//                newVehicle = new ReeferTruck(vehicleID, name, currentFuel, carryingCapacity, fuelCapacity, null, 0, new ArrayList<>(), new HashMap<>());
-//                break;
-//            case TANKER_TRUCK:
-//                newVehicle = new TankerTruck(vehicleID, name, currentFuel, carryingCapacity, fuelCapacity, null, 0, new ArrayList<>(), new HashMap<>());
-=======
+
 //                newVehicle = new Ship(vehicleID, name, currentFuel, carryingCapacity, fuelCapacity, null, 0,
 //                        new ArrayList<>(), new HashMap<>());
 //                break;
@@ -641,7 +619,7 @@ public class Admin extends User implements IAdmin {
 //            case TANKER_TRUCK:
 //                newVehicle = new TankerTruck(vehicleID, name, currentFuel, carryingCapacity
 //                );
->>>>>>> Stashed changes
+
 //                break;
 //            default:
 //                System.out.println("Invalid vehicle type.");
@@ -651,13 +629,60 @@ public class Admin extends User implements IAdmin {
 //        // Add the new vehicle to the list of vehicles
 //        vehicles.add(newVehicle);
 //        System.out.println("New vehicle with ID " + vehicleID + " has been added successfully.");
-<<<<<<< Updated upstream
+
 //    }
 
 
-=======
+        // Enter carrying capacity
+        System.out.println("Enter the carrying capacity: ");
+        double carryingCapacity;
+        try {
+            carryingCapacity = Double.parseDouble(scanner.nextLine());
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid carrying capacity value. Please enter a valid number.");
+            return;
+        }
+
+
+        // Enter fuel capacity
+        System.out.println("Enter the fuel capacity: ");
+        double fuelCapacity;
+        try {
+            fuelCapacity = Double.parseDouble(scanner.nextLine());
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid fuel capacity value. Please enter a valid number.");
+            return;
+        }
+
+        // Create the new vehicle based on user input
+        Vehicle newVehicle;
+        switch (vehicleType) {
+            case SHIP:
+                newVehicle = new Ship(vehicleID, name, currentFuel, carryingCapacity, fuelCapacity, null, 0,
+                        new ArrayList<>(), new HashMap<>());
+                break;
+            case BASIC_TRUCK:
+                newVehicle = new BasicTruck(vehicleID, name, currentFuel, carryingCapacity, fuelCapacity, null, 0,
+                        new ArrayList<>(), new HashMap<>());
+                break;
+            case REEFER_TRUCK:
+                newVehicle = new ReeferTruck(vehicleID, name, currentFuel, carryingCapacity
+                );
+                break;
+            case TANKER_TRUCK:
+                newVehicle = new TankerTruck(vehicleID, name, currentFuel, carryingCapacity
+                );
+                break;
+            default:
+                System.out.println("Invalid vehicle type.");
+                return;
+        }
+
+        // Add the new vehicle to the list of vehicles
+        vehicles.add(newVehicle);
+        System.out.println("New vehicle with ID " + vehicleID + " has been added successfully.");
     }
->>>>>>> Stashed changes
+
 
     // Remove a vehicle from the system
     @Override
@@ -780,9 +805,8 @@ public class Admin extends User implements IAdmin {
         }
     }
 
-
-    // ====================================CONTAINER FUNCTIONS==========================================================
-
+    // ====================================CONTAINER
+    // FUNCTIONS==========================================================
 
     // public void addContainer(Container container) {
     // // Check if there is already an existing container with the same ID
@@ -812,8 +836,8 @@ public class Admin extends User implements IAdmin {
         System.out.println("Enter the weight of the container (in kilograms): ");
         double weight = scanner.nextDouble();
 
-        // Require the container location (a port ID is required since container can not be set directly on a vehicle
-
+        // Require the container location (a port ID is required since container can not
+        // be set directly on a vehicle
         System.out.println("Enter the port ID as the location of the container: ");
         String portID = scanner.next();
 
@@ -827,15 +851,18 @@ public class Admin extends User implements IAdmin {
         }
 
         if (!validPort) {
-
-            System.out.println("Invalid port ID. Container location cannot be set"); // Output if the location is not valid
+            System.out.println("Invalid port ID. Container location cannot be set"); // Output if the location is not
+            // valid
         }
 
-        // Create a new Container object based on the collected information (necessary for further modification of the created container)
+        // Create a new Container object based on the collected information (necessary
+        // for further modification of the created container)
 
         if (validPort) {
             Container newContainer = new Container(containerID, containerType, weight, portID);
-            containers.add(newContainer);     // Add the new container to your ArrayList or data structure.
+            containers.add(newContainer); // Add the new container to your ArrayList or data structure.
+            System.out.println("Container " + containerID + " has been added successfully.");
+        }
 
         System.out.println("Container " + containerID + " has been added successfully.");
     }
@@ -883,14 +910,15 @@ public class Admin extends User implements IAdmin {
                         // Handling choices
                         switch (choice) {
                             case 1 -> {
-
-                                System.out.println("Enter the new container type (e.g., DRY_STORAGE, OPEN_TOP, OPEN_SIDE, REFRIGERATED, LIQUID): ");
+                                System.out.println(
+                                        "Enter the new container type (e.g., DRY_STORAGE, OPEN_TOP, OPEN_SIDE, REFRIGERATED, LIQUID): ");
                                 String newContainerTypeStr = scanner.nextLine();
                                 try {
-                                    Container.ContainerType newContainerType = Container.ContainerType.valueOf(newContainerTypeStr);
+                                    Container.ContainerType newContainerType = Container.ContainerType
+                                            .valueOf(newContainerTypeStr);
                                     containerToEdit.setContainerType(newContainerType);
-                                    System.out.println("Container " + containerID + " has been updated with the new type.");
-
+                                    System.out.println(
+                                            "Container " + containerID + " has been updated with the new type.");
                                 } catch (IllegalArgumentException e) {
                                     System.out.println("Invalid container type.");
                                 }
@@ -926,8 +954,7 @@ public class Admin extends User implements IAdmin {
 
     @Override
     public void deleteContainer() {
-
-        Scanner scanner =  new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
 
         // Require a container ID to find the container
         System.out.println("Enter the container ID to delete: ");
@@ -1029,9 +1056,8 @@ public class Admin extends User implements IAdmin {
                         selectedVehicle.loadContainer(containerToAdd.getType());
                         System.out.println("Container " + containerID + " loaded onto Vehicle " + selectedVehicleID);
                     } else {
-
-                        System.out.println("Error: This vehicle cannot load " + containerToAdd.getType() + " container.");
-
+                        System.out
+                                .println("Error: This vehicle cannot load " + containerToAdd.getType() + " container.");
                     }
                 } else {
                     System.out.println("Container " + containerID + " not found.");
@@ -1087,17 +1113,19 @@ public class Admin extends User implements IAdmin {
                 // Ask the admin to select a container type to unload
                 System.out.println("Enter the Container Type to unload (e.g., DRY_STORAGE):");
                 String selectedContainerTypeStr = scanner.next();
-
-                Container.ContainerType selectedContainerType = Container.ContainerType.valueOf(selectedContainerTypeStr);
+                Container.ContainerType selectedContainerType = Container.ContainerType
+                        .valueOf(selectedContainerTypeStr);
 
                 // Check if the selected container type is loaded on the vehicle
                 if (selectedVehicle.getContainerCount(selectedContainerType) > 0) {
                     // Decrement the count of the specified container type
-                    selectedVehicle.updateContainerCount(selectedContainerType, selectedVehicle.getContainerCount(selectedContainerType) - 1);
-                    System.out.println("Container of type " + selectedContainerType + " unloaded from vehicle " + selectedVehicle.getVehicleID());
+                    selectedVehicle.updateContainerCount(selectedContainerType,
+                            selectedVehicle.getContainerCount(selectedContainerType) - 1);
+                    System.out.println("Container of type " + selectedContainerType + " unloaded from vehicle "
+                            + selectedVehicle.getVehicleID());
                 } else {
-                    System.err.println("Error: No " + selectedContainerType + " container to unload from vehicle " + selectedVehicle.getVehicleID());
-
+                    System.err.println("Error: No " + selectedContainerType + " container to unload from vehicle "
+                            + selectedVehicle.getVehicleID());
                 }
             } else {
                 System.out.println("Vehicle " + selectedVehicleID + " does not have any containers loaded.");
@@ -1154,18 +1182,14 @@ public class Admin extends User implements IAdmin {
             // Create the new manager and associate them with the selected port
             Manager newManager = new Manager(managerID, username, password, managedPort);
             managers.add(newManager);
-
-            System.out.println("Manager with ID " + managerID + " has been added and assigned to port " + managedPort.getName() + " successfully.");
-
+            System.out.println("Manager with ID " + managerID + " has been added and assigned to port "
+                    + managedPort.getName() + " successfully.");
         } else {
             System.out.println("Port with ID " + portID + " not found. Manager assignment failed.");
         }
 
         scanner.close();
     }
-
-
-
 
     @Override
     public void editManagerDetails() {
@@ -1204,9 +1228,7 @@ public class Admin extends User implements IAdmin {
 
                         System.out.println("Enter your choice: ");
                         int choice = scanner.nextInt();
-
-                        scanner.nextLine();  // Consume newline
-
+                        scanner.nextLine(); // Consume newline
 
                         switch (choice) {
                             case 1 -> {
@@ -1245,7 +1267,6 @@ public class Admin extends User implements IAdmin {
             }
         }
     }
-
 
     @Override
     public void deleteManager() {
@@ -1299,7 +1320,6 @@ public class Admin extends User implements IAdmin {
             }
         }
     }
-
 
     @Override
     public void generateTrafficReport() {

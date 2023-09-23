@@ -5,10 +5,7 @@ import java.util.*;
 public interface IManager {
 
 
-
     User login(String username, String password); // Common method for login
-
-
 
 
     void displayMenu(); // Common method to view dashboard
@@ -17,9 +14,9 @@ public interface IManager {
 
     void calculateDailyFuelUsage(Date date); // Common method to generate daily fuel usage report
 
-    void calculateContainerWeights(); // Admin can calculate the weight of their targeted port(s) or the total weight
+    void calculateContainerWeights(); // model.Admin can calculate the weight of their targeted port(s) or the total weight
                                       // of every ports
-  
+
     void listShipsInPort(); // Common method to list all ships in a port
 
     void listTripsFromDateToDate(); // Common method to list all trips in range(date, anotherDate)
@@ -35,7 +32,6 @@ public interface IManager {
     void deleteContainer(); // Exclusive method for manager to delete a container
 
     void loadContainerOntoVehicle();
-
     void unloadContainerFromVehicle();
 }
 

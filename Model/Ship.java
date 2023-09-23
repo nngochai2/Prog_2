@@ -17,10 +17,12 @@ public class Ship extends Vehicle {
 //    }
 
 
+
     public Ship(String vehicleID, String name, double carryingCapacity, double fuelCapacity) {
         super(vehicleID, name, carryingCapacity, fuelCapacity);
-<<<<<<< Updated upstream
-=======
+
+
+
         if (!vehicleID.matches("^sh\\d+$")) {
             // '^': the pattern must start from th beginning of the ID
             // 'sh': force the ID to start with 'sh'
@@ -28,7 +30,7 @@ public class Ship extends Vehicle {
             // '$': the pattern must reach the end of the ID
             System.out.println("Invalid vehicle ID. It must be sh-number.");
         }
->>>>>>> Stashed changes
+
     }
 
     @Override
@@ -53,12 +55,11 @@ public class Ship extends Vehicle {
 
     @Override
     public boolean canLoadContainerType(Container.ContainerType type) {
-<<<<<<< Updated upstream
+
         // Ship can load all types of containers.
-=======
-        // Ship can load all types of containers.t
->>>>>>> Stashed changes
+
         return true;
+
     }
     @Override
     public void move(Port destinationPort) {
