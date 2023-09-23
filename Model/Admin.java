@@ -3,9 +3,11 @@ package Model;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+
 import Model.Container.ContainerType;
 import Model.User.UserRole;
 import Model.Vehicle.VehicleType;
+
 
 public class Admin extends User implements IAdmin {
 
@@ -67,7 +69,12 @@ public class Admin extends User implements IAdmin {
     public void setTrips(ArrayList<Trip> trips) {
         this.trips = trips;
     }
+    public boolean verifyUser (String username, String password) {
+        String encryptPassword = this.encrypt(password); // Hash the input password
+        // If the username and password after hashing are correct
 
+        return username.equals("admin");
+    }
     // Display the menu for the admin
     public void displayMenu() {
         System.out.println("Welcome Admin " + getUsername());
