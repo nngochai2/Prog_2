@@ -547,7 +547,11 @@ public class Admin extends User implements IAdmin {
 
     // Add a vehicle
     @Override
+<<<<<<< Updated upstream
     public void addVehicle() {}
+=======
+    public void addVehicle() {
+>>>>>>> Stashed changes
 //        Scanner scanner = new Scanner(System.in);
 //
 //        // Require user input
@@ -611,6 +615,7 @@ public class Admin extends User implements IAdmin {
 //        Vehicle newVehicle;
 //        switch (vehicleType) {
 //            case SHIP:
+<<<<<<< Updated upstream
 //                newVehicle = new Ship(vehicleID, name, currentFuel, carryingCapacity, fuelCapacity, null, 0, new ArrayList<>(), new HashMap<>());
 //                break;
 //            case BASIC_TRUCK:
@@ -621,6 +626,22 @@ public class Admin extends User implements IAdmin {
 //                break;
 //            case TANKER_TRUCK:
 //                newVehicle = new TankerTruck(vehicleID, name, currentFuel, carryingCapacity, fuelCapacity, null, 0, new ArrayList<>(), new HashMap<>());
+=======
+//                newVehicle = new Ship(vehicleID, name, currentFuel, carryingCapacity, fuelCapacity, null, 0,
+//                        new ArrayList<>(), new HashMap<>());
+//                break;
+//            case BASIC_TRUCK:
+//                newVehicle = new BasicTruck(vehicleID, name, currentFuel, carryingCapacity, fuelCapacity, null, 0,
+//                        new ArrayList<>(), new HashMap<>());
+//                break;
+//            case REEFER_TRUCK:
+//                newVehicle = new ReeferTruck(vehicleID, name, currentFuel, carryingCapacity
+//                );
+//                break;
+//            case TANKER_TRUCK:
+//                newVehicle = new TankerTruck(vehicleID, name, currentFuel, carryingCapacity
+//                );
+>>>>>>> Stashed changes
 //                break;
 //            default:
 //                System.out.println("Invalid vehicle type.");
@@ -630,9 +651,13 @@ public class Admin extends User implements IAdmin {
 //        // Add the new vehicle to the list of vehicles
 //        vehicles.add(newVehicle);
 //        System.out.println("New vehicle with ID " + vehicleID + " has been added successfully.");
+<<<<<<< Updated upstream
 //    }
 
 
+=======
+    }
+>>>>>>> Stashed changes
 
     // Remove a vehicle from the system
     @Override

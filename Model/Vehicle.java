@@ -16,12 +16,20 @@ public abstract class Vehicle implements IVehicle {
     protected ArrayList<Container> containers;
     protected Map<Container.ContainerType, Integer> containerCounts;
     // Used to keep track of the number of each type of container that a vehicle is carrying, store and manage the counts of different container types.
+<<<<<<< Updated upstream
 
 
     public Vehicle(String vehicleID, String name, double carryingCapacity, double fuelCapacity) {
         this.vehicleID = vehicleID;
         this.name = name;
         this.currentFuel = carryingCapacity;
+=======
+    
+    public Vehicle(String vehicleID, String name, double carryingCapacity, double fuelCapacity) {
+        this.vehicleID = vehicleID;
+        this.name = name;
+        this.currentFuel = fuelCapacity;
+>>>>>>> Stashed changes
         this.carryingCapacity = carryingCapacity;
         this.fuelCapacity = fuelCapacity;
     }

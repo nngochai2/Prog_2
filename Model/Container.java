@@ -1,6 +1,15 @@
+<<<<<<< Updated upstream
 
 package Model;
 
+=======
+package Model;
+
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.List;
+
+>>>>>>> Stashed changes
 public class Container {
     private String containerID;
     private ContainerType type;
