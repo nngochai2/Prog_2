@@ -68,19 +68,20 @@ public abstract class User {
 //        return (this.username.equals(username) && this.password.equals(password));
 //    }
 
-//    public void calculateDailyFuelUsage(Date date, ArrayList<model.Trip> trips) {
+
+//    public void calculateDailyFuelUsage(Date date, ArrayList<Trip> trips) {
 //        // This method is responsible for calculating daily fuel usage
 //        double dailyFuelUsage = 0;
-//        for (model.Trip trip : trips) {
+//        for (Trip trip : trips) {
 //            if ((date.after(trip.getDepartureDate()) && date.before(trip.getArrivalDate()))
 //                    || (date.equals(trip.getDepartureDate())) || (date.equals(trip.getArrivalDate()))) {
-//                model.Vehicle vehicle = trip.getVehicle();
-//                ArrayList<model.Container> containers = trip.getContainersOnTrip();
+//                Vehicle vehicle = trip.getVehicle();
+//                ArrayList<Container> containers = trip.getContainersOnTrip();
+
 //                // Get the distance traveled during the trip
 //                double distance = trip.getDeparturePort().calculateDistance(trip.getArrivalPort());
 //
-//                // Calculate the fuel consumption for the trip
-//                for (model.Container container : containers) {
+//                // Calculate the fuel consumption for the trip for (Container container : containers) {
 //                    double fuelRate = container.calculateFuelConsumption(vehicle);
 //                    dailyFuelUsage += fuelRate;
 //                }

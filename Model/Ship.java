@@ -1,10 +1,11 @@
+
 package Model;
 
 import java.util.ArrayList;
 import java.util.Map;
 
 public class Ship extends Vehicle {
-//    public model.Ship(String vehicleID, String name, double currentFuel, double carryingCapacity, double fuelCapacity, model.Port currentPort, int totalContainers, ArrayList<model.Container> containers, Map<model.Container.ContainerType, Integer> containerCounts) {
+//    public Ship(String vehicleID, String name, double currentFuel, double carryingCapacity, double fuelCapacity, Port currentPort, int totalContainers, ArrayList<Container> containers, Map<Container.ContainerType, Integer> containerCounts) {
 //        super(vehicleID, name, currentFuel, carryingCapacity, fuelCapacity, currentPort, totalContainers, containers, containerCounts);
 //        if (!vehicleID.matches("^sh\\d+$")) {
 //            // '^': the pattern must start from th beginning of the ID
@@ -49,8 +50,8 @@ public class Ship extends Vehicle {
 
     @Override
     public boolean canLoadContainerType(Container.ContainerType type) {
-        // model.Ship can load all types of containers.
-        return true;
+
+        // Ship can load all types of containers.
     }
     @Override
     public void move(Port destinationPort) {

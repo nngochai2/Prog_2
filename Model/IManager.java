@@ -8,7 +8,6 @@ public interface IManager {
     User login(String username, String password); // Common method for login
 
 
-
     void displayMenu(); // Common method to view dashboard
 
     void viewPortDetails(); // Common method to view port details
@@ -17,7 +16,6 @@ public interface IManager {
 
     void calculateContainerWeights(); // model.Admin can calculate the weight of their targeted port(s) or the total weight
                                       // of every ports
-
 
     void listShipsInPort(); // Common method to list all ships in a port
 
@@ -36,4 +34,5 @@ public interface IManager {
     void loadContainerOntoVehicle();
     void unloadContainerFromVehicle();
 }
+
 

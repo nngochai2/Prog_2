@@ -1,3 +1,4 @@
+
 package Model;
 
 import java.util.ArrayList;
@@ -5,6 +6,7 @@ import java.util.Map;
 
 public abstract class Vehicle implements IVehicle {
     protected String vehicleID;
+
     protected String name;
     protected double currentFuel;
     protected double carryingCapacity;
@@ -14,8 +16,7 @@ public abstract class Vehicle implements IVehicle {
     protected ArrayList<Container> containers;
     protected Map<Container.ContainerType, Integer> containerCounts;
     // Used to keep track of the number of each type of container that a vehicle is carrying, store and manage the counts of different container types.
-
-
+    
     public Vehicle(String vehicleID, String name, double currentFuel, double carryingCapacity, double fuelCapacity, Port currentPort, int totalContainers, ArrayList<Container> containers, Map<Container.ContainerType, Integer> containerCounts) {
         this.vehicleID = vehicleID;
         this.name = name;
@@ -138,7 +139,7 @@ public abstract class Vehicle implements IVehicle {
         return totalWeight;
     }
 
-    // Calculate the total weight for each type of containers (return a HashMap, might be useful)
+// Calculate the total weight for each type of containers (return a HashMap, might be useful)
 //    public Map<model.Container.ContainerType, Double> calculateTotalWeightForEachType() { // The method returns a 'Map' the associates each ContainerType with its total weight as 'Double'
 //        // Initialize a new HashMap
 //        Map<model.Container.ContainerType, Double> weightForEachType = new HashMap<>();
@@ -184,7 +185,9 @@ public abstract class Vehicle implements IVehicle {
     // Check whether a vehicle can start a trip or not
     public boolean canMove() {
         if (currentFuel == 0) {
+
             System.out.println("model.Vehicle is out of fuel!");
+
             return false;
         }
 
@@ -193,7 +196,9 @@ public abstract class Vehicle implements IVehicle {
 
         // Check if the total weight exceeds the carrying capacity
         if (totalWeight > carryingCapacity) {
+
             System.out.println("model.Vehicle is overloaded.");
+
             return false;
         }
 

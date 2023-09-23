@@ -5,6 +5,7 @@ import java.util.*;
 
 public class Admin extends User implements IAdmin {
 
+
     private ArrayList<Port> ports;
     private ArrayList<Vehicle> vehicles;
     private ArrayList<Container> containers;
@@ -12,7 +13,9 @@ public class Admin extends User implements IAdmin {
     private ArrayList<Trip> trips;
 
 
+
     public Admin(String userID, String username, String password, User.UserRole role, ArrayList<Port> ports, ArrayList<Vehicle> vehicles, ArrayList<Container> containers, ArrayList<Manager> managers, ArrayList<Trip> trips) {
+
         super(userID, username, password, role);
         this.ports = ports;
         this.vehicles = vehicles;
@@ -21,7 +24,9 @@ public class Admin extends User implements IAdmin {
         this.trips = trips;
     }
 
+
     // =================================GETTER AND SETTER METHODS=======================================================
+
     public ArrayList<Port> getPorts() {
         return this.ports;
     }
@@ -153,7 +158,9 @@ public class Admin extends User implements IAdmin {
             System.out.print("Enter the end date (yyyy-MM-dd): ");
             Date endDate = parseDate(scanner.nextLine(), sdf);
 
+
             System.out.println("Trips from " + sdf.format(startDate) + " to " + sdf.format(endDate) + " in model.Port " + selectedPort.getName() + ":");
+
 
             for (Trip trip : trips) {
                 Date tripStartDate = trip.getDepartureDate();
@@ -163,6 +170,7 @@ public class Admin extends User implements IAdmin {
                 if ((tripStartDate.equals(startDate) || tripStartDate.after(startDate))
                         && (tripEndDate.equals(endDate) || tripEndDate.before(endDate)
                         || (tripStartDate.equals(startDate) && tripEndDate.equals(endDate)))) {
+
                     // Print trip details
                     System.out.println("model.Trip ID: " + trip.getId());
                     System.out.println("Departure Date: " + sdf.format(trip.getDepartureDate()));
@@ -195,7 +203,9 @@ public class Admin extends User implements IAdmin {
         // Might be unnecessary
     }
 
+
     // =========================================PORT FUNCTIONS==========================================================
+
 
     // Calculate the total weight of containers (in one port/in all ports)
     @Override
@@ -523,21 +533,100 @@ public class Admin extends User implements IAdmin {
         }
     }
 
+
     // ======================================VEHICLE FUNCTIONS==========================================================
-
-
     @Override
     public void viewVehicleDetails() {
 
     }
     // Add a vehicle
     @Override
-    public void addVehicle() {
-        Scanner scanner = new Scanner(System.in);
+    public void addVehicle() {}
+//        Scanner scanner = new Scanner(System.in);
+//
+//        // Require user input
+//        System.out.println("Enter the vehicle ID: ");
+//        String vehicleID = scanner.nextLine();
+//
+//        // Check if there is already a vehicle with the same ID
+//        for (Vehicle vehicle : vehicles) {
+//            if (vehicle.getVehicleID().equals(vehicleID)) {
+//                System.out.println("Error. There is already a vehicle with the same ID");
+//                return;
+//            }
+//        }
+//
+//        // Require vehicle type
+//        System.out.println("Enter the vehicle type (SHIP, BASIC_TRUCK, REEFER_TRUCK, TANKER_TRUCK): ");
+//        String vehicleTypeStr = scanner.nextLine();
+//        Vehicle.VehicleType vehicleType;
+//        try {
+//            vehicleType = Vehicle.VehicleType.valueOf(vehicleTypeStr);
+//        } catch (IllegalArgumentException e) {
+//            System.out.println("Invalid vehicle type.");
+//            return;
+//        }
+//
+//        // Enter vehicle name
+//        System.out.println("Enter the vehicle name: ");
+//        String name = scanner.nextLine();
+//
+//        // Enter current fuel
+//        System.out.println("Enter the current fuel: ");
+//        double currentFuel;
+//        try {
+//            currentFuel = Double.parseDouble(scanner.nextLine());
+//        } catch (NumberFormatException e) {
+//            System.out.println("Invalid current fuel value. Please enter a valid number.");
+//            return;
+//        }
+//
+//        // Enter carrying capacity
+//        System.out.println("Enter the carrying capacity: ");
+//        double carryingCapacity;
+//        try {
+//            carryingCapacity = Double.parseDouble(scanner.nextLine());
+//        } catch (NumberFormatException e) {
+//            System.out.println("Invalid carrying capacity value. Please enter a valid number.");
+//            return;
+//        }
+//
+//        // Enter fuel capacity
+//        System.out.println("Enter the fuel capacity: ");
+//        double fuelCapacity;
+//        try {
+//            fuelCapacity = Double.parseDouble(scanner.nextLine());
+//        } catch (NumberFormatException e) {
+//            System.out.println("Invalid fuel capacity value. Please enter a valid number.");
+//            return;
+//        }
+//
+//        // Create the new vehicle based on user input
+//        Vehicle newVehicle;
+//        switch (vehicleType) {
+//            case SHIP:
+//                newVehicle = new Ship(vehicleID, name, currentFuel, carryingCapacity, fuelCapacity, null, 0, new ArrayList<>(), new HashMap<>());
+//                break;
+//            case BASIC_TRUCK:
+//                newVehicle = new BasicTruck(vehicleID, name, currentFuel, carryingCapacity, fuelCapacity, null, 0, new ArrayList<>(), new HashMap<>());
+//                break;
+//            case REEFER_TRUCK:
+//                newVehicle = new ReeferTruck(vehicleID, name, currentFuel, carryingCapacity, fuelCapacity, null, 0, new ArrayList<>(), new HashMap<>());
+//                break;
+//            case TANKER_TRUCK:
+//                newVehicle = new TankerTruck(vehicleID, name, currentFuel, carryingCapacity, fuelCapacity, null, 0, new ArrayList<>(), new HashMap<>());
+//                break;
+//            default:
+//                System.out.println("Invalid vehicle type.");
+//                return;
+//        }
+//
+//        // Add the new vehicle to the list of vehicles
+//        vehicles.add(newVehicle);
+//        System.out.println("New vehicle with ID " + vehicleID + " has been added successfully.");
+//    }
 
-        // Require user input
-        System.out.println("Enter the vehicle ID: ");
-        String vehicleID = scanner.nextLine();
+
 
         // Check if there is already a vehicle with the same ID
         for (Vehicle vehicle : vehicles) {
@@ -616,6 +705,7 @@ public class Admin extends User implements IAdmin {
         vehicles.add(newVehicle);
         System.out.println("New vehicle with ID " + vehicleID + " has been added successfully.");
     }
+
 
 
 
@@ -773,6 +863,7 @@ public class Admin extends User implements IAdmin {
         double weight = scanner.nextDouble();
 
         // Require the container location (a port ID is required since container can not be set directly on a vehicle
+
         System.out.println("Enter the port ID as the location of the container: ");
         String portID = scanner.next();
 
@@ -786,6 +877,7 @@ public class Admin extends User implements IAdmin {
         }
 
         if (!validPort) {
+
             System.out.println("Invalid port ID. model.Container location cannot be set"); // Output if the location is not valid
         }
 
@@ -794,8 +886,7 @@ public class Admin extends User implements IAdmin {
         if (validPort) {
             Container newContainer = new Container(containerID, containerType, weight, portID);
             containers.add(newContainer);     // Add the new container to your ArrayList or data structure.
-            System.out.println("model.Container " + containerID + " has been added successfully.");
-        }
+
 
         System.out.println("model.Container " + containerID + " has been added successfully.");
     }
@@ -843,12 +934,15 @@ public class Admin extends User implements IAdmin {
                         // Handling choices
                         switch (choice) {
                             case 1 -> {
+
                                 System.out.println("Enter the new container type (e.g., DRY_STORAGE, OPEN_TOP, OPEN_SIDE, REFRIGERATED, LIQUID): ");
                                 String newContainerTypeStr = scanner.nextLine();
                                 try {
                                     Container.ContainerType newContainerType = Container.ContainerType.valueOf(newContainerTypeStr);
                                     containerToEdit.setContainerType(newContainerType);
+
                                     System.out.println("model.Container " + containerID + " has been updated with the new type.");
+
                                 } catch (IllegalArgumentException e) {
                                     System.out.println("Invalid container type.");
                                 }
@@ -884,6 +978,7 @@ public class Admin extends User implements IAdmin {
 
     @Override
     public void deleteContainer() {
+
         Scanner scanner =  new Scanner(System.in);
 
         // Require a container ID to find the container
@@ -986,7 +1081,9 @@ public class Admin extends User implements IAdmin {
                         selectedVehicle.loadContainer(containerToAdd.getType());
                         System.out.println("model.Container " + containerID + " loaded onto model.Vehicle " + selectedVehicleID);
                     } else {
+
                         System.out.println("Error: This vehicle cannot load " + containerToAdd.getType() + " container.");
+
                     }
                 } else {
                     System.out.println("model.Container " + containerID + " not found.");
@@ -1042,6 +1139,8 @@ public class Admin extends User implements IAdmin {
                 // Ask the admin to select a container type to unload
                 System.out.println("Enter the model.Container Type to unload (e.g., DRY_STORAGE):");
                 String selectedContainerTypeStr = scanner.next();
+
+
                 Container.ContainerType selectedContainerType = Container.ContainerType.valueOf(selectedContainerTypeStr);
 
                 // Check if the selected container type is loaded on the vehicle
@@ -1051,6 +1150,7 @@ public class Admin extends User implements IAdmin {
                     System.out.println("model.Container of type " + selectedContainerType + " unloaded from vehicle " + selectedVehicle.getVehicleID());
                 } else {
                     System.err.println("Error: No " + selectedContainerType + " container to unload from vehicle " + selectedVehicle.getVehicleID());
+
                 }
             } else {
                 System.out.println("model.Vehicle " + selectedVehicleID + " does not have any containers loaded.");
@@ -1109,13 +1209,15 @@ public class Admin extends User implements IAdmin {
             // Create the new manager and associate them with the selected port
             Manager newManager = new Manager(managerID, username, password, managedPort);
             managers.add(newManager);
-            System.out.println("model.Manager with ID " + managerID + " has been added and assigned to port " + managedPort.getName() + " successfully.");
+            System.out.println("Manager with ID " + managerID + " has been added and assigned to port " + managedPort.getName() + " successfully.");
+
         } else {
             System.out.println("model.Port with ID " + portID + " not found. model.Manager assignment failed.");
         }
 
         scanner.close();
     }
+
 
 
     @Override
@@ -1155,7 +1257,11 @@ public class Admin extends User implements IAdmin {
 
                         System.out.println("Enter your choice: ");
                         int choice = scanner.nextInt();
+
+
                         scanner.nextLine();  // Consume newline
+
+
 
                         switch (choice) {
                             case 1 -> {

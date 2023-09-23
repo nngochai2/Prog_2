@@ -1,12 +1,14 @@
+
+
 package Model;
 
-import java.util.List;
 
 public class Container {
     private String containerID;
     private ContainerType type;
     private double weight;
     private String location;
+
     private List<Container> containerList;
 
     public Container(String containerID, double weight, ContainerType type) {
@@ -33,18 +35,22 @@ public class Container {
     }
 
     public void load(Vehicle from, Port to) {
-        // if weight < model.Port.storingCapacity
-        // Update model.Container.location
-        // Update model.Port.containersCount
-        // Update model.Vehicle.totalContainers
+
+        // if weight < Port.storingCapacity
+        // Update Container.location
+        // Update Port.containersCount
+        // Update Vehicle.totalContainers
+
         this.location = to.getPortID();
     }
 
     public void load(Port from, Ship to) {
-        // if weight < model.Ship.carryingCapacity
-        // Update model.Container.location
-        // Update model.Port.containersCount
-        // Update model.Ship.totalContainers
+
+        // if weight < Ship.carryingCapacity
+        // Update Container.location
+        // Update Port.containersCount
+        // Update Ship.totalContainers
+
     }
 
     public String getContainerID() {
@@ -60,9 +66,17 @@ public class Container {
     }
 
 
-
     public void load(ContainerType type) {
         // Implement loading logic based on container type.
+    }
+
+
+    public String getLocation() {
+        return this.location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 
 
@@ -97,3 +111,4 @@ public class Container {
         return fuelRate * weight;
     }
 }
+

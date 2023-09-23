@@ -1,19 +1,30 @@
+
 package Model;
 
 import java.util.ArrayList;
 import java.util.Map;
 
+
+import Model.Container.ContainerType;
+import Model.Vehicle.VehicleType;
+
 public class BasicTruck extends Vehicle {
-    public BasicTruck(String vehicleID, String name, double currentFuel, double carryingCapacity, double fuelCapacity, Port currentPort, int totalContainers, ArrayList<Container> containers, Map<Container.ContainerType, Integer> containerCounts) {
-        super(vehicleID, name, currentFuel, carryingCapacity, fuelCapacity, currentPort, totalContainers, containers, containerCounts);
+    public BasicTruck(String vehicleID, String name, double currentFuel, double carryingCapacity, double fuelCapacity,
+            Port currentPort, int totalContainers, ArrayList<Container> containers,
+            Map<Container.ContainerType, Integer> containerCounts) {
+        super(vehicleID, name, currentFuel, carryingCapacity, fuelCapacity, currentPort, totalContainers, containers,
+                containerCounts);
+
         if (!vehicleID.matches("^tr\\d+$")) {
             System.out.println("Invalid vehicle ID. It must be tr-number.");
         }
     }
 
     @Override
-    public Vehicle.VehicleType getVehicleType() {
-        return Vehicle.VehicleType.BASIC_TRUCK;
+
+    public VehicleType getVehicleType() {
+        return VehicleType.BASIC_TRUCK;
+
     }
 
     @Override
@@ -38,7 +49,10 @@ public class BasicTruck extends Vehicle {
             return true;
         } else if (type == Container.ContainerType.OPEN_SIDE) {
             return true;
-        } else return type == Container.ContainerType.OPEN_TOP;
+
+        } else
+            return type == Container.ContainerType.OPEN_TOP;
+
     }
 
     @Override

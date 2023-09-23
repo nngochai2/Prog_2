@@ -1,3 +1,4 @@
+
 package Model;
 
 import java.util.ArrayList;
@@ -96,7 +97,9 @@ public class PortManagementSystem {
 
         } else if (loggedInUsers.getRole() == User.UserRole.MANAGER) {
             // Display options for port manager
-            System.out.println("Welcome model.Port model.Manager!");
+
+            System.out.println("Welcome Port Manager!");
+
             System.out.println(
                     """
                             Main menu"
@@ -107,3 +110,4 @@ public class PortManagementSystem {
         }
     }
 }
+
