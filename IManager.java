@@ -2,7 +2,9 @@ import java.util.*;
 
 public interface IManager {
 
+
     User login(String username, String password); // Common method for login
+
 
 
     void displayMenu(); // Common method to view dashboard
@@ -21,6 +23,7 @@ public interface IManager {
 
     void listTripsFromDateToDate(); // Common method to list all trips in range(date,
     // anotherDate)
+
     void viewVehicleDetails(); // Common method to view vehicle details
 
     void viewTripDetails(); // Common method to view trip details
