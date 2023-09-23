@@ -2,7 +2,11 @@ package Model;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
-
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import Model.Container.ContainerType;
 import Model.User.UserRole;
@@ -28,8 +32,7 @@ public class Admin extends User implements IAdmin {
         this.trips = trips;
     }
 
-    // =================================GETTER AND SETTER
-    // METHODS=======================================================
+    // =================================GETTER AND SETTER=======================================================
     public ArrayList<Port> getPorts() {
         return this.ports;
     }
@@ -75,6 +78,27 @@ public class Admin extends User implements IAdmin {
 
         return username.equals("admin");
     }
+
+    public void getUserInfo() throws IOException {
+        List<String[]> users = new ArrayList<>();
+
+        try (BufferedReader br = new BufferedReader(new FileReader("./dataFile/users.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] userData = line.split(",");
+                if (userData.length >= 9) { // Check if there are at least 9 fields in the line
+                    String ID = userData[0].trim();
+                    String name = userData[1].trim();
+                    String username = userData[2].trim();
+                    String password = userData[6].trim();
+                    String role = userData[8].trim();
+                    String[] data = {ID, name, username, password, role};
+                    users.add(data);
+                }
+            }
+        }
+    }
+
     // Display the menu for the admin
     public void displayMenu() {
         System.out.println("Welcome Admin " + getUsername());
