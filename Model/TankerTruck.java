@@ -1,17 +1,23 @@
+package Model;
+
 import java.util.ArrayList;
 import java.util.Map;
 
-public class ReeferTruck extends BasicTruck {
-    public ReeferTruck(String vehicleID, String name, double currentFuel, double carryingCapacity, double fuelCapacity, Port currentPort, int totalContainers, ArrayList<Container> containers, Map<Container.ContainerType, Integer> containerCounts) {
-        super(vehicleID, name, currentFuel, carryingCapacity, fuelCapacity, currentPort, totalContainers, containers, containerCounts);
+import Model.Vehicle.VehicleType;
+
+public class TankerTruck extends BasicTruck {
+    public TankerTruck(String vehicleID, String name, double currentFuel, double carryingCapacity, double fuelCapacity,
+            Port currentPort, int totalContainers, ArrayList<Container> containers,
+            Map<Container.ContainerType, Integer> containerCounts) {
+        super(vehicleID, name, currentFuel, carryingCapacity, fuelCapacity, currentPort, totalContainers, containers,
+                containerCounts);
         if (!vehicleID.matches("^tr\\d+$")) {
             System.out.println("Invalid vehicle ID. It must be tr-number.");
         }
     }
 
-    @Override
     public VehicleType getVehicleType() {
-        return VehicleType.REEFER_TRUCK;
+        return VehicleType.TANKER_TRUCK;
     }
 
     @Override
@@ -31,7 +37,7 @@ public class ReeferTruck extends BasicTruck {
 
     @Override
     public boolean canLoadContainerType(Container.ContainerType type) {
-        return type == Container.ContainerType.REFRIGERATED;
+        return type == Container.ContainerType.LIQUID;
     }
 
     @Override

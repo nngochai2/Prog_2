@@ -1,3 +1,5 @@
+package Model;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -13,10 +15,12 @@ public abstract class Vehicle implements IVehicle {
     protected int totalContainers;
     protected ArrayList<Container> containers;
     protected Map<Container.ContainerType, Integer> containerCounts;
-    // Used to keep track of the number of each type of container that a vehicle is carrying, store and manage the counts of different container types.
+    // Used to keep track of the number of each type of container that a vehicle is
+    // carrying, store and manage the counts of different container types.
 
-
-    public Vehicle(String vehicleID, String name, double currentFuel, double carryingCapacity, double fuelCapacity, Port currentPort, int totalContainers, ArrayList<Container> containers, Map<Container.ContainerType, Integer> containerCounts) {
+    public Vehicle(String vehicleID, String name, double currentFuel, double carryingCapacity, double fuelCapacity,
+            Port currentPort, int totalContainers, ArrayList<Container> containers,
+            Map<Container.ContainerType, Integer> containerCounts) {
         this.vehicleID = vehicleID;
         this.name = name;
         this.currentFuel = currentFuel;
@@ -35,7 +39,6 @@ public abstract class Vehicle implements IVehicle {
         TANKER_TRUCK,
         REEFER_TRUCK
     }
-
 
     public abstract VehicleType getVehicleType();
 
@@ -99,19 +102,18 @@ public abstract class Vehicle implements IVehicle {
         this.totalContainers = totalContainers;
     }
 
-
     public boolean canLoadContainerType(Container.ContainerType type) {
 
         // Check whether a vehicle can carry a specific container type
         return true;
     };
+
     public void loadContainer(Container.ContainerType type) {
         // Increment the count of a specific container type
-        if(canLoadContainerType(type)) {
+        if (canLoadContainerType(type)) {
             containerCounts.put(type, containerCounts.get(type) + 1);
             totalContainers++;
-        }
-        else {
+        } else {
             // Show error message if the container does not match the requirements
             System.err.println("Error: This vehicle cannot load " + type + " container.");
         }
@@ -119,12 +121,11 @@ public abstract class Vehicle implements IVehicle {
 
     // Unload a container from a vehicle
     public void unloadContainer(Container.ContainerType type) {
-        if(containerCounts.get(type) > 0) {
+        if (containerCounts.get(type) > 0) {
             // Can only unload if there is at least one container
             containerCounts.put(type, containerCounts.get(type) - 1);
             totalContainers--;
-        }
-        else {
+        } else {
             System.err.println("Error: No " + type + " container to unload.");
         }
     }
@@ -138,25 +139,28 @@ public abstract class Vehicle implements IVehicle {
         return totalWeight;
     }
 
-    // Calculate the total weight for each type of containers (return a HashMap, might be useful)
-//    public Map<Container.ContainerType, Double> calculateTotalWeightForEachType() { // The method returns a 'Map' the associates each ContainerType with its total weight as 'Double'
-//        // Initialize a new HashMap
-//        Map<Container.ContainerType, Double> weightForEachType = new HashMap<>();
-//
-//        // Iterates over all possible container types defined in the enum
-//        for (Container.ContainerType type : Container.ContainerType.values()) {
-//            double totalWeightForType = 0.0;
-//
-//            // Iterates over all the containers stored in the ArrayList
-//            for (Container container : containers) {
-//                if (container.getType() == type) {
-//                    totalWeightForType += container.getWeight();
-//                }
-//            }
-//            weightForEachType.put(type, totalWeightForType);
-//        }
-//        return weightForEachType;
-//    }
+    // Calculate the total weight for each type of containers (return a HashMap,
+    // might be useful)
+    // public Map<Container.ContainerType, Double> calculateTotalWeightForEachType()
+    // { // The method returns a 'Map' the associates each ContainerType with its
+    // total weight as 'Double'
+    // // Initialize a new HashMap
+    // Map<Container.ContainerType, Double> weightForEachType = new HashMap<>();
+    //
+    // // Iterates over all possible container types defined in the enum
+    // for (Container.ContainerType type : Container.ContainerType.values()) {
+    // double totalWeightForType = 0.0;
+    //
+    // // Iterates over all the containers stored in the ArrayList
+    // for (Container container : containers) {
+    // if (container.getType() == type) {
+    // totalWeightForType += container.getWeight();
+    // }
+    // }
+    // weightForEachType.put(type, totalWeightForType);
+    // }
+    // return weightForEachType;
+    // }
 
     // Calculate total weight
     public double calculateTotalWeight(Container.ContainerType containerType) {
