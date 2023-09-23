@@ -5,6 +5,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+import Model.Container.ContainerType;
+import Model.User.UserRole;
+
 public class Manager extends User implements IManager {
     private Port managedPort;
 
@@ -106,25 +109,29 @@ public class Manager extends User implements IManager {
             }
         }
     }
-//    @Override
-//    public void listTripsFromDateToDate(Date startDate, Date endDate) {
-//        List<Trip> trips = this.managedPort.getCurrentTrips();
-//        // This method is responsible for listing trips from one date to another
-//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-//        for (Trip trip : trips) {
-//            if ((startDate.equals(trip.getDepartureDate()) || startDate.after(trip.getDepartureDate()))
-//                    && (endDate.before(trip.getArrivalDate())) || endDate.equals(trip.getArrivalDate())) {
-//                System.out.println("Trip ID: " + trip.getId());
-//                System.out.println("Departure Date: " + sdf.format(trip.getDepartureDate()));
-//                System.out.println("Arrival Date: " + sdf.format(trip.getArrivalDate()));
-//                System.out.println("Vehicle ID: " + trip.getVehicle().getVehicleID());
-//                System.out.println("Departure Port: " + trip.getDeparturePort());
-//                System.out.println("Arrival Port: " + trip.getArrivalPort());
-//                System.out.println("Status: " + trip.getStatus());
-//                System.out.println("-----------------------------");
-//            }
-//        }
-//    }
+
+    // @Override
+    // public void listTripsFromDateToDate(Date startDate, Date endDate) {
+    // List<Trip> trips = this.managedPort.getCurrentTrips();
+    // // This method is responsible for listing trips from one date to another
+    // SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    // for (Trip trip : trips) {
+    // if ((startDate.equals(trip.getDepartureDate()) ||
+    // startDate.after(trip.getDepartureDate()))
+    // && (endDate.before(trip.getArrivalDate())) ||
+    // endDate.equals(trip.getArrivalDate())) {
+    // System.out.println("Trip ID: " + trip.getId());
+    // System.out.println("Departure Date: " + sdf.format(trip.getDepartureDate()));
+    // System.out.println("Arrival Date: " + sdf.format(trip.getArrivalDate()));
+    // System.out.println("Vehicle ID: " + trip.getVehicle().getVehicleID());
+    // System.out.println("Departure Port: " + trip.getDeparturePort());
+    // System.out.println("Arrival Port: " + trip.getArrivalPort());
+    // System.out.println("Status: " + trip.getStatus());
+    // System.out.println("-----------------------------");
+    // }
+    // }
+    // }
+
 
     public void listTripsOnDate() {
 
@@ -141,6 +148,7 @@ public class Manager extends User implements IManager {
         Date endDate = parseDate(scanner.nextLine());
 
         List<Trip> trips = managedPort.getCurrentTrips();
+
 
         System.out.println("Trips in " + managedPort.getName() + " from " + sdf.format(startDate) + " to " + sdf.format(endDate) + ":");
 
@@ -163,7 +171,6 @@ public class Manager extends User implements IManager {
             }
         }
     }
-
 
     // Check date format
     private Date parseDate(String dateStr) {
@@ -221,7 +228,9 @@ public class Manager extends User implements IManager {
                 scanner.nextLine(); // Consume the newline character
 
                 // Create the new container
+
                 Container newContainer = new Container(containerID, containerType, containerWeight, managedPort.getPortID());
+
 
                 // Display container information for confirmation
                 System.out.println("Container Details:");
@@ -237,7 +246,9 @@ public class Manager extends User implements IManager {
                 if (confirmation.equals("yes")) {
                     // Add the container to the port
                     newContainer = new Container(containerID, containerType, containerWeight, managedPort.getPortID());
+
                     containers.add(newContainer);     // Add the new container to your ArrayList or data structure.
+
                     System.out.println("Container " + containerID + " has been added successfully.");
                     break; // Exit the loop
                 } else if (confirmation.equals("no")) {
@@ -251,7 +262,6 @@ public class Manager extends User implements IManager {
             }
         }
     }
-
 
     @Override
     public void editContainerDetails() {
@@ -300,12 +310,14 @@ public class Manager extends User implements IManager {
 
                         switch (choice) {
                             case 1 -> {
+
                                 System.out.println("Enter the new container type (e.g., DRY_STORAGE, OPEN_TOP, OPEN_SIDE, REFRIGERATED, LIQUID): ");
                                 String newContainerTypeStr = scanner.nextLine();
                                 try {
                                     Container.ContainerType newContainerType = Container.ContainerType.valueOf(newContainerTypeStr);
                                     containerToEdit.setContainerType(newContainerType);
                                     System.out.println("Container " + containerID + " has been updated with the new type.");
+
                                 } catch (IllegalArgumentException e) {
                                     System.out.println("Invalid container type.");
                                 }
@@ -457,7 +469,9 @@ public class Manager extends User implements IManager {
                         selectedVehicle.loadContainer(containerToAdd.getType());
                         System.out.println("Container " + containerID + " loaded onto Vehicle " + selectedVehicleID);
                     } else {
+
                         System.out.println("Error: This vehicle cannot load " + containerToAdd.getType() + " container.");
+
                     }
                 } else {
                     System.out.println("Container " + containerID + " not found.");
@@ -512,15 +526,19 @@ public class Manager extends User implements IManager {
                 // Ask the manager to select a container type to unload
                 System.out.println("Enter the Container Type to unload (e.g., DRY_STORAGE):");
                 String selectedContainerTypeStr = scanner.next();
+
                 Container.ContainerType selectedContainerType = Container.ContainerType.valueOf(selectedContainerTypeStr);
+
 
                 // Check if the selected container type is loaded on the vehicle
                 if (selectedVehicle.getContainerCount(selectedContainerType) > 0) {
                     // Decrement the count of the specified container type
+
                     selectedVehicle.updateContainerCount(selectedContainerType, selectedVehicle.getContainerCount(selectedContainerType) - 1);
                     System.out.println("Container of type " + selectedContainerType + " unloaded from vehicle " + selectedVehicle.getVehicleID());
                 } else {
                     System.err.println("Error: No " + selectedContainerType + " container to unload from vehicle " + selectedVehicle.getVehicleID());
+
                 }
             } else {
                 System.out.println("Vehicle " + selectedVehicleID + " does not have any containers loaded.");

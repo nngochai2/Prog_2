@@ -3,7 +3,12 @@ package Model;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-public class Admin extends User implements IAdmin{
+import Model.Container.ContainerType;
+import Model.User.UserRole;
+import Model.Vehicle.VehicleType;
+
+public class Admin extends User implements IAdmin {
+
 
     private ArrayList<Port> ports;
     private ArrayList<Vehicle> vehicles;
@@ -12,7 +17,11 @@ public class Admin extends User implements IAdmin{
     private ArrayList<Trip> trips;
 
 
+
     public Admin(String userID, String username, String password, UserRole role, ArrayList<Port> ports, ArrayList<Vehicle> vehicles, ArrayList<Container> containers, ArrayList<Manager> managers, ArrayList<Trip> trips) {
+    public Admin(String userID, String username, String password, UserRole role, ArrayList<Port> ports,
+            ArrayList<Vehicle> vehicles, ArrayList<Container> containers, ArrayList<Manager> managers,
+            ArrayList<Trip> trips) {
         super(userID, username, password, role);
         this.ports = ports;
         this.vehicles = vehicles;
@@ -21,7 +30,9 @@ public class Admin extends User implements IAdmin{
         this.trips = trips;
     }
 
+
     // =================================GETTER AND SETTER METHODS=======================================================
+
     public ArrayList<Port> getPorts() {
         return this.ports;
     }
@@ -153,7 +164,9 @@ public class Admin extends User implements IAdmin{
             System.out.print("Enter the end date (yyyy-MM-dd): ");
             Date endDate = parseDate(scanner.nextLine(), sdf);
 
+
             System.out.println("Trips from " + sdf.format(startDate) + " to " + sdf.format(endDate) + " in Port " + selectedPort.getName() + ":");
+
 
             for (Trip trip : trips) {
                 Date tripStartDate = trip.getDepartureDate();
@@ -163,6 +176,7 @@ public class Admin extends User implements IAdmin{
                 if ((tripStartDate.equals(startDate) || tripStartDate.after(startDate))
                         && (tripEndDate.equals(endDate) || tripEndDate.before(endDate)
                         || (tripStartDate.equals(startDate) && tripEndDate.equals(endDate)))) {
+
                     // Print trip details
                     System.out.println("Trip ID: " + trip.getId());
                     System.out.println("Departure Date: " + sdf.format(trip.getDepartureDate()));
@@ -189,13 +203,14 @@ public class Admin extends User implements IAdmin{
         }
     }
 
-
     @Override
     public void viewTripDetails() {
         // Might be unnecessary
     }
 
+
     // =========================================PORT FUNCTIONS==========================================================
+
 
     // Calculate the total weight of containers (in one port/in all ports)
     @Override
@@ -523,13 +538,13 @@ public class Admin extends User implements IAdmin{
         }
     }
 
+
     // ======================================VEHICLE FUNCTIONS==========================================================
-
-
     @Override
     public void viewVehicleDetails() {
 
     }
+
     // Add a vehicle
     @Override
     public void addVehicle() {}
@@ -646,7 +661,6 @@ public class Admin extends User implements IAdmin{
         scanner.close();
     }
 
-
     // Edit the vehicle details
     @Override
     public void editVehicleDetails() {
@@ -744,6 +758,7 @@ public class Admin extends User implements IAdmin{
 
     // ====================================CONTAINER FUNCTIONS==========================================================
 
+
     // public void addContainer(Container container) {
     // // Check if there is already an existing container with the same ID
     // for (Container exisitngContainer : containers) {
@@ -773,6 +788,7 @@ public class Admin extends User implements IAdmin{
         double weight = scanner.nextDouble();
 
         // Require the container location (a port ID is required since container can not be set directly on a vehicle
+
         System.out.println("Enter the port ID as the location of the container: ");
         String portID = scanner.next();
 
@@ -786,6 +802,7 @@ public class Admin extends User implements IAdmin{
         }
 
         if (!validPort) {
+
             System.out.println("Invalid port ID. Container location cannot be set"); // Output if the location is not valid
         }
 
@@ -794,8 +811,6 @@ public class Admin extends User implements IAdmin{
         if (validPort) {
             Container newContainer = new Container(containerID, containerType, weight, portID);
             containers.add(newContainer);     // Add the new container to your ArrayList or data structure.
-            System.out.println("Container " + containerID + " has been added successfully.");
-        }
 
         System.out.println("Container " + containerID + " has been added successfully.");
     }
@@ -843,12 +858,14 @@ public class Admin extends User implements IAdmin{
                         // Handling choices
                         switch (choice) {
                             case 1 -> {
+
                                 System.out.println("Enter the new container type (e.g., DRY_STORAGE, OPEN_TOP, OPEN_SIDE, REFRIGERATED, LIQUID): ");
                                 String newContainerTypeStr = scanner.nextLine();
                                 try {
                                     Container.ContainerType newContainerType = Container.ContainerType.valueOf(newContainerTypeStr);
                                     containerToEdit.setContainerType(newContainerType);
                                     System.out.println("Container " + containerID + " has been updated with the new type.");
+
                                 } catch (IllegalArgumentException e) {
                                     System.out.println("Invalid container type.");
                                 }
@@ -884,6 +901,7 @@ public class Admin extends User implements IAdmin{
 
     @Override
     public void deleteContainer() {
+
         Scanner scanner =  new Scanner(System.in);
 
         // Require a container ID to find the container
@@ -986,7 +1004,9 @@ public class Admin extends User implements IAdmin{
                         selectedVehicle.loadContainer(containerToAdd.getType());
                         System.out.println("Container " + containerID + " loaded onto Vehicle " + selectedVehicleID);
                     } else {
+
                         System.out.println("Error: This vehicle cannot load " + containerToAdd.getType() + " container.");
+
                     }
                 } else {
                     System.out.println("Container " + containerID + " not found.");
@@ -1042,6 +1062,7 @@ public class Admin extends User implements IAdmin{
                 // Ask the admin to select a container type to unload
                 System.out.println("Enter the Container Type to unload (e.g., DRY_STORAGE):");
                 String selectedContainerTypeStr = scanner.next();
+
                 Container.ContainerType selectedContainerType = Container.ContainerType.valueOf(selectedContainerTypeStr);
 
                 // Check if the selected container type is loaded on the vehicle
@@ -1051,6 +1072,7 @@ public class Admin extends User implements IAdmin{
                     System.out.println("Container of type " + selectedContainerType + " unloaded from vehicle " + selectedVehicle.getVehicleID());
                 } else {
                     System.err.println("Error: No " + selectedContainerType + " container to unload from vehicle " + selectedVehicle.getVehicleID());
+
                 }
             } else {
                 System.out.println("Vehicle " + selectedVehicleID + " does not have any containers loaded.");
@@ -1061,8 +1083,6 @@ public class Admin extends User implements IAdmin{
 
         scanner.close();
     }
-
-
 
     // Add a new manager to the system
     @Override
@@ -1109,13 +1129,17 @@ public class Admin extends User implements IAdmin{
             // Create the new manager and associate them with the selected port
             Manager newManager = new Manager(managerID, username, password, managedPort);
             managers.add(newManager);
+
             System.out.println("Manager with ID " + managerID + " has been added and assigned to port " + managedPort.getName() + " successfully.");
+
         } else {
             System.out.println("Port with ID " + portID + " not found. Manager assignment failed.");
         }
 
         scanner.close();
     }
+
+
 
 
     @Override
@@ -1155,7 +1179,9 @@ public class Admin extends User implements IAdmin{
 
                         System.out.println("Enter your choice: ");
                         int choice = scanner.nextInt();
+
                         scanner.nextLine();  // Consume newline
+
 
                         switch (choice) {
                             case 1 -> {

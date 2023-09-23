@@ -1,3 +1,4 @@
+
 package Model;
 
 public class Container {
@@ -52,8 +53,6 @@ public class Container {
         return weight;
     }
 
-
-
     public void load(ContainerType type) {
         // Implement loading logic based on container type.
     }
@@ -97,3 +96,4 @@ public class Container {
         return fuelRate * weight;
     }
 }
+
