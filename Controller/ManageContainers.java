@@ -1,6 +1,6 @@
 package Controller;
 
-import Model.Container;
+import Model.*;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -37,43 +37,42 @@ public class ManageContainers {
         return this.containerList.stream().anyMatch(container -> container.getContainerID().equals(containerID));
     }
 
-
     public Container addContainer(double weight, Container.ContainerType type) {
-        Container container = new Container(this.generateUniqueContainerID(),weight, type) ;
+        Container container = new Container(this.generateUniqueContainerID(), weight, type);
         containerList.add(container);
-        this.saveContainersToFile();
+        this.serializeContainersToFile();
         return container;
     }
 
     public boolean removeContainers(String containerID) {
         if (containerList.removeIf(container -> container.getContainerID().equals(containerID))) {
-            this.saveContainersToFile();
+            this.serializeContainersToFile();
             return true;
         }
         return false;
     }
 
-    public void saveContainersToFile() {
-        try (FileOutputStream fileOutputStream = new FileOutputStream("dataFile/containers.ser");
-             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream)) {
+    public void serializeContainersToFile() {
+        try (FileOutputStream fileOutputStream = new FileOutputStream("data/containers.dat");
+                ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream)) {
 
             objectOutputStream.writeObject(containerList);
 
-            System.out.println("Containers have been saved to " + "dataFile/containers.ser");
+            System.out.println("Containers have been serialized and saved to data/containers.dat");
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void getContainerInfo() {
-        try (FileInputStream fileInputStream = new FileInputStream("dataFile/containers.ser");
-             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream)) {
+    public void deserializeContainersFromFile() {
+        try (FileInputStream fileInputStream = new FileInputStream("data/containers.dat");
+                ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream)) {
 
-            ArrayList<Container> loadedContainers = (ArrayList<Container>) objectInputStream.readObject();
+            ArrayList<Container> importedContainers = (ArrayList<Container>) objectInputStream.readObject();
 
-            containerList = loadedContainers;
+            containerList = importedContainers;
 
-            System.out.println("Containers have been loaded from " + "dataFile/containers.ser");
+            System.out.println("Containers have been deserialized and imported from data/containers.dat");
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -81,15 +80,11 @@ public class ManageContainers {
 
     private synchronized String generateUniqueContainerID() {
         LastUsedID++;
-        return "c-" + LastUsedID;
+        return "C-" + LastUsedID;
     }
 
-    public static void main(String[] args) {
-        ManageContainers manageContainers = ManageContainers.getInstance();
-        manageContainers.addContainer(78.9, Container.ContainerType.LIQUID);
-    }
+    // public static void main(String[] args) {
+    // ManageContainers manageContainers = ManageContainers.getInstance();
+    // manageContainers.addContainer(78.9, Container.ContainerType.LIQUID);
+    // }
 }
-
-
-
-
