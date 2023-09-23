@@ -1,3 +1,4 @@
+
 package Model;
 
 public class Container {
@@ -95,3 +96,4 @@ public class Container {
         return fuelRate * weight;
     }
 }
+

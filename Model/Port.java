@@ -1,12 +1,10 @@
+
 package Model;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import Model.Vehicle.VehicleType;
 
 public class Port implements IPort {
     private String portID;
@@ -20,12 +18,12 @@ public class Port implements IPort {
     private int vehiclesCount;
     private ArrayList<Trip> pastTrips;
     private ArrayList<Trip> currentTrips;
-    private ArrayList<Container> containers;
+    private ArrayList<Model.Container> containers;
     private ArrayList<Vehicle> vehicles;
 
     public Port(String portID, String name, double latitude, double longitude, int storingCapacity,
-            boolean landingAbility, int containersCount, int vehiclesCount, ArrayList<Trip> pastTrips,
-            ArrayList<Trip> currentTrips, ArrayList<Container> containers, ArrayList<Vehicle> vehicles) {
+                boolean landingAbility, int containersCount, int vehiclesCount, ArrayList<Trip> pastTrips,
+                ArrayList<Trip> currentTrips, ArrayList<Model.Container> containers, ArrayList<Vehicle> vehicles) {
         if (!portID.matches("^p\\d+$")) {
             System.out.println("Invalid port ID. It must be p-number.");
         } else {
@@ -74,7 +72,7 @@ public class Port implements IPort {
         return currentTotalWeight;
     }
 
-    public ArrayList<Container> getContainers() {
+    public ArrayList<Model.Container> getContainers() {
         return containers;
     }
 
@@ -122,7 +120,7 @@ public class Port implements IPort {
         this.currentTrips = currentTrips;
     }
 
-    public void setContainers(ArrayList<Container> containers) {
+    public void setContainers(ArrayList<Model.Container> containers) {
         this.containers = containers;
     }
 
@@ -184,10 +182,10 @@ public class Port implements IPort {
 
     // Add containers
     @Override
-    public int addContainers(List<Container> containersToAdd) {
+    public int addContainers(List<Model.Container> containersToAdd) {
         // Calculate the total weight of containers being added
         double totalWeightToAdd = containersToAdd.stream()
-                .mapToDouble(Container::getWeight)
+                .mapToDouble(Model.Container::getWeight)
                 .sum();
 
         // Calculate the total weight of containers currently in the port
@@ -204,7 +202,7 @@ public class Port implements IPort {
     }
 
     @Override
-    public void removeContainer(Container container) {
+    public void removeContainer(Model.Container container) {
         containers.remove(container);
     }
 
@@ -228,17 +226,17 @@ public class Port implements IPort {
     }
 
     // Count the numbers of containers divided by type
-    public Map<Container.ContainerType, Integer> countContainersByType() {
-        Map<Container.ContainerType, Integer> containerCounts = new HashMap<>();
+    public Map<Model.Container.ContainerType, Integer> countContainersByType() {
+        Map<Model.Container.ContainerType, Integer> containerCounts = new HashMap<>();
 
         // Initialize counts
-        for (Container.ContainerType type : Container.ContainerType.values()) {
+        for (Model.Container.ContainerType type : Model.Container.ContainerType.values()) {
             containerCounts.put(type, 0);
         }
 
         // Loop through containers and count by type
-        for (Container container : containers) {
-            Container.ContainerType type = container.getType();
+        for (Model.Container container : containers) {
+            Model.Container.ContainerType type = container.getType();
             containerCounts.put(type, containerCounts.getOrDefault(type, 0) + 1);
         }
 
@@ -284,3 +282,4 @@ public class Port implements IPort {
         return vehicleCounts;
     }
 }
+

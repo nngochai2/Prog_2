@@ -1,9 +1,8 @@
+
 package Model;
 
 import java.util.Date;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 public class Trip {
     private String id;
