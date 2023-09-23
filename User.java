@@ -102,15 +102,15 @@ public abstract class User {
         System.out.println("Total weight of all containers: " + totalWeight + " units");
     }
 
-    public ArrayList<Ship> listShipsInPort(Port port) {
+    public void listShipsInPort(Port port) {
         // This method is responsible for listing all the ships in the given port
-        ArrayList<Ship> shipsAtPort = new ArrayList<>();
+        // ArrayList<Ship> shipsAtPort = new ArrayList<>();
         for (Vehicle vehicle : port.getVehicles()) {
             if (vehicle instanceof Ship) {
-                shipsAtPort.add((Ship) vehicle);
+                // shipsAtPort.add((Ship) vehicle);
+                System.out.println(vehicle);
             }
         }
-        return shipsAtPort;
     }
 
     public void listTripsOnDate(Date date, List<Trip> trips) {

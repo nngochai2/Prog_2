@@ -691,6 +691,7 @@ public class Admin extends User implements IAdmin{
         scanner.close();
     }
 
+
     // Edit the vehicle details
     @Override
     public void editVehicleDetails() {
@@ -787,6 +788,20 @@ public class Admin extends User implements IAdmin{
 
 
     // ====================================CONTAINER FUNCTIONS==========================================================
+=======
+    // public void addContainer(Container container) {
+    // // Check if there is already an existing container with the same ID
+    // for (Container exisitngContainer : containers) {
+    // if(exisitngContainer.getContainerID().equals(container.getContainerID())) {
+    // System.out.println("A container with the same ID has already exists!");
+    // return;
+    // }
+    // }
+    // containers.add(container);
+    // System.out.println("New container with ID " + container.getContainerID() + "
+    // has been added successfully.");
+    // }
+
     // Add a container to the system
     @Override
     public void addContainer() {
