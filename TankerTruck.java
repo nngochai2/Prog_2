@@ -2,14 +2,11 @@ import java.util.ArrayList;
 import java.util.Map;
 
 public class TankerTruck extends BasicTruck {
-    public TankerTruck(String vehicleID, String name, int currentFuel, int carryingCapacity, int fuelCapacity, Port currentPort, int totalContainers, ArrayList<Container> containers, Map<Container.ContainerType, Integer> containerCounts) {
+    public TankerTruck(String vehicleID, String name, double currentFuel, double carryingCapacity, double fuelCapacity, Port currentPort, int totalContainers, ArrayList<Container> containers, Map<Container.ContainerType, Integer> containerCounts) {
         super(vehicleID, name, currentFuel, carryingCapacity, fuelCapacity, currentPort, totalContainers, containers, containerCounts);
         if (!vehicleID.matches("^tr\\d+$")) {
             System.out.println("Invalid vehicle ID. It must be tr-number.");
         }
-    }
-
-    public TankerTruck(String vehicleID, double capacity) {
     }
 
     public VehicleType getVehicleType() {
@@ -17,7 +14,7 @@ public class TankerTruck extends BasicTruck {
     }
 
     @Override
-    public int getCarryCapacity() {
+    public double getCarryCapacity() {
         return super.getCarryCapacity();
     }
 

@@ -6,17 +6,17 @@ import java.util.Map;
 public abstract class Vehicle implements IVehicle {
     protected String vehicleID;
     protected String name;
-    protected int currentFuel;
-    protected int carryingCapacity;
-    protected int fuelCapacity;
+    protected double currentFuel;
+    protected double carryingCapacity;
+    protected double fuelCapacity;
     protected Port currentPort;
     protected int totalContainers;
     protected ArrayList<Container> containers;
     protected Map<Container.ContainerType, Integer> containerCounts;
     // Used to keep track of the number of each type of container that a vehicle is carrying, store and manage the counts of different container types.
 
-    public Vehicle(String vehicleID, String name, int currentFuel, int carryingCapacity, int fuelCapacity, Port currentPort, int totalContainers, ArrayList<Container> containers, Map<Container.ContainerType, Integer> containerCounts) {
 
+    public Vehicle(String vehicleID, String name, double currentFuel, double carryingCapacity, double fuelCapacity, Port currentPort, int totalContainers, ArrayList<Container> containers, Map<Container.ContainerType, Integer> containerCounts) {
         this.vehicleID = vehicleID;
         this.name = name;
         this.currentFuel = currentFuel;
@@ -26,10 +26,6 @@ public abstract class Vehicle implements IVehicle {
         this.totalContainers = totalContainers;
         this.containers = containers;
         this.containerCounts = containerCounts;
-    }
-
-    public Vehicle() {
-
     }
 
     // Define the vehicle types
@@ -51,15 +47,15 @@ public abstract class Vehicle implements IVehicle {
         return name;
     }
 
-    public int getCurrentFuel() {
+    public double getCurrentFuel() {
         return currentFuel;
     }
 
-    public int getCarryingCapacity() {
+    public double getCarryingCapacity() {
         return carryingCapacity;
     }
 
-    public int getFuelCapacity() {
+    public double getFuelCapacity() {
         return fuelCapacity;
     }
 
@@ -209,5 +205,20 @@ public abstract class Vehicle implements IVehicle {
             return false;
         }
         return true;
+    }
+
+    // Add or update a container count in the map
+    public void updateContainerCount(Container.ContainerType type, int count) {
+        containerCounts.put(type, count);
+    }
+
+    // Get the container count for a specific type
+    public int getContainerCount(Container.ContainerType type) {
+        return containerCounts.getOrDefault(type, 0);
+    }
+
+    // Remove a container count from the map
+    public void removeContainerCount(Container.ContainerType type) {
+        containerCounts.remove(type);
     }
 }

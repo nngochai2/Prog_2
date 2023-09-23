@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.text.SimpleDateFormat;
 
 public abstract class User {
-    private final String userID;
-    private final String username;
-    private final String password;
-    private final UserRole role;
+    private String userID;
+    private String username;
+    private String password;
+    private UserRole role;
 
     public User(String userID, String username, String password, UserRole role) {
         this.userID = userID;
@@ -37,37 +37,61 @@ public abstract class User {
         return userID;
     }
 
-    public boolean login(String username, String password) {
-        // This method is responsible for verifying the username and password
-        return (this.username.equals(username) && this.password.equals(password));
+    public void setUserID(String userID) {
+        this.userID = userID;
     }
 
-    public void calculateDailyFuelUsage(Date date, ArrayList<Trip> trips) {
-        // This method is responsible for calculating daily fuel usage
-        double dailyFuelUsage = 0;
-        for (Trip trip : trips) {
-            if ((date.after(trip.getDepartureDate()) && date.before(trip.getArrivalDate()))
-                    || (date.equals(trip.getDepartureDate())) || (date.equals(trip.getArrivalDate()))) {
-                Vehicle vehicle = trip.getVehicle();
-                ArrayList<Container> containers = trip.getContainersOnTrip();
-                // Get the distance traveled during the trip
-                double distance = trip.getDeparturePort().calculateDistance(trip.getArrivalPort());
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
-                // Calculate the fuel consumption for the trip
-                for (Container container : containers) {
-                    double fuelRate = container.calculateFuelConsumption(vehicle);
-                    dailyFuelUsage += fuelRate;
-                }
-                // Calculate the number of days the trip lasts
-                long millisecondsInADay = 24 * 60 * 60 * 1000;
-                long tripDurationInDays = (trip.getDepartureDate().getTime() - trip.getArrivalDate().getTime())
-                        / millisecondsInADay;
-                // Calculate daily fuel consumption for this trip
-                dailyFuelUsage *= distance / tripDurationInDays;
-            }
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setRole(UserRole role) {
+        this.role = role;
+    }
+
+    // Check if the provided username and password match the store value
+    public User login(String username, String password) {
+        if (this.username.equals(username) && this.password.equals(password)) {
+            return this;
         }
-        System.out.println("Total fuel used on " + date + " is: " + dailyFuelUsage + " gallons");
+        return null;
     }
+
+    //    public boolean login(String username, String password) {
+//        // This method is responsible for verifying the username and password
+//        return (this.username.equals(username) && this.password.equals(password));
+//    }
+
+//    public void calculateDailyFuelUsage(Date date, ArrayList<Trip> trips) {
+//        // This method is responsible for calculating daily fuel usage
+//        double dailyFuelUsage = 0;
+//        for (Trip trip : trips) {
+//            if ((date.after(trip.getDepartureDate()) && date.before(trip.getArrivalDate()))
+//                    || (date.equals(trip.getDepartureDate())) || (date.equals(trip.getArrivalDate()))) {
+//                Vehicle vehicle = trip.getVehicle();
+//                ArrayList<Container> containers = trip.getContainersOnTrip();
+//                // Get the distance traveled during the trip
+//                double distance = trip.getDeparturePort().calculateDistance(trip.getArrivalPort());
+//
+//                // Calculate the fuel consumption for the trip
+//                for (Container container : containers) {
+//                    double fuelRate = container.calculateFuelConsumption(vehicle);
+//                    dailyFuelUsage += fuelRate;
+//                }
+//                // Calculate the number of days the trip lasts
+//                long millisecondsInADay = 24 * 60 * 60 * 1000;
+//                long tripDurationInDays = (trip.getDepartureDate().getTime() - trip.getArrivalDate().getTime())
+//                        / millisecondsInADay;
+//                // Calculate daily fuel consumption for this trip
+//                dailyFuelUsage *= distance / tripDurationInDays;
+//            }
+//        }
+//        System.out.println("Total fuel used on " + date + " is: " + dailyFuelUsage + " gallons");
+//    }
 
     public void calculateContainerWeights(ArrayList<Container> containers) {
         // This method is responsible for calculating total container weights
