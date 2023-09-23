@@ -19,10 +19,7 @@ public interface IManager {
 
     void listShipsInPort(); // Common method to list all ships in a port
 
-
-
-    void listTripsFromDateToDate(); // Common method to list all trips in range(date,
-    // anotherDate)
+    void listTripsFromDateToDate(); // Common method to list all trips in range(date, anotherDate)
 
     void viewVehicleDetails(); // Common method to view vehicle details
 

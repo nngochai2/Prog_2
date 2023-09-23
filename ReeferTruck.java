@@ -38,6 +38,4 @@ public class ReeferTruck extends BasicTruck {
     public void move(Port destinationPort) {
         super.move(destinationPort);
     }
-
-
 }
