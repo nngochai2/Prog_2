@@ -1,3 +1,9 @@
+package model;
+
+import model.BasicTruck;
+import model.Container;
+import model.Port;
+
 import java.util.ArrayList;
 import java.util.Map;
 

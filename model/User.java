@@ -1,3 +1,5 @@
+package model;
+
 import java.util.List;
 import java.util.Date;
 import java.util.ArrayList;
@@ -66,19 +68,19 @@ public abstract class User {
 //        return (this.username.equals(username) && this.password.equals(password));
 //    }
 
-//    public void calculateDailyFuelUsage(Date date, ArrayList<Trip> trips) {
+//    public void calculateDailyFuelUsage(Date date, ArrayList<model.Trip> trips) {
 //        // This method is responsible for calculating daily fuel usage
 //        double dailyFuelUsage = 0;
-//        for (Trip trip : trips) {
+//        for (model.Trip trip : trips) {
 //            if ((date.after(trip.getDepartureDate()) && date.before(trip.getArrivalDate()))
 //                    || (date.equals(trip.getDepartureDate())) || (date.equals(trip.getArrivalDate()))) {
-//                Vehicle vehicle = trip.getVehicle();
-//                ArrayList<Container> containers = trip.getContainersOnTrip();
+//                model.Vehicle vehicle = trip.getVehicle();
+//                ArrayList<model.Container> containers = trip.getContainersOnTrip();
 //                // Get the distance traveled during the trip
 //                double distance = trip.getDeparturePort().calculateDistance(trip.getArrivalPort());
 //
 //                // Calculate the fuel consumption for the trip
-//                for (Container container : containers) {
+//                for (model.Container container : containers) {
 //                    double fuelRate = container.calculateFuelConsumption(vehicle);
 //                    dailyFuelUsage += fuelRate;
 //                }
@@ -104,10 +106,10 @@ public abstract class User {
 
     public void listShipsInPort(Port port) {
         // This method is responsible for listing all the ships in the given port
-        // ArrayList<Ship> shipsAtPort = new ArrayList<>();
+        // ArrayList<model.Ship> shipsAtPort = new ArrayList<>();
         for (Vehicle vehicle : port.getVehicles()) {
             if (vehicle instanceof Ship) {
-                // shipsAtPort.add((Ship) vehicle);
+                // shipsAtPort.add((model.Ship) vehicle);
                 System.out.println(vehicle);
             }
         }
@@ -119,12 +121,12 @@ public abstract class User {
         for (Trip trip : trips) {
             if ((date.after(trip.getDepartureDate()) && date.before(trip.getArrivalDate()))
                     || (date.equals(trip.getDepartureDate())) || (date.equals(trip.getArrivalDate()))) {
-                System.out.println("Trip ID: " + trip.getId());
+                System.out.println("model.Trip ID: " + trip.getId());
                 System.out.println("Departure Date: " + sdf.format(trip.getDepartureDate()));
                 System.out.println("Arrival Date: " + sdf.format(trip.getArrivalDate()));
-                System.out.println("Vehicle ID: " + trip.getVehicle().getVehicleID());
-                System.out.println("Departure Port: " + trip.getDeparturePort());
-                System.out.println("Arrival Port: " + trip.getArrivalPort());
+                System.out.println("model.Vehicle ID: " + trip.getVehicle().getVehicleID());
+                System.out.println("Departure model.Port: " + trip.getDeparturePort());
+                System.out.println("Arrival model.Port: " + trip.getArrivalPort());
                 System.out.println("Status: " + trip.getStatus());
                 System.out.println("-----------------------------");
             }
@@ -138,12 +140,12 @@ public abstract class User {
         for (Trip trip : trips) {
             if ((startDate.equals(trip.getDepartureDate()) || startDate.after(trip.getDepartureDate()))
                     && (endDate.before(trip.getArrivalDate())) || endDate.equals(trip.getArrivalDate())) {
-                System.out.println("Trip ID: " + trip.getId());
+                System.out.println("model.Trip ID: " + trip.getId());
                 System.out.println("Departure Date: " + sdf.format(trip.getDepartureDate()));
                 System.out.println("Arrival Date: " + sdf.format(trip.getArrivalDate()));
-                System.out.println("Vehicle ID: " + trip.getVehicle().getVehicleID());
-                System.out.println("Departure Port: " + trip.getDeparturePort());
-                System.out.println("Arrival Port: " + trip.getArrivalPort());
+                System.out.println("model.Vehicle ID: " + trip.getVehicle().getVehicleID());
+                System.out.println("Departure model.Port: " + trip.getDeparturePort());
+                System.out.println("Arrival model.Port: " + trip.getArrivalPort());
                 System.out.println("Status: " + trip.getStatus());
                 System.out.println("-----------------------------");
             }

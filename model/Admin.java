@@ -1,7 +1,9 @@
+package model;
+
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-public class Admin extends User implements IAdmin{
+public class Admin extends User implements IAdmin {
 
     private ArrayList<Port> ports;
     private ArrayList<Vehicle> vehicles;
@@ -10,7 +12,7 @@ public class Admin extends User implements IAdmin{
     private ArrayList<Trip> trips;
 
 
-    public Admin(String userID, String username, String password, UserRole role, ArrayList<Port> ports, ArrayList<Vehicle> vehicles, ArrayList<Container> containers, ArrayList<Manager> managers, ArrayList<Trip> trips) {
+    public Admin(String userID, String username, String password, User.UserRole role, ArrayList<Port> ports, ArrayList<Vehicle> vehicles, ArrayList<Container> containers, ArrayList<Manager> managers, ArrayList<Trip> trips) {
         super(userID, username, password, role);
         this.ports = ports;
         this.vehicles = vehicles;
@@ -62,21 +64,21 @@ public class Admin extends User implements IAdmin{
 
     // Display the menu for the admin
     public void displayMenu() {
-        System.out.println("Welcome Admin " + getUsername());
+        System.out.println("Welcome model.Admin " + getUsername());
         System.out.println("Administrator's menu: ");
-        System.out.println("1. Add Port");
-        System.out.println("2. Remove Port");
-        System.out.println("3. Add Vehicle");
-        System.out.println("4. Remove Vehicle");
-        System.out.println("5. Add Container");
-        System.out.println("6. Remove Container");
-        System.out.println("7. Add Manager");
-        System.out.println("8. Remove Manager");
-        System.out.println("9. List Ships in Port");
+        System.out.println("1. Add model.Port");
+        System.out.println("2. Remove model.Port");
+        System.out.println("3. Add model.Vehicle");
+        System.out.println("4. Remove model.Vehicle");
+        System.out.println("5. Add model.Container");
+        System.out.println("6. Remove model.Container");
+        System.out.println("7. Add model.Manager");
+        System.out.println("8. Remove model.Manager");
+        System.out.println("9. List Ships in model.Port");
         System.out.println("10. List Trips on a Date");
         System.out.println("11. List Trips from Date to Date");
         System.out.println("12. Calculate Daily Fuel Usage");
-        System.out.println("13. Calculate Container Weights");
+        System.out.println("13. Calculate model.Container Weights");
     }
 
     @Override
@@ -124,7 +126,7 @@ public class Admin extends User implements IAdmin{
         // Prompt the admin to select a port
         System.out.println("Select a port to list trips:");
         for (Port port : ports) {
-            System.out.println("Port ID: " + port.getPortID());
+            System.out.println("model.Port ID: " + port.getPortID());
             System.out.println("Name: " + port.getName());
         }
 
@@ -151,7 +153,7 @@ public class Admin extends User implements IAdmin{
             System.out.print("Enter the end date (yyyy-MM-dd): ");
             Date endDate = parseDate(scanner.nextLine(), sdf);
 
-            System.out.println("Trips from " + sdf.format(startDate) + " to " + sdf.format(endDate) + " in Port " + selectedPort.getName() + ":");
+            System.out.println("Trips from " + sdf.format(startDate) + " to " + sdf.format(endDate) + " in model.Port " + selectedPort.getName() + ":");
 
             for (Trip trip : trips) {
                 Date tripStartDate = trip.getDepartureDate();
@@ -162,18 +164,18 @@ public class Admin extends User implements IAdmin{
                         && (tripEndDate.equals(endDate) || tripEndDate.before(endDate)
                         || (tripStartDate.equals(startDate) && tripEndDate.equals(endDate)))) {
                     // Print trip details
-                    System.out.println("Trip ID: " + trip.getId());
+                    System.out.println("model.Trip ID: " + trip.getId());
                     System.out.println("Departure Date: " + sdf.format(trip.getDepartureDate()));
                     System.out.println("Arrival Date: " + sdf.format(trip.getArrivalDate()));
-                    System.out.println("Vehicle ID: " + trip.getVehicle().getVehicleID());
-                    System.out.println("Departure Port: " + trip.getDeparturePort());
-                    System.out.println("Arrival Port: " + trip.getArrivalPort());
+                    System.out.println("model.Vehicle ID: " + trip.getVehicle().getVehicleID());
+                    System.out.println("Departure model.Port: " + trip.getDeparturePort());
+                    System.out.println("Arrival model.Port: " + trip.getArrivalPort());
                     System.out.println("Status: " + trip.getStatus());
                     System.out.println("-----------------------------");
                 }
             }
         } else {
-            System.out.println("Port with ID " + portID + " not found.");
+            System.out.println("model.Port with ID " + portID + " not found.");
         }
     }
 
@@ -210,12 +212,12 @@ public class Admin extends User implements IAdmin{
         // Handle the options
         switch (choice) {
             case 1 -> {
-                System.out.println("Container Weights for All Ports:");
+                System.out.println("model.Container Weights for All Ports:");
 
                 // Calculate and print container weights for all ports
                 for (Port port : this.ports) {
                     double totalWeight = port.calculateTotalWeight();
-                    System.out.println("Port ID: " + port.getPortID() + " - Total Container Weight: " + totalWeight);
+                    System.out.println("model.Port ID: " + port.getPortID() + " - Total model.Container Weight: " + totalWeight);
                 }
             }
             case 2 -> {
@@ -234,9 +236,9 @@ public class Admin extends User implements IAdmin{
                 // If the ID is correct, proceed to calculate the weight of targeted port
                 if (specificPort != null) {
                     double totalWeight = specificPort.calculateTotalWeight();
-                    System.out.println("Total Container Weight for Port ID " + portID + ": " + totalWeight);
+                    System.out.println("Total model.Container Weight for model.Port ID " + portID + ": " + totalWeight);
                 } else {
-                    System.out.println("Port with ID " + portID + " not found.");
+                    System.out.println("model.Port with ID " + portID + " not found.");
                 }
             }
             default -> System.out.println("Invalid choice.");
@@ -264,7 +266,7 @@ public class Admin extends User implements IAdmin{
 
             // View all ports' details
             for (Port port : ports) {
-                System.out.println("Port ID: " + port.getPortID());
+                System.out.println("model.Port ID: " + port.getPortID());
                 System.out.println("Name: " + port.getName());
                 System.out.println("Latitude: " + port.getLatitude());
                 System.out.println("Longitude: " + port.getLongitude());
@@ -273,7 +275,7 @@ public class Admin extends User implements IAdmin{
                 System.out.println("---------------------");
             }
         } else if (choice == 2) {
-            System.out.print("Enter the Port ID to view details: ");
+            System.out.print("Enter the model.Port ID to view details: ");
             String portIDToView = scanner.nextLine();
 
             boolean found = false;
@@ -282,7 +284,7 @@ public class Admin extends User implements IAdmin{
             for (Port port : this.ports) {
                 if (port.getPortID().equals(portIDToView)) {
                     found = true;
-                    System.out.println("Port ID: " + port.getPortID());
+                    System.out.println("model.Port ID: " + port.getPortID());
                     System.out.println("Name: " + port.getName());
                     System.out.println("Latitude: " + port.getLatitude());
                     System.out.println("Longitude: " + port.getLongitude());
@@ -294,7 +296,7 @@ public class Admin extends User implements IAdmin{
             }
 
             if (!found) {
-                System.out.println("Port with ID " + portIDToView + " not found.");
+                System.out.println("model.Port with ID " + portIDToView + " not found.");
             }
         } else {
             System.out.println("Invalid choice.");
@@ -331,15 +333,15 @@ public class Admin extends User implements IAdmin{
             }
 
             if (!shipsInPort.isEmpty()) {
-                System.out.println("Ships in Port ID " + portID + ":");
+                System.out.println("Ships in model.Port ID " + portID + ":");
                 for (Ship ship : shipsInPort) {
-                    System.out.println("Ship ID: " + ship.getVehicleID() + " - Name: " + ship.getName());
+                    System.out.println("model.Ship ID: " + ship.getVehicleID() + " - Name: " + ship.getName());
                 }
             } else {
-                System.out.println("No ships found in Port ID " + portID + ".");
+                System.out.println("No ships found in model.Port ID " + portID + ".");
             }
         } else {
-            System.out.println("Port with ID " + portID + " not found.");
+            System.out.println("model.Port with ID " + portID + " not found.");
         }
 
         scanner.close();
@@ -349,7 +351,7 @@ public class Admin extends User implements IAdmin{
     public void addPort() {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Enter the Port ID: ");
+        System.out.println("Enter the model.Port ID: ");
         String portID = scanner.nextLine();
 
         // Check if there is already an existing port with the same ID
@@ -360,7 +362,7 @@ public class Admin extends User implements IAdmin{
             }
         }
 
-        System.out.println("Enter the Port Name: ");
+        System.out.println("Enter the model.Port Name: ");
         String name = scanner.nextLine();
 
         for (Port existingPort : ports) {
@@ -391,7 +393,7 @@ public class Admin extends User implements IAdmin{
         System.out.println("Does it have landing ability? (true/false): ");
         boolean landingAbility = scanner.nextBoolean();
 
-        // Create a new Port object with the collected information
+        // Create a new model.Port object with the collected information
         Port newPort = new Port(portID, name, latitude, longitude, storingCapacity, landingAbility, 0, 0,
                 new ArrayList<>(), new ArrayList<>());
 
@@ -421,8 +423,8 @@ public class Admin extends User implements IAdmin{
 
         // Check if the port with the specified ID was found
         if (portToEdit != null) {
-            System.out.println("Port found:");
-            System.out.println("Port ID: " + portToEdit.getPortID());
+            System.out.println("model.Port found:");
+            System.out.println("model.Port ID: " + portToEdit.getPortID());
             System.out.println("Name: " + portToEdit.getName());
             System.out.println("Latitude: " + portToEdit.getLatitude());
             System.out.println("Longitude: " + portToEdit.getLongitude());
@@ -435,7 +437,7 @@ public class Admin extends User implements IAdmin{
                 String confirmation = scanner.nextLine().toLowerCase();
 
                 if (confirmation.equals("yes")) {
-                    System.out.println("Edit Port Details:");
+                    System.out.println("Edit model.Port Details:");
                     System.out.println("1. Edit Name");
                     System.out.println("2. Edit Latitude");
                     System.out.println("3. Edit Longitude");
@@ -452,19 +454,19 @@ public class Admin extends User implements IAdmin{
                             System.out.println("Enter the new name: ");
                             String newName = scanner.nextLine();
                             portToEdit.setName(newName);
-                            System.out.println("Port name updated.");
+                            System.out.println("model.Port name updated.");
                         }
                         case 2 -> {
                             System.out.println("Enter the new latitude: ");
                             double newLatitude = scanner.nextDouble();
                             portToEdit.setLatitude(newLatitude);
-                            System.out.println("Port latitude updated.");
+                            System.out.println("model.Port latitude updated.");
                         }
                         case 3 -> {
                             System.out.println("Enter the new longitude: ");
                             double newLongitude = scanner.nextDouble();
                             portToEdit.setLongitude(newLongitude);
-                            System.out.println("Port longitude updated.");
+                            System.out.println("model.Port longitude updated.");
                         }
                         case 4 -> {
                             System.out.println("Enter the new storing capacity: ");
@@ -479,7 +481,7 @@ public class Admin extends User implements IAdmin{
                             System.out.println("Landing ability updated.");
                         }
                         case 6 -> {
-                            System.out.println("Port details updated and saved.");
+                            System.out.println("model.Port details updated and saved.");
                             return;
                         }
                     }
@@ -491,7 +493,7 @@ public class Admin extends User implements IAdmin{
                 }
             }
         } else {
-            System.out.println("Port with ID " + portID + " was not found. Editing failed.");
+            System.out.println("model.Port with ID " + portID + " was not found. Editing failed.");
         }
     }
 
@@ -500,7 +502,7 @@ public class Admin extends User implements IAdmin{
     public void deletePort() {
         Scanner scanner = new Scanner(System.in);
         // Collect the port ID that the admin wants to delete
-        System.out.println("Enter the Port ID to delete:");
+        System.out.println("Enter the model.Port ID to delete:");
         String portIDToDelete = scanner.nextLine();
 
         // Find the port with the given ID
@@ -515,9 +517,9 @@ public class Admin extends User implements IAdmin{
         if (portToDelete != null) {
             // Remove the port from the list of ports
             ports.remove(portToDelete);
-            System.out.println("Port with ID " + portIDToDelete + " has been deleted.");
+            System.out.println("model.Port with ID " + portIDToDelete + " has been deleted.");
         } else {
-            System.out.println("Port with ID " + portIDToDelete + " not found. Deletion failed.");
+            System.out.println("model.Port with ID " + portIDToDelete + " not found. Deletion failed.");
         }
     }
 
@@ -637,9 +639,9 @@ public class Admin extends User implements IAdmin{
         if (vehicleToDelete != null) {
             // Remove the vehicle from the list of ports
             vehicles.remove(vehicleToDelete);
-            System.out.println("Vehicle with ID " + vehicleIDToDelete + " has been deleted.");
+            System.out.println("model.Vehicle with ID " + vehicleIDToDelete + " has been deleted.");
         } else {
-            System.out.println("Vehicle with ID " + vehicleIDToDelete + " not found. Deletion failed.");
+            System.out.println("model.Vehicle with ID " + vehicleIDToDelete + " not found. Deletion failed.");
         }
         scanner.close();
     }
@@ -666,10 +668,10 @@ public class Admin extends User implements IAdmin{
 
             // Check if the vehicle with the specified ID was found
             if (vehicleToEdit != null) {
-                System.out.println("Vehicle found:");
-                System.out.println("Vehicle ID: " + vehicleToEdit.getVehicleID());
-                System.out.println("Vehicle Type: " + vehicleToEdit.getVehicleType());
-                System.out.println("Vehicle Name: " + vehicleToEdit.getName());
+                System.out.println("model.Vehicle found:");
+                System.out.println("model.Vehicle ID: " + vehicleToEdit.getVehicleID());
+                System.out.println("model.Vehicle Type: " + vehicleToEdit.getVehicleType());
+                System.out.println("model.Vehicle Name: " + vehicleToEdit.getName());
                 System.out.println("Current Fuel: " + vehicleToEdit.getCurrentFuel());
                 System.out.println("Carrying Capacity: " + vehicleToEdit.getCarryingCapacity());
                 System.out.println("Fuel Capacity: " + vehicleToEdit.getFuelCapacity());
@@ -680,8 +682,8 @@ public class Admin extends User implements IAdmin{
                     String confirmation = scanner.nextLine().toLowerCase();
 
                     if (confirmation.equals("yes")) {
-                        System.out.println("Edit Vehicle Details:");
-                        System.out.println("1. Edit Vehicle Name");
+                        System.out.println("Edit model.Vehicle Details:");
+                        System.out.println("1. Edit model.Vehicle Name");
                         System.out.println("2. Edit Current Fuel");
                         System.out.println("3. Edit Carrying Capacity");
                         System.out.println("4. Edit Fuel Capacity");
@@ -696,7 +698,7 @@ public class Admin extends User implements IAdmin{
                                 System.out.println("Enter the new vehicle name: ");
                                 String newName = scanner.nextLine();
                                 vehicleToEdit.setName(newName);
-                                System.out.println("Vehicle name updated.");
+                                System.out.println("model.Vehicle name updated.");
                             }
                             case 2 -> {
                                 System.out.println("Enter the new current fuel: ");
@@ -717,7 +719,7 @@ public class Admin extends User implements IAdmin{
                                 System.out.println("Fuel capacity updated.");
                             }
                             case 5 -> {
-                                System.out.println("Vehicle details updated and saved.");
+                                System.out.println("model.Vehicle details updated and saved.");
                                 return;
                             }
                         }
@@ -728,7 +730,7 @@ public class Admin extends User implements IAdmin{
                     }
                 }
             } else {
-                System.out.println("Vehicle with ID " + vehicleID + " not found. Editing failed.");
+                System.out.println("model.Vehicle with ID " + vehicleID + " not found. Editing failed.");
                 System.out.println("Do you want to try editing another vehicle? (yes/no): ");
                 String tryAgain = scanner.nextLine().toLowerCase();
 
@@ -742,9 +744,9 @@ public class Admin extends User implements IAdmin{
 
     // ====================================CONTAINER FUNCTIONS==========================================================
 
-    // public void addContainer(Container container) {
+    // public void addContainer(model.Container container) {
     // // Check if there is already an existing container with the same ID
-    // for (Container exisitngContainer : containers) {
+    // for (model.Container exisitngContainer : containers) {
     // if(exisitngContainer.getContainerID().equals(container.getContainerID())) {
     // System.out.println("A container with the same ID has already exists!");
     // return;
@@ -784,18 +786,18 @@ public class Admin extends User implements IAdmin{
         }
 
         if (!validPort) {
-            System.out.println("Invalid port ID. Container location cannot be set"); // Output if the location is not valid
+            System.out.println("Invalid port ID. model.Container location cannot be set"); // Output if the location is not valid
         }
 
-        // Create a new Container object based on the collected information (necessary for further modification of the created container)
+        // Create a new model.Container object based on the collected information (necessary for further modification of the created container)
 
         if (validPort) {
             Container newContainer = new Container(containerID, containerType, weight, portID);
             containers.add(newContainer);     // Add the new container to your ArrayList or data structure.
-            System.out.println("Container " + containerID + " has been added successfully.");
+            System.out.println("model.Container " + containerID + " has been added successfully.");
         }
 
-        System.out.println("Container " + containerID + " has been added successfully.");
+        System.out.println("model.Container " + containerID + " has been added successfully.");
     }
 
     @Override
@@ -817,10 +819,10 @@ public class Admin extends User implements IAdmin{
 
             // Check if the container with the specified ID was found
             if (containerToEdit != null) {
-                System.out.println("Container found:");
-                System.out.println("Container ID: " + containerToEdit.getContainerID());
-                System.out.println("Container Type: " + containerToEdit.getType());
-                System.out.println("Container Weight: " + containerToEdit.getWeight());
+                System.out.println("model.Container found:");
+                System.out.println("model.Container ID: " + containerToEdit.getContainerID());
+                System.out.println("model.Container Type: " + containerToEdit.getType());
+                System.out.println("model.Container Weight: " + containerToEdit.getWeight());
 
                 // Ask for confirmation
                 while (true) {
@@ -829,9 +831,9 @@ public class Admin extends User implements IAdmin{
 
                     if (confirmation.equals("yes")) {
                         // Provide options for the admin
-                        System.out.println("Edit Container Details:");
-                        System.out.println("1. Edit Container Type");
-                        System.out.println("2. Edit Container Weight");
+                        System.out.println("Edit model.Container Details:");
+                        System.out.println("1. Edit model.Container Type");
+                        System.out.println("2. Edit model.Container Weight");
                         System.out.println("3. Save and Exit");
 
                         System.out.println("Enter your choice: ");
@@ -846,7 +848,7 @@ public class Admin extends User implements IAdmin{
                                 try {
                                     Container.ContainerType newContainerType = Container.ContainerType.valueOf(newContainerTypeStr);
                                     containerToEdit.setContainerType(newContainerType);
-                                    System.out.println("Container " + containerID + " has been updated with the new type.");
+                                    System.out.println("model.Container " + containerID + " has been updated with the new type.");
                                 } catch (IllegalArgumentException e) {
                                     System.out.println("Invalid container type.");
                                 }
@@ -855,10 +857,10 @@ public class Admin extends User implements IAdmin{
                                 System.out.println("Enter the new container weight: ");
                                 double newWeight = scanner.nextDouble();
                                 containerToEdit.setWeight(newWeight);
-                                System.out.println("Container weight updated.");
+                                System.out.println("model.Container weight updated.");
                             }
                             case 3 -> {
-                                System.out.println("Container details updated and saved.");
+                                System.out.println("model.Container details updated and saved.");
                                 return;
                             }
                         }
@@ -869,7 +871,7 @@ public class Admin extends User implements IAdmin{
                     }
                 }
             } else {
-                System.out.println("Container with ID " + containerID + " not found. Editing failed.");
+                System.out.println("model.Container with ID " + containerID + " not found. Editing failed.");
                 System.out.println("Do you want to try editing another container? (yes/no): ");
                 String tryAgain = scanner.nextLine().toLowerCase();
 
@@ -899,10 +901,10 @@ public class Admin extends User implements IAdmin{
 
         // If the ID is correct, proceed to find the container information
         if (containerToDelete != null) {
-            System.out.println("Container found:");
-            System.out.println("Container ID: " + containerToDelete.getContainerID());
-            System.out.println("Container Type: " + containerToDelete.getType());
-            System.out.println("Container Weight: " + containerToDelete.getWeight());
+            System.out.println("model.Container found:");
+            System.out.println("model.Container ID: " + containerToDelete.getContainerID());
+            System.out.println("model.Container Type: " + containerToDelete.getType());
+            System.out.println("model.Container Weight: " + containerToDelete.getWeight());
 
             // Ask for the user confirmation before deletion
             System.out.println("Are you sure you want to delete this container? (yes/no): ");
@@ -910,13 +912,13 @@ public class Admin extends User implements IAdmin{
 
             if (confirmation.equals("yes")) {
                 containers.remove(containerToDelete);
-                System.out.println("Container with ID " + containerIDToDelete + " has been deleted successfully.");
+                System.out.println("model.Container with ID " + containerIDToDelete + " has been deleted successfully.");
             } else if (confirmation.equals("no")) {
-                System.out.println("Deletion canceled. Container was not deleted");
+                System.out.println("Deletion canceled. model.Container was not deleted");
             } else
                 System.out.println("Invalid input. Please enter 'yes' or 'no'.");
         } else {
-            System.out.println("Container with ID " + containerIDToDelete + "  not found");
+            System.out.println("model.Container with ID " + containerIDToDelete + "  not found");
             System.out.println("Do you want to try deleting another container? (yes/no): ");
             String tryAgain = scanner.nextLine().toLowerCase();
 
@@ -935,12 +937,12 @@ public class Admin extends User implements IAdmin{
         System.out.println("Available Vehicles (Ships and Trucks):");
         for (Port port : this.ports) {
             for (Vehicle vehicle : port.getVehicles()) {
-                System.out.println("Vehicle ID: " + vehicle.getVehicleID() + " - Name: " + vehicle.getName());
+                System.out.println("model.Vehicle ID: " + vehicle.getVehicleID() + " - Name: " + vehicle.getName());
             }
         }
 
         // Ask the admin to select a vehicle to load containers onto
-        System.out.println("Enter the Vehicle ID to load container(s) onto: ");
+        System.out.println("Enter the model.Vehicle ID to load container(s) onto: ");
         String selectedVehicleID = scanner.next();
 
         // Find the vehicle with matched ID
@@ -961,11 +963,11 @@ public class Admin extends User implements IAdmin{
             // Display available containers for the admin to choose
             System.out.println("Available Containers: ");
             for (Container container : containers) {
-                System.out.println("Container ID: " + container.getContainerID() + " - Type: " + container.getType());
+                System.out.println("model.Container ID: " + container.getContainerID() + " - Type: " + container.getType());
             }
 
             // Ask the admin to select containers to load onto the vehicle
-            System.out.println("Enter the Container IDs to load onto the vehicle (comma-separated):");
+            System.out.println("Enter the model.Container IDs to load onto the vehicle (comma-separated):");
             String selectedContainerIDs = scanner.next();
             String[] containerIDs = selectedContainerIDs.split(",");
 
@@ -982,16 +984,16 @@ public class Admin extends User implements IAdmin{
                     // Check if the vehicle can carry the container type
                     if (selectedVehicle.canLoadContainerType(containerToAdd.getType())) {
                         selectedVehicle.loadContainer(containerToAdd.getType());
-                        System.out.println("Container " + containerID + " loaded onto Vehicle " + selectedVehicleID);
+                        System.out.println("model.Container " + containerID + " loaded onto model.Vehicle " + selectedVehicleID);
                     } else {
                         System.out.println("Error: This vehicle cannot load " + containerToAdd.getType() + " container.");
                     }
                 } else {
-                    System.out.println("Container " + containerID + " not found.");
+                    System.out.println("model.Container " + containerID + " not found.");
                 }
             }
         } else {
-            System.out.println("Vehicle with ID " + selectedVehicleID + " not found.");
+            System.out.println("model.Vehicle with ID " + selectedVehicleID + " not found.");
         }
 
         scanner.close();
@@ -1005,12 +1007,12 @@ public class Admin extends User implements IAdmin{
         System.out.println("Available Vehicles (Ships and Trucks):");
         for (Port port : this.ports) {
             for (Vehicle vehicle : port.getVehicles()) {
-                System.out.println("Vehicle ID: " + vehicle.getVehicleID() + " - Name: " + vehicle.getName());
+                System.out.println("model.Vehicle ID: " + vehicle.getVehicleID() + " - Name: " + vehicle.getName());
             }
         }
 
         // Ask the admin to select a vehicle to unload containers from
-        System.out.println("Enter the Vehicle ID to unload containers from:");
+        System.out.println("Enter the model.Vehicle ID to unload containers from:");
         String selectedVehicleID = scanner.next();
 
         // Find the selected vehicle
@@ -1023,7 +1025,7 @@ public class Admin extends User implements IAdmin{
                 }
             }
             if (selectedVehicle != null) {
-                break; // Vehicle found, exit the loop
+                break; // model.Vehicle found, exit the loop
             }
         }
 
@@ -1031,14 +1033,14 @@ public class Admin extends User implements IAdmin{
             // Check if the vehicle has any containers to unload
             if (selectedVehicle.getTotalContainers() > 0) {
                 // Display containers loaded on the selected vehicle
-                System.out.println("Containers loaded on Vehicle " + selectedVehicleID + ":");
+                System.out.println("Containers loaded on model.Vehicle " + selectedVehicleID + ":");
                 for (Container type : selectedVehicle.getContainerCounts().keySet()) {
                     int count = selectedVehicle.getContainerCounts().get(type);
                     System.out.println(type + " Containers: " + count);
                 }
 
                 // Ask the admin to select a container type to unload
-                System.out.println("Enter the Container Type to unload (e.g., DRY_STORAGE):");
+                System.out.println("Enter the model.Container Type to unload (e.g., DRY_STORAGE):");
                 String selectedContainerTypeStr = scanner.next();
                 Container.ContainerType selectedContainerType = Container.ContainerType.valueOf(selectedContainerTypeStr);
 
@@ -1046,15 +1048,15 @@ public class Admin extends User implements IAdmin{
                 if (selectedVehicle.getContainerCount(selectedContainerType) > 0) {
                     // Decrement the count of the specified container type
                     selectedVehicle.updateContainerCount(selectedContainerType, selectedVehicle.getContainerCount(selectedContainerType) - 1);
-                    System.out.println("Container of type " + selectedContainerType + " unloaded from vehicle " + selectedVehicle.getVehicleID());
+                    System.out.println("model.Container of type " + selectedContainerType + " unloaded from vehicle " + selectedVehicle.getVehicleID());
                 } else {
                     System.err.println("Error: No " + selectedContainerType + " container to unload from vehicle " + selectedVehicle.getVehicleID());
                 }
             } else {
-                System.out.println("Vehicle " + selectedVehicleID + " does not have any containers loaded.");
+                System.out.println("model.Vehicle " + selectedVehicleID + " does not have any containers loaded.");
             }
         } else {
-            System.out.println("Vehicle with ID " + selectedVehicleID + " not found.");
+            System.out.println("model.Vehicle with ID " + selectedVehicleID + " not found.");
         }
 
         scanner.close();
@@ -1088,7 +1090,7 @@ public class Admin extends User implements IAdmin{
         // Display available ports for the admin to choose from
         System.out.println("Available Ports:");
         for (Port port : this.ports) {
-            System.out.println("Port ID: " + port.getPortID() + " - Name: " + port.getName());
+            System.out.println("model.Port ID: " + port.getPortID() + " - Name: " + port.getName());
         }
 
         System.out.println("Enter the port ID to assign to the manager:");
@@ -1107,9 +1109,9 @@ public class Admin extends User implements IAdmin{
             // Create the new manager and associate them with the selected port
             Manager newManager = new Manager(managerID, username, password, managedPort);
             managers.add(newManager);
-            System.out.println("Manager with ID " + managerID + " has been added and assigned to port " + managedPort.getName() + " successfully.");
+            System.out.println("model.Manager with ID " + managerID + " has been added and assigned to port " + managedPort.getName() + " successfully.");
         } else {
-            System.out.println("Port with ID " + portID + " not found. Manager assignment failed.");
+            System.out.println("model.Port with ID " + portID + " not found. model.Manager assignment failed.");
         }
 
         scanner.close();
@@ -1136,8 +1138,8 @@ public class Admin extends User implements IAdmin{
 
             // Check if the manager with the specified user ID was found
             if (managerToEdit != null) {
-                System.out.println("Manager found:");
-                System.out.println("User ID: " + managerToEdit.getUserID());
+                System.out.println("model.Manager found:");
+                System.out.println("model.User ID: " + managerToEdit.getUserID());
                 System.out.println("Username: " + managerToEdit.getUsername());
 
                 // Ask for confirmation
@@ -1146,7 +1148,7 @@ public class Admin extends User implements IAdmin{
                     String confirmation = scanner.nextLine().toLowerCase();
 
                     if (confirmation.equals("yes")) {
-                        System.out.println("Edit Manager Details:");
+                        System.out.println("Edit model.Manager Details:");
                         System.out.println("1. Edit Username");
                         System.out.println("2. Edit Password");
                         System.out.println("3. Save and Exit");
@@ -1169,7 +1171,7 @@ public class Admin extends User implements IAdmin{
                                 System.out.println("Password updated.");
                             }
                             case 3 -> {
-                                System.out.println("Manager details updated and saved.");
+                                System.out.println("model.Manager details updated and saved.");
                                 return;
                             }
                             default -> System.out.println("Invalid choice. Please enter a valid option.");
@@ -1182,7 +1184,7 @@ public class Admin extends User implements IAdmin{
                     }
                 }
             } else {
-                System.out.println("Manager with user ID " + managerUserID + " not found. Editing failed.");
+                System.out.println("model.Manager with user ID " + managerUserID + " not found. Editing failed.");
                 System.out.println("Do you want to try editing another manager? (yes/no): ");
                 String tryAgain = scanner.nextLine().toLowerCase();
 
@@ -1214,8 +1216,8 @@ public class Admin extends User implements IAdmin{
 
             // Check if the manager with the specified user ID was found
             if (managerToDelete != null) {
-                System.out.println("Manager found:");
-                System.out.println("User ID: " + managerToDelete.getUserID());
+                System.out.println("model.Manager found:");
+                System.out.println("model.User ID: " + managerToDelete.getUserID());
                 System.out.println("Username: " + managerToDelete.getUsername());
 
                 // Ask for confirmation
@@ -1226,7 +1228,7 @@ public class Admin extends User implements IAdmin{
                     if (confirmation.equals("yes")) {
                         // Delete the manager from the list
                         managers.remove(managerToDelete);
-                        System.out.println("Manager deleted successfully.");
+                        System.out.println("model.Manager deleted successfully.");
                         return; // Exit the function after deletion
                     } else if (confirmation.equals("no")) {
                         System.out.println("Deletion canceled. The manager was not deleted.");
@@ -1236,7 +1238,7 @@ public class Admin extends User implements IAdmin{
                     }
                 }
             } else {
-                System.out.println("Manager with user ID " + managerUserID + " not found. Deletion failed.");
+                System.out.println("model.Manager with user ID " + managerUserID + " not found. Deletion failed.");
                 System.out.println("Do you want to try deleting another manager? (yes/no): ");
                 String tryAgain = scanner.nextLine().toLowerCase();
 

@@ -1,3 +1,7 @@
+package model;
+
+import model.User;
+
 import java.util.*;
 
 public interface IManager {
@@ -13,7 +17,7 @@ public interface IManager {
 
     void calculateDailyFuelUsage(Date date); // Common method to generate daily fuel usage report
 
-    void calculateContainerWeights(); // Admin can calculate the weight of their targeted port(s) or the total weight
+    void calculateContainerWeights(); // model.Admin can calculate the weight of their targeted port(s) or the total weight
                                       // of every ports
 
 
