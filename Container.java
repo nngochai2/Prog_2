@@ -1,5 +1,3 @@
-import java.util.Map;
-
 public class Container {
     private final String containerID;
     private final ContainerType type;
@@ -27,10 +25,28 @@ public class Container {
     }
 
     public void load(Vehicle from, Port to) {
+<<<<<<< Updated upstream
         // if weight < Port.storingCapacity
             // Update Container.location
             // Update Port.containersCount
             // Update Vehicle.totalContainers
+=======
+        // if canLoadContainerType type
+        if (from.canLoadContainerType(getType())) {
+            // if weight + currentWeight < Port.storingCapacity
+            if (getWeight() + to.getCurrentTotalWeight() > to.getStoringCapacity()) {
+                // Update Container
+                    // container.location
+                this.location =
+                // Update Vehicle
+                    // vehicle.
+                    // Update Vehicle.totalContainers
+                // Update Port
+            }
+        }
+
+
+>>>>>>> Stashed changes
         this.location = to.getPortID();
     }
 

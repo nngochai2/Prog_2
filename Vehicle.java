@@ -3,11 +3,16 @@ import java.util.Map;
 public abstract class Vehicle implements IVehicle {
     protected String vehicleID;
     protected String name;
-    protected int currentFuel;
-    protected int carryingCapacity;
-    protected int fuelCapacity;
+    protected double currentFuel;
+    protected double carryingCapacity;
+    protected double fuelCapacity;
     protected Port currentPort;
     protected int totalContainers;
+<<<<<<< Updated upstream
+=======
+    protected ArrayList<Container> containers;
+    protected double currentWeight;
+>>>>>>> Stashed changes
     protected Map<Container.ContainerType, Integer> containerCounts;
     // Used to keep track of the number of each type of container that a vehicle is carrying, store and manage the counts of different container types.
 
@@ -37,15 +42,15 @@ public abstract class Vehicle implements IVehicle {
         return name;
     }
 
-    public int getCurrentFuel() {
+    public double getCurrentFuel() {
         return currentFuel;
     }
 
-    public int getCarryingCapacity() {
+    public double getCarryingCapacity() {
         return carryingCapacity;
     }
 
-    public int getFuelCapacity() {
+    public double getFuelCapacity() {
         return fuelCapacity;
     }
 
@@ -57,6 +62,17 @@ public abstract class Vehicle implements IVehicle {
         return totalContainers;
     }
 
+<<<<<<< Updated upstream
+=======
+    public ArrayList<Container> getContainers() {
+        return containers;
+    }
+
+    public double getCurrentWeight() {
+        return currentWeight;
+    }
+
+>>>>>>> Stashed changes
     public void setVehicleID(String vehicleID) {
         this.vehicleID = vehicleID;
     }
