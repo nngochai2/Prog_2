@@ -1,11 +1,10 @@
+package Model;
+
 import java.util.*;
 
 public interface IManager {
 
-
     User login(String username, String password); // Common method for login
-
-
 
     void displayMenu(); // Common method to view dashboard
 
@@ -15,7 +14,6 @@ public interface IManager {
 
     void calculateContainerWeights(); // Admin can calculate the weight of their targeted port(s) or the total weight
                                       // of every ports
-
 
     void listShipsInPort(); // Common method to list all ships in a port
 
@@ -32,6 +30,6 @@ public interface IManager {
     void deleteContainer(); // Exclusive method for manager to delete a container
 
     void loadContainerOntoVehicle();
+
     void unloadContainerFromVehicle();
 }
-

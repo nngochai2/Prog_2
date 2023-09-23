@@ -1,3 +1,5 @@
+package Model;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -5,9 +7,10 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        Admin admin =  new Admin();
+        Admin admin = new Admin();
 
     }
+
     private void displayWelcomeScreen() {
         // Display welcome information
         System.out.println("""

@@ -1,3 +1,5 @@
+package Model;
+
 public class Container {
     private String containerID;
     private ContainerType type;
@@ -49,8 +51,6 @@ public class Container {
     public double getWeight() {
         return weight;
     }
-
-
 
     public void load(ContainerType type) {
         // Implement loading logic based on container type.
