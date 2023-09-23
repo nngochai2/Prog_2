@@ -632,55 +632,55 @@ public class Admin extends User implements IAdmin {
 
 //    }
 
-
-        // Enter carrying capacity
-        System.out.println("Enter the carrying capacity: ");
-        double carryingCapacity;
-        try {
-            carryingCapacity = Double.parseDouble(scanner.nextLine());
-        } catch (NumberFormatException e) {
-            System.out.println("Invalid carrying capacity value. Please enter a valid number.");
-            return;
-        }
-
-
-        // Enter fuel capacity
-        System.out.println("Enter the fuel capacity: ");
-        double fuelCapacity;
-        try {
-            fuelCapacity = Double.parseDouble(scanner.nextLine());
-        } catch (NumberFormatException e) {
-            System.out.println("Invalid fuel capacity value. Please enter a valid number.");
-            return;
-        }
-
-        // Create the new vehicle based on user input
-        Vehicle newVehicle;
-        switch (vehicleType) {
-            case SHIP:
-                newVehicle = new Ship(vehicleID, name, currentFuel, carryingCapacity, fuelCapacity, null, 0,
-                        new ArrayList<>(), new HashMap<>());
-                break;
-            case BASIC_TRUCK:
-                newVehicle = new BasicTruck(vehicleID, name, currentFuel, carryingCapacity, fuelCapacity, null, 0,
-                        new ArrayList<>(), new HashMap<>());
-                break;
-            case REEFER_TRUCK:
-                newVehicle = new ReeferTruck(vehicleID, name, currentFuel, carryingCapacity
-                );
-                break;
-            case TANKER_TRUCK:
-                newVehicle = new TankerTruck(vehicleID, name, currentFuel, carryingCapacity
-                );
-                break;
-            default:
-                System.out.println("Invalid vehicle type.");
-                return;
-        }
-
-        // Add the new vehicle to the list of vehicles
-        vehicles.add(newVehicle);
-        System.out.println("New vehicle with ID " + vehicleID + " has been added successfully.");
+//
+//        // Enter carrying capacity
+//        System.out.println("Enter the carrying capacity: ");
+//        double carryingCapacity;
+//        try {
+//            carryingCapacity = Double.parseDouble(scanner.nextLine());
+//        } catch (NumberFormatException e) {
+//            System.out.println("Invalid carrying capacity value. Please enter a valid number.");
+//            return;
+//        }
+//
+//
+//        // Enter fuel capacity
+//        System.out.println("Enter the fuel capacity: ");
+//        double fuelCapacity;
+//        try {
+//            fuelCapacity = Double.parseDouble(scanner.nextLine());
+//        } catch (NumberFormatException e) {
+//            System.out.println("Invalid fuel capacity value. Please enter a valid number.");
+//            return;
+//        }
+//
+//        // Create the new vehicle based on user input
+//        Vehicle newVehicle;
+//        switch (vehicleType) {
+//            case SHIP:
+//                newVehicle = new Ship(vehicleID, name, currentFuel, carryingCapacity, fuelCapacity, null, 0,
+//                        new ArrayList<>(), new HashMap<>());
+//                break;
+//            case BASIC_TRUCK:
+//                newVehicle = new BasicTruck(vehicleID, name, currentFuel, carryingCapacity, fuelCapacity, null, 0,
+//                        new ArrayList<>(), new HashMap<>());
+//                break;
+//            case REEFER_TRUCK:
+//                newVehicle = new ReeferTruck(vehicleID, name, currentFuel, carryingCapacity
+//                );
+//                break;
+//            case TANKER_TRUCK:
+//                newVehicle = new TankerTruck(vehicleID, name, currentFuel, carryingCapacity
+//                );
+//                break;
+//            default:
+//                System.out.println("Invalid vehicle type.");
+//                return;
+//        }
+//
+//        // Add the new vehicle to the list of vehicles
+//        vehicles.add(newVehicle);
+//        System.out.println("New vehicle with ID " + vehicleID + " has been added successfully.");
     }
 
 
