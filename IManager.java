@@ -3,11 +3,6 @@ import java.util.*;
 public interface IManager {
 
     User login(String username, String password); // Common method for login
-<<<<<<< Updated upstream
-=======
-    void login(String username, String password); // Common method for login
-=======
->>>>>>> Stashed changes
 
 
     void displayMenu(); // Common method to view dashboard
@@ -17,27 +12,15 @@ public interface IManager {
     void calculateDailyFuelUsage(Date date); // Common method to generate daily fuel usage report
 
     void calculateContainerWeights(); // Admin can calculate the weight of their targeted port(s) or the total weight
-
-    // of every ports
-=======
                                       // of every ports
 
 
     void listShipsInPort(); // Common method to list all ships in a port
 
-    void listTripsOnDate(Date date); // Common method to list all trips on a given date
 
 
     void listTripsFromDateToDate(); // Common method to list all trips in range(date,
     // anotherDate)
-<<<<<<< Updated upstream
-=======
-    void listTripsFromDateToDate(Date startDate, Date endDate); // Common method to list all trips in range(date,
-                                                                // anotherDate)
-=======
->>>>>>> Stashed changes
-
-
     void viewVehicleDetails(); // Common method to view vehicle details
 
     void viewTripDetails(); // Common method to view trip details
@@ -50,7 +33,5 @@ public interface IManager {
 
     void loadContainerOntoVehicle();
     void unloadContainerFromVehicle();
-}
-=======
 }
 

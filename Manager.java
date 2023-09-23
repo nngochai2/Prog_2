@@ -86,27 +86,6 @@ public class Manager extends User implements IManager {
     }
 
     @Override
-    public void listTripsFromDateToDate(Date startDate, Date endDate) {
-        List<Trip> trips = this.managedPort.getCurrentTrips();
-        // This method is responsible for listin trips from one date to another
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        for (Trip trip : trips) {
-            if ((startDate.equals(trip.getDepartureDate()) || startDate.after(trip.getDepartureDate()))
-                    && (endDate.before(trip.getArrivalDate())) || endDate.equals(trip.getArrivalDate())) {
-                System.out.println("Trip ID: " + trip.getId());
-                System.out.println("Departure Date: " + sdf.format(trip.getDepartureDate()));
-                System.out.println("Arrival Date: " + sdf.format(trip.getArrivalDate()));
-                System.out.println("Vehicle ID: " + trip.getVehicle().getVehicleID());
-                System.out.println("Departure Port: " + trip.getDeparturePort());
-                System.out.println("Arrival Port: " + trip.getArrivalPort());
-                System.out.println("Status: " + trip.getStatus());
-                System.out.println("-----------------------------");
-            }
-        }
-    }
-
-
-    @Override
     public void calculateContainerWeights() {
         double totalWeight = 0;
         ArrayList<Container> containers = this.managedPort.getContainers();
@@ -126,26 +105,6 @@ public class Manager extends User implements IManager {
             }
         }
     }
-
-    @Override
-    public void listTripsOnDate(Date date) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        List<Trip> trips = this.managedPort.getCurrentTrips();
-        for (Trip trip : trips) {
-            if ((date.after(trip.getDepartureDate()) && date.before(trip.getArrivalDate()))
-                    || (date.equals(trip.getDepartureDate())) || (date.equals(trip.getArrivalDate()))) {
-                System.out.println("Trip ID: " + trip.getId());
-                System.out.println("Departure Date: " + sdf.format(trip.getDepartureDate()));
-                System.out.println("Arrival Date: " + sdf.format(trip.getArrivalDate()));
-                System.out.println("Vehicle ID: " + trip.getVehicle().getVehicleID());
-                System.out.println("Departure Port: " + trip.getDeparturePort());
-                System.out.println("Arrival Port: " + trip.getArrivalPort());
-                System.out.println("Status: " + trip.getStatus());
-                System.out.println("-----------------------------");
-            }
-        }
-    }
-
 //    @Override
 //    public void listTripsFromDateToDate(Date startDate, Date endDate) {
 //        List<Trip> trips = this.managedPort.getCurrentTrips();
