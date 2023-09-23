@@ -1,7 +1,4 @@
-package model;
-
-import model.Container;
-import model.Port;
+package Model;
 
 import java.util.ArrayList;
 import java.util.Map;

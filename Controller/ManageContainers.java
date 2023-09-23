@@ -1,6 +1,6 @@
-package controller;
+package Controller;
 
-import model.Container;
+import Model.Container;
 
 import java.io.*;
 import java.util.ArrayList;

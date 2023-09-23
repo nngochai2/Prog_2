@@ -1,4 +1,4 @@
-package model;
+package Model;
 
 public interface IAdmin extends IManager {
     void addPort(); // Exclusive method for admin to add a new port

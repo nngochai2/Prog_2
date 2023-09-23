@@ -1,7 +1,4 @@
-package model;
-
-import model.Admin;
-import model.User;
+package Model;
 
 import java.util.Scanner;
 
