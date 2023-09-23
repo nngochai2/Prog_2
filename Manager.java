@@ -125,6 +125,10 @@ public class Manager extends User implements IManager {
 //        }
 //    }
 
+    public void listTripsOnDate() {
+
+    }
+
     public void listTripsFromDateToDate() {
         Scanner scanner = new Scanner(System.in);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -158,6 +162,7 @@ public class Manager extends User implements IManager {
             }
         }
     }
+
 
     // Check date format
     private Date parseDate(String dateStr) {
