@@ -1,11 +1,19 @@
 
+
 package Model;
+
 
 public class Container {
     private String containerID;
     private ContainerType type;
     private double weight;
     private String location;
+
+    private List<Container> containerList;
+
+    public Container(String containerID, double weight, ContainerType type) {
+
+    }
 
     public enum ContainerType {
         // Represents the different container types.
@@ -27,18 +35,22 @@ public class Container {
     }
 
     public void load(Vehicle from, Port to) {
+
         // if weight < Port.storingCapacity
         // Update Container.location
         // Update Port.containersCount
         // Update Vehicle.totalContainers
+
         this.location = to.getPortID();
     }
 
     public void load(Port from, Ship to) {
+
         // if weight < Ship.carryingCapacity
         // Update Container.location
         // Update Port.containersCount
         // Update Ship.totalContainers
+
     }
 
     public String getContainerID() {
@@ -53,9 +65,11 @@ public class Container {
         return weight;
     }
 
+
     public void load(ContainerType type) {
         // Implement loading logic based on container type.
     }
+
 
     public String getLocation() {
         return this.location;
@@ -64,6 +78,7 @@ public class Container {
     public void setLocation(String location) {
         this.location = location;
     }
+
 
     public void setWeight(double weight) {
         this.weight = weight;

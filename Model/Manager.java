@@ -5,14 +5,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-import Model.Container.ContainerType;
-import Model.User.UserRole;
-
 public class Manager extends User implements IManager {
     private Port managedPort;
 
     public Manager(String userID, String username, String password, Port managedPort) {
-        super(userID, username, password, UserRole.MANAGER);
+        super(userID, username, password, User.UserRole.MANAGER);
         this.managedPort = managedPort;
     }
 
@@ -26,8 +23,8 @@ public class Manager extends User implements IManager {
 
     @Override
     public void displayMenu() {
-        System.out.println("Welcome Manager, " + getUsername() + "!");
-        System.out.println("Manager's menu for port: " + managedPort.getName());
+        System.out.println("Welcome model.Manager, " + getUsername() + "!");
+        System.out.println("model.Manager's menu for port: " + managedPort.getName());
         System.out.println("1. View port details");
         System.out.println("2. Calculate daily fuel usage in the port");
         System.out.println("3. Calculate container weights in the port");
@@ -43,7 +40,7 @@ public class Manager extends User implements IManager {
 
     @Override
     public void viewPortDetails() {
-        System.out.println("Port ID: " + this.managedPort.getPortID());
+        System.out.println("model.Port ID: " + this.managedPort.getPortID());
         System.out.println("Name: " + this.managedPort.getName());
         System.out.println("Latitude: " + this.managedPort.getLatitude());
         System.out.println("Longitude: " + this.managedPort.getLongitude());
@@ -104,11 +101,12 @@ public class Manager extends User implements IManager {
     public void listShipsInPort() {
         for (Vehicle vehicle : this.managedPort.getVehicles()) {
             if (vehicle instanceof Ship) {
-                // shipsAtPort.add((Ship) vehicle);
+                // shipsAtPort.add((model.Ship) vehicle);
                 System.out.println(vehicle);
             }
         }
     }
+
 
     // @Override
     // public void listTripsFromDateToDate(Date startDate, Date endDate) {
@@ -131,6 +129,7 @@ public class Manager extends User implements IManager {
     // }
     // }
     // }
+
 
 
     public void listTripsOnDate() {
@@ -160,17 +159,18 @@ public class Manager extends User implements IManager {
             if ((tripStartDate.equals(startDate) || tripStartDate.after(startDate))
                     && (tripEndDate.equals(endDate) || tripEndDate.before(endDate))) {
                 // Print trip details
-                System.out.println("Trip ID: " + trip.getId());
+                System.out.println("model.Trip ID: " + trip.getId());
                 System.out.println("Departure Date: " + sdf.format(trip.getDepartureDate()));
                 System.out.println("Arrival Date: " + sdf.format(trip.getArrivalDate()));
-                System.out.println("Vehicle ID: " + trip.getVehicle().getVehicleID());
-                System.out.println("Departure Port: " + trip.getDeparturePort());
-                System.out.println("Arrival Port: " + trip.getArrivalPort());
+                System.out.println("model.Vehicle ID: " + trip.getVehicle().getVehicleID());
+                System.out.println("Departure model.Port: " + trip.getDeparturePort());
+                System.out.println("Arrival model.Port: " + trip.getArrivalPort());
                 System.out.println("Status: " + trip.getStatus());
                 System.out.println("-----------------------------");
             }
         }
     }
+
 
     // Check date format
     private Date parseDate(String dateStr) {
@@ -187,7 +187,7 @@ public class Manager extends User implements IManager {
         List<Vehicle> vehicles = this.managedPort.getVehicles();
         for (int i = 0; i < vehicles.size(); i++) {
             System.out.println(
-                    i + 1 + ". Vehicle ID: " + vehicles.get(i).getVehicleID() + " Name: " + vehicles.get(i).getName());
+                    i + 1 + ". model.Vehicle ID: " + vehicles.get(i).getVehicleID() + " Name: " + vehicles.get(i).getName());
         }
         System.out.println("-----------------------------");
         System.out.print("Please select vehicle ID: ");
@@ -207,37 +207,38 @@ public class Manager extends User implements IManager {
         ArrayList<Container> containers = new ArrayList<>();
         // Check if the manager has an assigned port
         if (managedPort == null) {
-            System.out.println("Manager has no assigned port. Cannot add containers.");
+            System.out.println("model.Manager has no assigned port. Cannot add containers.");
             return;
         }
 
         while (true) {
             System.out.println("Enter the details of the container:");
 
-            // Collect container information from the Manager
-            System.out.print("Container ID: ");
+            // Collect container information from the model.Manager
+            System.out.print("model.Container ID: ");
             String containerID = scanner.nextLine();
 
-            System.out.print("Container Type (e.g., DRY_STORAGE, OPEN_TOP, OPEN_SIDE, REFRIGERATED, LIQUID): ");
+            System.out.print("model.Container Type (e.g., DRY_STORAGE, OPEN_TOP, OPEN_SIDE, REFRIGERATED, LIQUID): ");
             String containerTypeStr = scanner.nextLine();
             try {
                 Container.ContainerType containerType = Container.ContainerType.valueOf(containerTypeStr);
 
-                System.out.print("Container Weight (in kilograms): ");
+                System.out.print("model.Container Weight (in kilograms): ");
                 double containerWeight = scanner.nextDouble();
                 scanner.nextLine(); // Consume the newline character
 
                 // Create the new container
 
+
                 Container newContainer = new Container(containerID, containerType, containerWeight, managedPort.getPortID());
 
 
                 // Display container information for confirmation
-                System.out.println("Container Details:");
-                System.out.println("Container ID: " + newContainer.getContainerID());
-                System.out.println("Container Type: " + newContainer.getType());
-                System.out.println("Container Weight: " + newContainer.getWeight());
-                System.out.println("Destination Port: " + managedPort);
+                System.out.println("model.Container Details:");
+                System.out.println("model.Container ID: " + newContainer.getContainerID());
+                System.out.println("model.Container Type: " + newContainer.getType());
+                System.out.println("model.Container Weight: " + newContainer.getWeight());
+                System.out.println("Destination model.Port: " + managedPort);
 
                 // Ask for confirmation
                 System.out.print("Confirm adding this container? (yes/no): ");
@@ -247,12 +248,14 @@ public class Manager extends User implements IManager {
                     // Add the container to the port
                     newContainer = new Container(containerID, containerType, containerWeight, managedPort.getPortID());
 
+
                     containers.add(newContainer);     // Add the new container to your ArrayList or data structure.
 
                     System.out.println("Container " + containerID + " has been added successfully.");
+
                     break; // Exit the loop
                 } else if (confirmation.equals("no")) {
-                    System.out.println("Container not added.");
+                    System.out.println("model.Container not added.");
                     break; // Exit the loop
                 } else {
                     System.out.println("Invalid input. Please enter 'yes' or 'no'.");
@@ -263,13 +266,14 @@ public class Manager extends User implements IManager {
         }
     }
 
+
     @Override
     public void editContainerDetails() {
         Scanner scanner = new Scanner(System.in);
 
         // Check if the manager has an assigned port
         if (managedPort == null) {
-            System.out.println("Manager has no assigned port. Cannot edit containers.");
+            System.out.println("model.Manager has no assigned port. Cannot edit containers.");
             return;
         }
 
@@ -288,10 +292,10 @@ public class Manager extends User implements IManager {
 
             // Check if the container with the specified ID was found
             if (containerToEdit != null) {
-                System.out.println("Container found:");
-                System.out.println("Container ID: " + containerToEdit.getContainerID());
-                System.out.println("Container Type: " + containerToEdit.getType());
-                System.out.println("Container Weight: " + containerToEdit.getWeight());
+                System.out.println("model.Container found:");
+                System.out.println("model.Container ID: " + containerToEdit.getContainerID());
+                System.out.println("model.Container Type: " + containerToEdit.getType());
+                System.out.println("model.Container Weight: " + containerToEdit.getWeight());
 
                 // Ask for confirmation
                 while (true) {
@@ -299,9 +303,9 @@ public class Manager extends User implements IManager {
                     String confirmation = scanner.nextLine().toLowerCase();
 
                     if (confirmation.equals("yes")) {
-                        System.out.println("Edit Container Details:");
-                        System.out.println("1. Edit Container Type");
-                        System.out.println("2. Edit Container Weight");
+                        System.out.println("Edit model.Container Details:");
+                        System.out.println("1. Edit model.Container Type");
+                        System.out.println("2. Edit model.Container Weight");
                         System.out.println("3. Save and Exit");
 
                         System.out.println("Enter your choice: ");
@@ -316,7 +320,9 @@ public class Manager extends User implements IManager {
                                 try {
                                     Container.ContainerType newContainerType = Container.ContainerType.valueOf(newContainerTypeStr);
                                     containerToEdit.setContainerType(newContainerType);
+
                                     System.out.println("Container " + containerID + " has been updated with the new type.");
+
 
                                 } catch (IllegalArgumentException e) {
                                     System.out.println("Invalid container type.");
@@ -326,10 +332,10 @@ public class Manager extends User implements IManager {
                                 System.out.println("Enter the new container weight: ");
                                 double newWeight = scanner.nextDouble();
                                 containerToEdit.setWeight(newWeight);
-                                System.out.println("Container weight updated.");
+                                System.out.println("model.Container weight updated.");
                             }
                             case 3 -> {
-                                System.out.println("Container details updated and saved.");
+                                System.out.println("model.Container details updated and saved.");
                                 return;
                             }
                             default -> System.out.println("Invalid choice. Please select a valid option.");
@@ -342,7 +348,7 @@ public class Manager extends User implements IManager {
                     }
                 }
             } else {
-                System.out.println("Container with ID " + containerID + " not found in your assigned port.");
+                System.out.println("model.Container with ID " + containerID + " not found in your assigned port.");
                 System.out.println("Do you want to try editing another container? (yes/no): ");
                 String tryAgain = scanner.nextLine().toLowerCase();
 
@@ -360,7 +366,7 @@ public class Manager extends User implements IManager {
 
         // Check if the manager has an assigned port
         if (managedPort == null) {
-            System.out.println("Manager has no assigned port. Cannot delete containers.");
+            System.out.println("model.Manager has no assigned port. Cannot delete containers.");
             return;
         }
 
@@ -379,10 +385,10 @@ public class Manager extends User implements IManager {
 
             // Check if the container with the specified ID was found
             if (containerToDelete != null) {
-                System.out.println("Container found:");
-                System.out.println("Container ID: " + containerToDelete.getContainerID());
-                System.out.println("Container Type: " + containerToDelete.getType());
-                System.out.println("Container Weight: " + containerToDelete.getWeight());
+                System.out.println("model.Container found:");
+                System.out.println("model.Container ID: " + containerToDelete.getContainerID());
+                System.out.println("model.Container Type: " + containerToDelete.getType());
+                System.out.println("model.Container Weight: " + containerToDelete.getWeight());
 
                 // Ask for confirmation
                 while (true) {
@@ -392,7 +398,7 @@ public class Manager extends User implements IManager {
                     if (confirmation.equals("yes")) {
                         // Remove the container from the port
                         managedPort.removeContainer(containerToDelete);
-                        System.out.println("Container " + containerID + " has been deleted.");
+                        System.out.println("model.Container " + containerID + " has been deleted.");
                         return;
                     } else if (confirmation.equals("no")) {
                         System.out.println("Deletion canceled. The container was not deleted.");
@@ -402,7 +408,7 @@ public class Manager extends User implements IManager {
                     }
                 }
             } else {
-                System.out.println("Container with ID " + containerID + " not found in your assigned port.");
+                System.out.println("model.Container with ID " + containerID + " not found in your assigned port.");
                 System.out.println("Do you want to try deleting another container? (yes/no): ");
                 String tryAgain = scanner.nextLine().toLowerCase();
 
@@ -420,17 +426,17 @@ public class Manager extends User implements IManager {
 
         // Display available vehicles (ships and trucks) in the managed port
         if (managedPort == null) {
-            System.out.println("Manager has no assigned port. Cannot load containers.");
+            System.out.println("model.Manager has no assigned port. Cannot load containers.");
             return;
         }
 
         System.out.println("Available Vehicles (Ships and Trucks) in " + managedPort.getName() + ":");
         for (Vehicle vehicle : managedPort.getVehicles()) {
-            System.out.println("Vehicle ID: " + vehicle.getVehicleID() + " - Name: " + vehicle.getName());
+            System.out.println("model.Vehicle ID: " + vehicle.getVehicleID() + " - Name: " + vehicle.getName());
         }
 
         // Ask the manager to select a vehicle to load containers onto
-        System.out.println("Enter the Vehicle ID to load container(s) onto: ");
+        System.out.println("Enter the model.Vehicle ID to load container(s) onto: ");
         String selectedVehicleID = scanner.next();
 
         // Find the vehicle with matched ID
@@ -446,11 +452,11 @@ public class Manager extends User implements IManager {
             // Display available containers in the managed port for the manager to choose
             System.out.println("Available Containers in " + managedPort.getName() + ": ");
             for (Container container : managedPort.getContainers()) {
-                System.out.println("Container ID: " + container.getContainerID() + " - Type: " + container.getType());
+                System.out.println("model.Container ID: " + container.getContainerID() + " - Type: " + container.getType());
             }
 
             // Ask the manager to select containers to load onto the vehicle
-            System.out.println("Enter the Container IDs to load onto the vehicle (comma-separated):");
+            System.out.println("Enter the model.Container IDs to load onto the vehicle (comma-separated):");
             String selectedContainerIDs = scanner.next();
             String[] containerIDs = selectedContainerIDs.split(",");
 
@@ -467,18 +473,19 @@ public class Manager extends User implements IManager {
                     // Check if the vehicle can carry the container type
                     if (selectedVehicle.canLoadContainerType(containerToAdd.getType())) {
                         selectedVehicle.loadContainer(containerToAdd.getType());
-                        System.out.println("Container " + containerID + " loaded onto Vehicle " + selectedVehicleID);
+                        System.out.println("model.Container " + containerID + " loaded onto model.Vehicle " + selectedVehicleID);
                     } else {
+
 
                         System.out.println("Error: This vehicle cannot load " + containerToAdd.getType() + " container.");
 
                     }
                 } else {
-                    System.out.println("Container " + containerID + " not found.");
+                    System.out.println("model.Container " + containerID + " not found.");
                 }
             }
         } else {
-            System.out.println("Vehicle with ID " + selectedVehicleID + " not found in " + managedPort.getName() + ".");
+            System.out.println("model.Vehicle with ID " + selectedVehicleID + " not found in " + managedPort.getName() + ".");
         }
 
         scanner.close();
@@ -491,17 +498,17 @@ public class Manager extends User implements IManager {
 
         // Display available vehicles (ships and trucks) in the managed port
         if (managedPort == null) {
-            System.out.println("Manager has no assigned port. Cannot unload containers.");
+            System.out.println("model.Manager has no assigned port. Cannot unload containers.");
             return;
         }
 
         System.out.println("Available Vehicles (Ships and Trucks) in " + managedPort.getName() + ":");
         for (Vehicle vehicle : managedPort.getVehicles()) {
-            System.out.println("Vehicle ID: " + vehicle.getVehicleID() + " - Name: " + vehicle.getName());
+            System.out.println("model.Vehicle ID: " + vehicle.getVehicleID() + " - Name: " + vehicle.getName());
         }
 
         // Ask the manager to select a vehicle to unload containers from
-        System.out.println("Enter the Vehicle ID to unload containers from:");
+        System.out.println("Enter the model.Vehicle ID to unload containers from:");
         String selectedVehicleID = scanner.next();
 
         // Find the selected vehicle in the managed port
@@ -517,15 +524,16 @@ public class Manager extends User implements IManager {
             // Check if the vehicle has any containers to unload
             if (selectedVehicle.getTotalContainers() > 0) {
                 // Display containers loaded on the selected vehicle
-                System.out.println("Containers loaded on Vehicle " + selectedVehicleID + ":");
+                System.out.println("Containers loaded on model.Vehicle " + selectedVehicleID + ":");
                 for (Container containerType : selectedVehicle.getContainerCounts().keySet()) {
                     int count = selectedVehicle.getContainerCount(containerType.getType());
                     System.out.println(containerType + " Containers: " + count);
                 }
 
                 // Ask the manager to select a container type to unload
-                System.out.println("Enter the Container Type to unload (e.g., DRY_STORAGE):");
+                System.out.println("Enter the model.Container Type to unload (e.g., DRY_STORAGE):");
                 String selectedContainerTypeStr = scanner.next();
+
 
                 Container.ContainerType selectedContainerType = Container.ContainerType.valueOf(selectedContainerTypeStr);
 
@@ -541,10 +549,10 @@ public class Manager extends User implements IManager {
 
                 }
             } else {
-                System.out.println("Vehicle " + selectedVehicleID + " does not have any containers loaded.");
+                System.out.println("model.Vehicle " + selectedVehicleID + " does not have any containers loaded.");
             }
         } else {
-            System.out.println("Vehicle with ID " + selectedVehicleID + " not found in " + managedPort.getName() + ".");
+            System.out.println("model.Vehicle with ID " + selectedVehicleID + " not found in " + managedPort.getName() + ".");
         }
 
         scanner.close();

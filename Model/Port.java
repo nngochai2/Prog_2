@@ -235,7 +235,9 @@ public class Port implements IPort {
         }
 
         // Loop through containers and count by type
+
         for (Model.Container container : containers) {
+
             Model.Container.ContainerType type = container.getType();
             containerCounts.put(type, containerCounts.getOrDefault(type, 0) + 1);
         }
@@ -246,7 +248,9 @@ public class Port implements IPort {
     // Calculate the total weight
     public double calculateTotalWeight() {
         double totalWeight = 0.0;
+
         for (Container container : containers) {
+
             totalWeight += container.getWeight();
         }
         return totalWeight;
@@ -269,7 +273,9 @@ public class Port implements IPort {
                 vehicleCounts.put(Vehicle.VehicleType.BASIC_TRUCK,
                         vehicleCounts.getOrDefault(Vehicle.VehicleType.BASIC_TRUCK, 0) + 1);
 
+
                 // Check for ReeferTruck or TankerTruck and update accordingly
+
                 if (vehicle instanceof ReeferTruck) {
                     vehicleCounts.put(Vehicle.VehicleType.REEFER_TRUCK,
                             vehicleCounts.getOrDefault(Vehicle.VehicleType.REEFER_TRUCK, 0) + 1);

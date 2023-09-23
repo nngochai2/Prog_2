@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 
+
 public class ReeferTruck extends BasicTruck {
     public ReeferTruck(String vehicleID, String name, double carryingCapacity, double fuelCapacity) {
         super(vehicleID, name, carryingCapacity, fuelCapacity);

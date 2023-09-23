@@ -16,14 +16,17 @@ public abstract class Vehicle implements IVehicle {
     protected ArrayList<Container> containers;
     protected Map<Container.ContainerType, Integer> containerCounts;
     // Used to keep track of the number of each type of container that a vehicle is carrying, store and manage the counts of different container types.
-
-
-    public Vehicle(String vehicleID, String name, double carryingCapacity, double fuelCapacity) {
+    
+    public Vehicle(String vehicleID, String name, double currentFuel, double carryingCapacity, double fuelCapacity, Port currentPort, int totalContainers, ArrayList<Container> containers, Map<Container.ContainerType, Integer> containerCounts) {
         this.vehicleID = vehicleID;
         this.name = name;
-        this.currentFuel = carryingCapacity;
+        this.currentFuel = currentFuel;
         this.carryingCapacity = carryingCapacity;
         this.fuelCapacity = fuelCapacity;
+        this.currentPort = currentPort;
+        this.totalContainers = totalContainers;
+        this.containers = containers;
+        this.containerCounts = containerCounts;
     }
 
     // Define the vehicle types
@@ -136,17 +139,17 @@ public abstract class Vehicle implements IVehicle {
         return totalWeight;
     }
 
-    // Calculate the total weight for each type of containers (return a HashMap, might be useful)
-//    public Map<Container.ContainerType, Double> calculateTotalWeightForEachType() { // The method returns a 'Map' the associates each ContainerType with its total weight as 'Double'
+// Calculate the total weight for each type of containers (return a HashMap, might be useful)
+//    public Map<model.Container.ContainerType, Double> calculateTotalWeightForEachType() { // The method returns a 'Map' the associates each ContainerType with its total weight as 'Double'
 //        // Initialize a new HashMap
-//        Map<Container.ContainerType, Double> weightForEachType = new HashMap<>();
+//        Map<model.Container.ContainerType, Double> weightForEachType = new HashMap<>();
 //
 //        // Iterates over all possible container types defined in the enum
-//        for (Container.ContainerType type : Container.ContainerType.values()) {
+//        for (model.Container.ContainerType type : model.Container.ContainerType.values()) {
 //            double totalWeightForType = 0.0;
 //
 //            // Iterates over all the containers stored in the ArrayList
-//            for (Container container : containers) {
+//            for (model.Container container : containers) {
 //                if (container.getType() == type) {
 //                    totalWeightForType += container.getWeight();
 //                }
@@ -182,7 +185,9 @@ public abstract class Vehicle implements IVehicle {
     // Check whether a vehicle can start a trip or not
     public boolean canMove() {
         if (currentFuel == 0) {
-            System.out.println("Vehicle is out of fuel!");
+
+            System.out.println("model.Vehicle is out of fuel!");
+
             return false;
         }
 
@@ -191,7 +196,9 @@ public abstract class Vehicle implements IVehicle {
 
         // Check if the total weight exceeds the carrying capacity
         if (totalWeight > carryingCapacity) {
-            System.out.println("Vehicle is overloaded.");
+
+            System.out.println("model.Vehicle is overloaded.");
+
             return false;
         }
 
