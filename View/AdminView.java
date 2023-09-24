@@ -24,8 +24,8 @@ public class AdminView {
                     VehiclesView vehiclesView = new VehiclesView();
                     vehiclesView.vehicles();
                 case "3":
-                    ContainersView containersView = new ContainersView();
-                    containersView.containers();
+//                    ContainersView containersView = new ContainersView();
+//                    containersView.containers();
                 case "4":
                     break;
                 default:

@@ -1,13 +1,21 @@
 package View;
+import Controller.ManageContainers;
+import Model.Container;
+
 import java.util.Scanner;
 
 public class ContainersView {
+    ManageContainers manageContainers;
+
+    public ContainersView(ManageContainers manageContainers) {
+        this.manageContainers = manageContainers;
+    }
 
     public void containers(){
         // Menu - Containers
         Scanner scanner = new Scanner(System.in);
         System.out.println("__________________________Containers__________________________");
-        System.out.println("There are currently [number] containers");
+        System.out.println("There are currently " + manageContainers.getAllContainers().size() + " containers \n");
 
         String input;
         do {
@@ -45,7 +53,8 @@ public class ContainersView {
     public void containersList() {
         // Menu - Containers - All Containers
         System.out.println("__________________________MENU - CONTAINERS - All Containers__________________________");
-        System.out.println("There are currently [number] containers \n");
+        System.out.println("There are currently " + manageContainers.getAllContainers().size() + " containers \n");
+        
         // Go back
         this.containers();
     }
@@ -88,8 +97,9 @@ public class ContainersView {
                 String type = values[1];
                 double weight = Double.parseDouble(values[2]);
                 String location = values[3];
-
                 // Add container
+//                manageContainers.addContainer()
+
                 System.out.println("Container added successfully!");
             } catch (NumberFormatException e) {
                 System.out.println("Invalid input!");
@@ -121,5 +131,13 @@ public class ContainersView {
         } while(!input.equals("!"));
         // Go back
         this.containers();
+    }
+
+    public static void main(String[] args) {
+        ManageContainers manageContainers = new ManageContainers();
+        manageContainers.addContainer(Container.ContainerType.DRY_STORAGE, 90);
+
+        ContainersView containersView = new ContainersView(manageContainers);
+        containersView.containersList();
     }
 }

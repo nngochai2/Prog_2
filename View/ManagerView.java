@@ -21,8 +21,8 @@ public class ManagerView {
                     vehiclesView.vehicles();
                     break;
                 case "2":
-                    ContainersView containersView = new ContainersView();
-                    containersView.containers();
+//                    ContainersView containersView = new ContainersView();
+//                    containersView.containers();
                 default:
                     System.out.println("Invalid input");
             }
