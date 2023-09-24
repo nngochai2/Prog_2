@@ -154,27 +154,5 @@ public class ManageContainers {
 
         return result.toString();
     }
-
-
-    public static void main(String[] args) {
-        // Create an instance of ManageContainers
-        ManageContainers manageContainers = ManageContainers.getInstance();
-
-        // Now you can use the manageContainers instance to perform operations
-        // For example, you can add containers, list containers, etc.
-
-        // Example: Adding containers
-        manageContainers.addContainer(90, Container.ContainerType.DRY_STORAGE);
-        manageContainers.addContainer(910, Container.ContainerType.LIQUID);
-        manageContainers.addContainer(9000, Container.ContainerType.OPEN_SIDE);
-        manageContainers.addContainer(9.0, Container.ContainerType.OPEN_TOP);
-
-        // Example: Listing all containers
-        System.out.println(manageContainers.toString());
-
-        // You can continue using manageContainers for other operations as needed
-
-        // ... Rest of your code ...
-    }
 }
 

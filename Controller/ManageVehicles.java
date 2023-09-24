@@ -38,7 +38,7 @@ public class ManageVehicles {
 
     // Get all vehicles
     public boolean validateVehicleId(String containerId) {
-        String regex = "[0-9a-zA-Z]+";
+        String regex = "^([a-z]{2})-(\\\\d+)$";
         return containerId.matches(regex);
     }
 
@@ -164,6 +164,20 @@ public class ManageVehicles {
         }
     }
 
+    public boolean removeVehicle(String vehicleID) {
+        boolean value = false;
+        for (Vehicle vehicle : listVehicle) {
+            if (vehicle.getVehicleID().equals(vehicleID)) {
+                listVehicle.remove(vehicle);
+                serializeVehiclesToFile("data/vehicles.dat");
+                value = true;
+                break;
+            } else {
+                value = false;
+            }
+        }
+        return value;
+    }
 
 
 }
