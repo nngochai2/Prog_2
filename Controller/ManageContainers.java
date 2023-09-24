@@ -43,7 +43,10 @@ public class ManageContainers {
         Container container = new Container(this.generateUniqueContainerID(), weight, type);
         containerList.add(container);
 
-        this.serializeContainersToFile();
+
+
+//        this.serializeContainersToFile();
+
         return container;
     }
 
@@ -93,24 +96,26 @@ public class ManageContainers {
     }
 
 
-    public void deserializeContainersFromFile() {
-        try (FileInputStream fileInputStream = new FileInputStream("data/ports.dat");
-             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream)) {
+//    public void deserializeContainersFromFile() {
+//        try (FileInputStream fileInputStream = new FileInputStream("data/ports.dat");
+//             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream)) {
+//
+//            ArrayList<Container> importedContainers = (ArrayList<Container>) objectInputStream.readObject();
+//
+//            containerList = importedContainers;
+//
+//            System.out.println("Ports have been deserialized and imported from data/ports.dat");
+//        } catch (IOException | ClassNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
-            ArrayList<Container> importedContainers = (ArrayList<Container>) objectInputStream.readObject();
-
-            containerList = importedContainers;
-
-            System.out.println("Ports have been deserialized and imported from data/ports.dat");
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
 
     private synchronized String generateUniqueContainerID() {
         LastUsedID++;
         return "C-" + LastUsedID;
     }
+
 
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder("ManageContainers:\n");
@@ -125,9 +130,9 @@ public class ManageContainers {
         return stringBuilder.toString();
     }
 
+
     // public static void main(String[] args) {
     // ManageContainers manageContainers = ManageContainers.getInstance();
     // manageContainers.addContainer(78.9, Container.ContainerType.LIQUID);
     // }
 
-}
