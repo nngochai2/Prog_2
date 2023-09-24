@@ -44,8 +44,8 @@ public class ManageContainers {
         String containerID = generateUniqueContainerID();
         Container container = new Container(containerID, type, weight, ""); // Initialize Container
         containerList.add(container); // Add to containerList
-
         serializeContainersToFile("data/containers.dat");
+
     }
 
 
@@ -99,6 +99,7 @@ public class ManageContainers {
     }
 
 
+
     public void deserializeContainersFromFile() {
         try (FileInputStream fileInputStream = new FileInputStream("data/containers.dat");
              ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream)) {
@@ -122,6 +123,7 @@ public class ManageContainers {
             e.printStackTrace();
         }
     }
+
 
 
     private synchronized String generateUniqueContainerID() {
@@ -148,6 +150,7 @@ public class ManageContainers {
         return result.toString();
     }
 
+
     public static void main(String[] args) {
         // Create an instance of ManageContainers
         ManageContainers manageContainers = ManageContainers.getInstance();
@@ -169,3 +172,4 @@ public class ManageContainers {
         // ... Rest of your code ...
     }
 }
+

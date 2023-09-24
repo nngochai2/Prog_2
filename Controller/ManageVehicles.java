@@ -17,6 +17,7 @@ public class ManageVehicles {
 
     private int lastUsedID = 0;
 
+
     public List<Vehicle> getAllVehicles() {
         return listVehicle;
     }
@@ -55,6 +56,7 @@ public class ManageVehicles {
         return false;
     }
 
+
     private synchronized String generateUniqueVehicleID(Vehicle.VehicleType vehicleType) {
         lastUsedID++;
 
@@ -71,6 +73,7 @@ public class ManageVehicles {
             default:
                 System.err.println("Invalid vehicle type: " + vehicleType);
                 return null;
+
         }
 
         return prefix + lastUsedID;
