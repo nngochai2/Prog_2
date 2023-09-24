@@ -37,6 +37,30 @@ public class Container {
         this.location = location;
     }
 
+    // Define fuel consumption rates
+    public enum FuelRate {
+        SHIP(3.5, 4.6),
+        BASIC_TRUCK(4.6, 3.5),
+        TANKER_TRUCK(4.8, 3.7),
+        REEFER_TRUCK(5.0, 3.9);
+
+        private final double shipRate;
+        private final double truckRate;
+
+        FuelRate(double shipRate, double truckRate) {
+            this.shipRate = shipRate;
+            this.truckRate = truckRate;
+        }
+
+        public double getShipRate() {
+            return shipRate;
+        }
+
+        public double getTruckRate() {
+            return truckRate;
+        }
+    }
+
     public void load(Vehicle from, Port to) {
 
         // if weight < Port.storingCapacity
@@ -95,23 +119,24 @@ public class Container {
         this.type = containerType;
     }
 
-    public double calculateFuelConsumption(Vehicle vehicle) {
-        // Define fuel consumption rate
-        double fuelRate = switch (type) {
-            // 'switch' is used to test the value of 'type' against different cases
+    public double calculateFuelConsumption(Vehicle.VehicleType type, double distanceInKm) {
+        FuelRate fuelRate = null;
+        if (type == Vehicle.VehicleType.SHIP) {
+            fuelRate = FuelRate.SHIP;
+        } else if (type == Vehicle.VehicleType.BASIC_TRUCK) {
+            fuelRate = FuelRate.BASIC_TRUCK;
+        } else if (type == Vehicle.VehicleType.TANKER_TRUCK) {
+            fuelRate = FuelRate.TANKER_TRUCK;
+        } else if (type == Vehicle.VehicleType.REEFER_TRUCK) {
+            fuelRate = FuelRate.REEFER_TRUCK;
+        }
 
-            case DRY_STORAGE -> (vehicle instanceof Ship) ? 3.5 : 4.6;
-            // If the vehicle is a ship, '3.5' is assigned to fuelRate.
-            // If the vehicle is not a ship, 4.6 is assigned to fuelRate.
-
-            case OPEN_TOP -> (vehicle instanceof Ship) ? 2.8 : 3.2;
-            case OPEN_SIDE -> (vehicle instanceof Ship) ? 2.7 : 3.2;
-            case REFRIGERATED -> (vehicle instanceof Ship) ? 4.5 : 5.4;
-            case LIQUID -> (vehicle instanceof Ship) ? 4.8 : 5.3;
-        };
-
-        // Default value
-        return fuelRate * weight;
+        if (fuelRate != null) {
+            double rate = (type == Vehicle.VehicleType.SHIP) ? fuelRate.getShipRate() : fuelRate.getTruckRate();
+            return rate * weight * distanceInKm;
+        } else {
+            return -1.0; // Return -1 to indicate invalid input
+        }
     }
 }
 

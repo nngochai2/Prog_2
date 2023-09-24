@@ -16,6 +16,7 @@ public class Ship extends Vehicle {
 //        }
 //    }
 
+<<<<<<< Updated upstream
 
 
     public Ship(String vehicleID, String name, double carryingCapacity, double fuelCapacity) {
@@ -23,6 +24,10 @@ public class Ship extends Vehicle {
 
 
 
+=======
+    public Ship(String vehicleID, String name, double currentFuel, double carryingCapacity, String currentPort) {
+        super(vehicleID, name, currentFuel, carryingCapacity, currentPort);
+>>>>>>> Stashed changes
         if (!vehicleID.matches("^sh\\d+$")) {
             // '^': the pattern must start from th beginning of the ID
             // 'sh': force the ID to start with 'sh'
@@ -30,7 +35,6 @@ public class Ship extends Vehicle {
             // '$': the pattern must reach the end of the ID
             System.out.println("Invalid vehicle ID. It must be sh-number.");
         }
-
     }
 
     @Override
@@ -55,17 +59,33 @@ public class Ship extends Vehicle {
 
     @Override
     public boolean canLoadContainerType(Container.ContainerType type) {
-
         // Ship can load all types of containers.
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
         return true;
 
     }
+
+    // Calculate the total fuel consumption of a ship
+    @Override
+    public double estimatedFuelConsumption(double distance) {
+        double fuelConsumption = 0.0;
+
+        for (Container container : containers) {
+            double containerFuelConsumption = container.calculateFuelConsumption(VehicleType.SHIP, distance);
+            fuelConsumption += containerFuelConsumption;
+        }
+
+        return fuelConsumption;
+    }
+
     @Override
     public void move(Port destinationPort) {
-        // Calculate the distance to the destination port
-        double distance = currentPort.calculateDistance(destinationPort);
-        // Calculate the fuel consumption
+//        // Calculate the distance to the destination port
+//        double distance = currentPort.calculateDistance(destinationPort);
+//        // Calculate the fuel consumption
     }
 
 
