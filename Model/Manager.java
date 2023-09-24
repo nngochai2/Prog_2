@@ -56,20 +56,20 @@ public class Manager extends User implements IManager {
     }
 
     @Override
-    public void calculateDailyFuelUsage(Date date) {
+    public void calculateDailyFuelUsage(Date date, Vehicle vehicle) {
         double dailyFuelUsage = 0;
         List<Trip> trips = this.managedPort.getCurrentTrips();
         for (Trip trip : trips) {
             if ((date.after(trip.getDepartureDate()) && date.before(trip.getArrivalDate()))
                     || (date.equals(trip.getDepartureDate())) || (date.equals(trip.getArrivalDate()))) {
-                Vehicle vehicle = trip.getVehicle();
+                vehicle = trip.getVehicle();
                 ArrayList<Container> containers = trip.getContainersOnTrip();
                 // Get the distance traveled during the trip
                 double distance = trip.getDeparturePort().calculateDistance(trip.getArrivalPort());
 
                 // Calculate the fuel consumption for the trip
                 for (Container container : containers) {
-                    double fuelRate = container.calculateFuelConsumption(vehicle);
+                    double fuelRate = container.calculateFuelConsumption(vehicle.getVehicleType(), distance);
                     dailyFuelUsage += fuelRate;
                 }
                 // Calculate the number of days the trip lasts
