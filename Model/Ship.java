@@ -20,9 +20,6 @@ public class Ship extends Vehicle {
 
     public Ship(String vehicleID, String name, double carryingCapacity, double fuelCapacity) {
         super(vehicleID, name, carryingCapacity, fuelCapacity);
-
-
-
         if (!vehicleID.matches("^sh\\d+$")) {
             // '^': the pattern must start from th beginning of the ID
             // 'sh': force the ID to start with 'sh'
@@ -58,8 +55,8 @@ public class Ship extends Vehicle {
 
         // Ship can load all types of containers.
 
-        return true;
 
+        return true;
     }
     @Override
     public void move(Port destinationPort) {

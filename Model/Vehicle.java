@@ -17,7 +17,9 @@ public abstract class Vehicle implements IVehicle {
     protected Map<Container.ContainerType, Integer> containerCounts;
     // Used to keep track of the number of each type of container that a vehicle is carrying, store and manage the counts of different container types.
     
-    public Vehicle(String vehicleID, String name, double carryingCapacity, double fuelCapacity) {
+
+    public Vehicle(String vehicleID, String name, double currentFuel, double carryingCapacity) {
+
         this.vehicleID = vehicleID;
         this.name = name;
         this.currentFuel = fuelCapacity;
@@ -155,17 +157,18 @@ public abstract class Vehicle implements IVehicle {
 //        return weightForEachType;
 //    }
 
-    // Calculate total weight
-    public double calculateTotalWeight(Container.ContainerType containerType) {
-        // Calculate the total weight for the given container type
-        double totalWeight = 0.0;
-        for (Container container : containers) {
-            if (container.getType() == containerType) {
-                totalWeight += container.getWeight();
-            }
-        }
-        return totalWeight;
-    }
+//    // Calculate total weight ( dung duoc )
+//    public double calculateTotalWeight(Container.ContainerType containerType) {
+//        // Calculate the total weight for the given container type
+//        double totalWeight = 0.0;
+//        for (Container container : containers) {
+//            if (container.getType() == containerType) {
+//                totalWeight += container.getWeight();
+//            }
+//        }
+//        return totalWeight;
+//    }
+
 
     // Estimate the fuel consumption based on the containers carried by a vehicle
     public double estimatedFuelConsumption(Port destinationPort) {
