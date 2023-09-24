@@ -1,12 +1,26 @@
+package Model;
+
+import java.util.ArrayList;
 import java.util.Map;
 
+
+
 public class TankerTruck extends BasicTruck {
-    public TankerTruck(String vehicleID, String name, int currentFuel, int carryingCapacity, int fuelCapacity, Port currentPort, int totalContainers) {
-        super(vehicleID, name, currentFuel, carryingCapacity, fuelCapacity, currentPort, totalContainers);
+    public TankerTruck(String vehicleID, String name, double carryingCapacity, double fuelCapacity) {
+        super(vehicleID, name, carryingCapacity, fuelCapacity);
+
+
+        if (!vehicleID.matches("^tr\\d+$")) {
+            System.out.println("Invalid vehicle ID. It must be tr-number.");
+        }
+    }
+
+    public VehicleType getVehicleType() {
+        return VehicleType.TANKER_TRUCK;
     }
 
     @Override
-    public int getCarryCapacity() {
+    public double getCarryCapacity() {
         return super.getCarryCapacity();
     }
 
