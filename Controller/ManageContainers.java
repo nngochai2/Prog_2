@@ -1,7 +1,6 @@
 package Controller;
-
-import Model.*;
-
+import Model.Container;
+import java.util.UUID;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,30 +39,70 @@ public class ManageContainers {
     public Container addContainer(double weight, Container.ContainerType type) {
         Container container = new Container(this.generateUniqueContainerID(), weight, type);
         containerList.add(container);
-        this.serializeContainersToFile();
+
+        this.saveContainers();
         return container;
     }
 
-    public boolean removeContainers(String containerID) {
-        if (containerList.removeIf(container -> container.getContainerID().equals(containerID))) {
-            this.serializeContainersToFile();
+    public boolean removeContainer(String containerID) {
+        List<Container> newList = new ArrayList<>();
+        boolean found = false;
+
+        for (Container container : containerList) {
+            if (!container.getContainerID().equals(containerID)) {
+                newList.add(container);
+            } else {
+                found = true;
+            }
+        }
+
+        if (found) {
+            containerList = newList; // Update the original list without the removed element
+            saveContainers();
+
             return true;
         }
+
         return false;
     }
 
-    public void serializeContainersToFile() {
-        try (FileOutputStream fileOutputStream = new FileOutputStream("data/containers.dat");
-                ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream)) {
-
-            objectOutputStream.writeObject(containerList);
-
-            System.out.println("Containers have been serialized and saved to data/containers.dat");
-        } catch (IOException e) {
-            e.printStackTrace();
+    public void updateContainer(String id, Container container) {
+        for (int i = 0; i < containerList.size(); i++) {
+            if (containerList.get(i).getContainerID().equals(id)) {
+                containerList.set(i, container);
+                saveContainers();
+                break;
+            }
         }
     }
 
+
+    public void saveContainers() {
+        FileOutputStream fileOutputStream = null;
+        ObjectOutputStream objectOutputStream = null;
+
+        try {
+            fileOutputStream = new FileOutputStream("dataFile/containers.ser");
+            objectOutputStream = new ObjectOutputStream(fileOutputStream);
+
+            objectOutputStream.writeObject(containerList);
+
+            System.out.println("Containers have been saved to dataFile/containers.ser");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (objectOutputStream != null) {
+                    objectOutputStream.close();
+                }
+                if (fileOutputStream != null) {
+                    fileOutputStream.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
     public void deserializeContainersFromFile() {
         try (FileInputStream fileInputStream = new FileInputStream("data/containers.dat");
                 ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream)) {
@@ -87,4 +126,5 @@ public class ManageContainers {
     // ManageContainers manageContainers = ManageContainers.getInstance();
     // manageContainers.addContainer(78.9, Container.ContainerType.LIQUID);
     // }
+
 }

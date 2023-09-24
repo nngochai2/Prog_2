@@ -134,6 +134,11 @@ public class Port implements IPort {
         return 0;
     }
 
+    @Override
+    public int addContainers(List<Container> containersToAdd) {
+        return 0;
+    }
+
     public boolean isLandingAbility() {
         return landingAbility;
     }
@@ -180,26 +185,30 @@ public class Port implements IPort {
         pastTrips.add(trip);
     }
 
-    // Add containers
-    @Override
-    public int addContainers(List<Model.Container> containersToAdd) {
-        // Calculate the total weight of containers being added
-        double totalWeightToAdd = containersToAdd.stream()
-                .mapToDouble(Model.Container::getWeight)
-                .sum();
+    // Add containers ( optimized cach check enough capacity )
 
-        // Calculate the total weight of containers currently in the port
-        double currentTotalWeight = calculateTotalWeight();
+//    public int addContainers(List<Model.Container> containersToAdd) {
+//        // Calculate the total weight of containers being added
+//        double totalWeightToAdd = containersToAdd.stream()
+//                .mapToDouble(Model.Container::getWeight)
+//                .sum();
+//
+//        // Calculate the total weight of containers currently in the port
+//        double currentTotalWeight = calculateTotalWeight();
+//
+//        // Calculate the available capacity in the port
+//        double availableCapacity = storingCapacity - currentTotalWeight;
+//
+//        // Check if there is enough capacity to add the containers
+//        if (totalWeightToAdd <= availableCapacity) {
+//            containers.addAll(containersToAdd); // Add the containers to the port
+//            containersCount += containersToAdd.size(); // Update the containers count
+//            return containersToAdd.size(); // Return the number of containers added
+//        } else {
+//            return 0; // Adding containers would exceed the storing capacity, return 0
+//        }
+//    }
 
-        // Check if adding these containers would exceed the storing capacity
-        if (currentTotalWeight + totalWeightToAdd <= storingCapacity) {
-            containers.addAll(containersToAdd); // Add the containers to the port
-            containersCount += containersToAdd.size(); // Update the containers count
-            return containersToAdd.size(); // Return the number of containers added
-        } else {
-            return 0; // Adding containers would exceed the storing capacity, return 0
-        }
-    }
 
     @Override
     public void removeContainer(Model.Container container) {
