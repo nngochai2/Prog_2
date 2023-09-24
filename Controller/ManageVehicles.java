@@ -37,6 +37,11 @@ public class ManageVehicles {
     }
 
     // Get all vehicles
+    public boolean validateVehicleId(String containerId) {
+        String regex = "^([a-z]{2})-(\\\\d+)$";
+        return containerId.matches(regex);
+    }
+
     public Optional<Vehicle> getVehicleByID(String vehicleID) {
         for (Vehicle vehicle : listVehicle) {
             if (vehicle.getVehicleID().equals(vehicleID)) {
@@ -111,44 +116,68 @@ public class ManageVehicles {
     }
 
     // Add a ship to the list and save to a file
-    public Ship addShip(String name, double carryingCapacity, double fuelCapacity, String portID) {
+    public boolean addShip(String name, double carryingCapacity, double fuelCapacity, String portID) {
         String vehicleID = generateUniqueVehicleID(Vehicle.VehicleType.SHIP);
         if (vehicleID != null) {
             Ship vehicle = new Ship(vehicleID, name, carryingCapacity, fuelCapacity, portID);
             listVehicle.add(vehicle);
             this.serializeVehiclesToFile("data/vehicles.dat");
-            return vehicle;
+            return true;
+        } else {
+            return false;
         }
-        return null;
     }
 
-
-
-    // Add a truck to the list and save to a file
-    public BasicTruck addTruck(String name, double carryingCapacity, double fuelCapacity, String portID, Vehicle.VehicleType type) {
-        Vehicle.VehicleType vehicleType = null;
-
-        if (type == Vehicle.VehicleType.TANKER_TRUCK) {
-            vehicleType = Vehicle.VehicleType.TANKER_TRUCK;
-        } else if (type == Vehicle.VehicleType.REEFER_TRUCK) {
-            vehicleType = Vehicle.VehicleType.REEFER_TRUCK;
-        } else if (type == Vehicle.VehicleType.BASIC_TRUCK) {
-            vehicleType = Vehicle.VehicleType.BASIC_TRUCK;
-        } else {
-            System.err.println("Invalid truck type: " + type);
-            return null;
-        }
-
-        String vehicleID = generateUniqueVehicleID(vehicleType);
+    public boolean addTankerTruck(String name, double carryingCapacity, double fuelCapacity, String portID) {
+        String vehicleID = generateUniqueVehicleID(Vehicle.VehicleType.TANKER_TRUCK);
         if (vehicleID != null) {
-            BasicTruck vehicle = new BasicTruck(vehicleID, name, carryingCapacity, fuelCapacity, portID);
-            vehicle.setVehicleType(vehicleType); // Set the VehicleType separately
+            TankerTruck vehicle = new TankerTruck(vehicleID, name, carryingCapacity, fuelCapacity, portID);
             listVehicle.add(vehicle);
             this.serializeVehiclesToFile("data/vehicles.dat");
-            return vehicle;
+            return true;
+        } else {
+            return false;
         }
-        return null;
-
     }
+
+    public boolean addReeferTruck(String name, double carryingCapacity, double fuelCapacity, String portID) {
+        String vehicleID = generateUniqueVehicleID(Vehicle.VehicleType.REEFER_TRUCK);
+        if (vehicleID != null) {
+            ReeferTruck vehicle = new ReeferTruck(vehicleID, name, carryingCapacity, fuelCapacity, portID);
+            listVehicle.add(vehicle);
+            this.serializeVehiclesToFile("data/vehicles.dat");
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean addBasicTruck(String name, double carryingCapacity, double fuelCapacity, String portID) {
+        String vehicleID = generateUniqueVehicleID(Vehicle.VehicleType.BASIC_TRUCK);
+        if (vehicleID != null) {
+            BasicTruck vehicle = new BasicTruck(vehicleID, name, carryingCapacity, fuelCapacity, portID);
+            listVehicle.add(vehicle);
+            this.serializeVehiclesToFile("data/vehicles.dat");
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean removeVehicle(String vehicleID) {
+        boolean value = false;
+        for (Vehicle vehicle : listVehicle) {
+            if (vehicle.getVehicleID().equals(vehicleID)) {
+                listVehicle.remove(vehicle);
+                serializeVehiclesToFile("data/vehicles.dat");
+                value = true;
+                break;
+            } else {
+                value = false;
+            }
+        }
+        return value;
+    }
+
 
 }

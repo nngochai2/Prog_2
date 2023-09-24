@@ -52,14 +52,18 @@ public class ManagePorts {
 
 
     public boolean removePort(String portID) {
+        boolean value = false;
         for (Port port : portsList) {
             if (port.getPortID().equals(portID)) {
                 portsList.remove(port);
                 serializePortsToFile("data/ports.dat");
-                return true;
+                value = true;
+                break;
+            } else {
+                value = false;
             }
         }
-        return false;
+        return value;
     }
 
     public void serializePortsToFile(String filePath) {

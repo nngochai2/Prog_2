@@ -1,26 +1,29 @@
 package View;
 import Controller.ManageVehicles;
+import Model.Port;
+import Model.Vehicle;
 
+import java.util.Optional;
 import java.util.Scanner;
 
 public class VehiclesView {
     // shared by admins and managers
     ManageVehicles manageVehicles = ManageVehicles.getInstance();
-    public void vehicles(){
+    public void vehicles() {
         // Menu - Vehicles
         Scanner scanner = new Scanner(System.in);
         System.out.println("__________________________Vehicles__________________________");
-        System.out.println("There are currently [number] vehicles");
+        System.out.println("There are currently " + manageVehicles.getAllVehicles().size() + " vehicles \n");
 
         String input;
         do {
             System.out.println("""
-                   [0] GO BACK
-                   [1] List All Vehicles
-                   [2] Find Vehicle by ID
-                   [3] Add Vehicle
-                   [4] Remove Vehicle
-                    """);
+                [0] GO BACK
+                [1] List All Vehicles
+                [2] Find Vehicle by ID
+                [3] Add Vehicle
+                [4] Remove Vehicle
+                """);
             System.out.println("ENTER THE NUMBER TO CHOOSE THE OPTION:");
             input = scanner.nextLine().trim();
             switch (input) {
@@ -42,13 +45,20 @@ public class VehiclesView {
                 default:
                     System.out.println("Invalid input");
             }
-        } while(!input.equals("0"));
+        } while (!input.equals("0"));
     }
 
     public void vehiclesList() {
         // Menu - Vehicles - All Vehicles
         System.out.println("__________________________MENU - VEHICLES - All Vehicles__________________________");
-        System.out.println("There are currently [number] vehicles \n");
+        System.out.println("There are currently " + manageVehicles.getAllVehicles().size() + " vehicles \n");
+        for (Vehicle vehicle: manageVehicles.getAllVehicles()) {
+            System.out.println("Vehicle ID - name - type - current fuel - fuel capacity - carrying capacity - current port");
+            System.out.println(vehicle.getVehicleID() + " - " + vehicle.getVehicleType() + " - " +
+                    vehicle.getCurrentFuel() + " - " + vehicle.getFuelCapacity() + " - " +
+                    vehicle.getCurrentPort());
+        }
+
         // Go back
         this.vehicles();
     }
@@ -63,6 +73,20 @@ public class VehiclesView {
             System.out.println("(Enter ! to cancel)");
             System.out.println("Enter Vehicle ID: ");
             input = scanner.nextLine().trim();
+
+            if (manageVehicles.validateVehicleId(input)) {
+                Optional<Vehicle> vehicle = manageVehicles.getVehicleByID(input);
+                if (vehicle.isPresent()) {
+                    System.out.println("Vehicle ID - name - type - current fuel - fuel capacity - carrying capacity - current port");
+                    System.out.println(vehicle.get().getVehicleID() + " - " + vehicle.get().getVehicleType() + " - " +
+                            vehicle.get().getCurrentFuel() + " - " + vehicle.get().getFuelCapacity() + " - " +
+                            vehicle.get().getCurrentPort());
+                } else {
+                    System.out.println("No vehicle found\n");
+                }
+            } else {
+                System.out.println("Invalid input!\n");
+            }
         } while(!input.equals("!"));
         // Go back
         this.vehicles();
@@ -75,12 +99,13 @@ public class VehiclesView {
 
         String input;
         do {
-            System.out.println("There are currently [number] vehicles");
+            System.out.println("There are currently " + manageVehicles.getAllVehicles().size() + " vehicles");
             System.out.println("""
                    [0] GO BACK
                    [1] Add Tanker Truck
                    [2] Add Reefer Truck
                    [3] Add Ship
+                   [4] Add Basic Truck
                     """);
             System.out.println("ENTER THE NUMBER TO CHOOSE THE OPTION:");
             input = scanner.nextLine().trim();
@@ -96,6 +121,8 @@ public class VehiclesView {
                 case "3":
                     this.addShip();
                     break;
+                case "4":
+                    this.addBasicTruck();
                 default:
                     System.out.println("Invalid input");
             }
@@ -105,16 +132,15 @@ public class VehiclesView {
     }
 
     public void addTankerTruck() {
-        // Menu - Vehicles - Add Vehicles - Add Tanker Truck
         Scanner scanner = new Scanner(System.in);
         System.out.println("__________________________MENU - VEHICLES - Add Vehicles - Add Tanker Truck__________________________");
 
         String input;
         do {
-            System.out.println("There are currently [number] tanker trucks");
+            System.out.println("There are currently " + manageVehicles.getAllVehicles().size() + " vehicles");
             System.out.println("(Enter ! to cancel)");
             System.out.println("Separate values by \" , \" ");
-            System.out.println("Enter Vehicle's ID, name, carrying capacity, fuel capacity, current port: ");
+            System.out.println("Enter Vehicle name, carrying capacity, fuel capacity, current port: ");
             input = scanner.nextLine().trim();
 
             if (input.equals("!")) {
@@ -123,20 +149,20 @@ public class VehiclesView {
 
             try {
                 String[] values = input.split(",");
-                String ID = values[0];
-                String name = values[1];
-                double carryingCapacity = Double.parseDouble(values[2]);
-                double fuelCapacity = Double.parseDouble(values[3]);
-                String currentPort = values[4];
+                String name = values[0];
+                double carryingCapacity = Double.parseDouble(values[1]);
+                double fuelCapacity = Double.parseDouble(values[2]);
+                String currentPort = values[3];
 
-                // Add tanker truck
-                System.out.println("The following tanker trucks have been added:");
-
-                System.out.println("Tanker truck added successfully!");
+                if (manageVehicles.addTankerTruck(name, carryingCapacity, fuelCapacity, currentPort)){
+                    System.out.println("Tanker truck added successfully!\n");
+                } else {
+                    System.out.println("Failed to add tanker truck\n");
+                }
             } catch (NumberFormatException e) {
-                System.out.println("Invalid input!");
+                System.out.println("Invalid input!\n");
             } catch (IndexOutOfBoundsException e) {
-                System.out.println("Not enough values entered!");
+                System.out.println("Not enough values entered!\n");
             }
         } while (true);
         // Go back
@@ -149,10 +175,10 @@ public class VehiclesView {
 
         String input;
         do {
-            System.out.println("There are currently [number] reefer trucks");
+            System.out.println("There are currently " + manageVehicles.getAllVehicles().size() + " vehicles");
             System.out.println("(Enter ! to cancel)");
             System.out.println("Separate values by \" , \" ");
-            System.out.println("Enter Vehicle's ID, name, carrying capacity, fuel capacity, current port: ");
+            System.out.println("Enter Vehicle's name, carrying capacity, fuel capacity, current port: ");
             input = scanner.nextLine().trim();
 
             if (input.equals("!")) {
@@ -161,18 +187,20 @@ public class VehiclesView {
 
             try {
                 String[] values = input.split(",");
-                String ID = values[0];
-                String name = values[1];
-                double carryingCapacity = Double.parseDouble(values[2]);
-                double fuelCapacity = Double.parseDouble(values[3]);
-                String currentPort = values[4];
+                String name = values[0];
+                double carryingCapacity = Double.parseDouble(values[1]);
+                double fuelCapacity = Double.parseDouble(values[2]);
+                String currentPort = values[3];
 
-                // Add reefer truck
-                System.out.println("Reefer truck added successfully!");
+                if (manageVehicles.addReeferTruck(name, carryingCapacity, fuelCapacity, currentPort)){
+                    System.out.println("Reefer truck added successfully!\n");
+                } else {
+                    System.out.println("Failed to add reefer truck\n");
+                }
             } catch (NumberFormatException e) {
-                System.out.println("Invalid input!");
+                System.out.println("Invalid input!\n");
             } catch (IndexOutOfBoundsException e) {
-                System.out.println("Not enough values entered!");
+                System.out.println("Not enough values entered!\n");
             }
         } while (true);
         // Go back
@@ -185,10 +213,9 @@ public class VehiclesView {
 
         String input;
         do {
-            System.out.println("There are currently [number] ships");
             System.out.println("(Enter ! to cancel)");
             System.out.println("Separate values by \" , \" ");
-            System.out.println("Enter Vehicle's ID, name, carrying capacity, fuel capacity, current port: ");
+            System.out.println("Enter Vehicle's name, carrying capacity, fuel capacity, current port: ");
             input = scanner.nextLine().trim();
 
             if (input.equals("!")) {
@@ -197,23 +224,63 @@ public class VehiclesView {
 
             try {
                 String[] values = input.split(",");
-                String ID = values[0];
-                String name = values[1];
-                double carryingCapacity = Double.parseDouble(values[2]);
-                double fuelCapacity = Double.parseDouble(values[3]);
-                String currentPort = values[4];
+                String name = values[0];
+                double carryingCapacity = Double.parseDouble(values[1]);
+                double fuelCapacity = Double.parseDouble(values[2]);
+                String currentPort = values[3];
 
-                // Add ship
-                System.out.println("Ship added successfully!");
+                if (manageVehicles.addShip(name, carryingCapacity, fuelCapacity, currentPort)){
+                    System.out.println("Ship added successfully!\n");
+                } else {
+                    System.out.println("Failed to add ship\n");
+                }
             } catch (NumberFormatException e) {
-                System.out.println("Invalid input!");
+                System.out.println("Invalid input!\n");
             } catch (IndexOutOfBoundsException e) {
-                System.out.println("Not enough values entered!");
+                System.out.println("Not enough values entered!\n");
             }
         } while (true);
         // Go back
         this.addVehicle();
     }
+
+    public void addBasicTruck() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("__________________________MENU - VEHICLES - Add Vehicles - Add Basic Truck__________________________");
+
+        String input;
+        do {
+            System.out.println("(Enter ! to cancel)");
+            System.out.println("Separate values by \" , \" ");
+            System.out.println("Enter Vehicle's name, carrying capacity, fuel capacity, current port: ");
+            input = scanner.nextLine().trim();
+
+            if (input.equals("!")) {
+                break;
+            }
+
+            try {
+                String[] values = input.split(",");
+                String name = values[0];
+                double carryingCapacity = Double.parseDouble(values[1]);
+                double fuelCapacity = Double.parseDouble(values[2]);
+                String currentPort = values[3];
+
+                if (manageVehicles.addBasicTruck(name, carryingCapacity, fuelCapacity, currentPort)){
+                    System.out.println("Basic truck added successfully!\n");
+                } else {
+                    System.out.println("Failed to add basic truck\n");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input!\n");
+            } catch (IndexOutOfBoundsException e) {
+                System.out.println("Not enough values entered!\n");
+            }
+        } while (true);
+        // Go back
+        this.addVehicle();
+    }
+
 
     public void removeVehicle() {
         // Menu - Vehicles - Remove Vehicles
@@ -226,19 +293,23 @@ public class VehiclesView {
             System.out.println("Enter Port ID: ");
             input = scanner.nextLine().trim();
 
-//            try {
-//                // validate
-//                // deleteVehicle(input)
-//            } catch (IllegalArgumentException e) {
-//                System.out.println(e.getMessage());
-//            }
+            if (manageVehicles.validateVehicleId(input)) {
+                Optional<Vehicle> vehicle = manageVehicles.getVehicleByID(input);
+                if (manageVehicles.removeVehicle(input)) {
+                    System.out.println("Removed vehicle successfully");
+                } else {
+                    System.out.println("No vehicle was found.\n");
+                }
+            } else {
+                System.out.println("Invalid input!\n");
+            }
         } while(!input.equals("!"));
         // Go back
         this.vehicles();
     }
 
     public static void main(String[] args) {
-        VehiclesView vv = new VehiclesView();
-        vv.addTankerTruck();
+        VehiclesView vehiclesView = new VehiclesView();
+        vehiclesView.vehicles();
     }
 }

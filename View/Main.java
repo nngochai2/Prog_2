@@ -13,26 +13,30 @@ public class Main {
                 s3979331, Hoang Quoc Dat
                 s3979170, Nguyen Chi Nghia
                 s3978546, Bui Cong Duy""");
-        System.out.println("__________________________WELCOME TO MY ASS" +
+        System.out.println("__________________________WELCOME TO PORT MANAGEMENT SYSTEM" +
                            "__________________________");
         // Login
-        System.out.println("LOGIN");
-        System.out.println("ENTER THE NUMBER TO CHOOSE THE OPTION:");
-        System.out.println("""
+        String input;
+
+        do {
+            System.out.println("LOGIN");
+            System.out.println("""
                 [1] Login as Admin
                 [2] Login as Port Manager
                 """);
-        String option = scanner.nextLine();
+            System.out.println("ENTER THE NUMBER TO CHOOSE THE OPTION:");
+            input = scanner.nextLine();
 
-        // Display menu
-        if (option.equals("1")){
-            AdminView adminView = new AdminView();
-            adminView.menu();
-        } else if (option.equals("2")) {
-            ManagerView managerView = new ManagerView();
-            managerView.menu();
-        } else {
-            System.out.println("well fuck off then");
-        }
+            // Display menu
+            if (input.equals("1")){
+                AdminView adminView = new AdminView();
+                adminView.menu();
+            } else if (input.equals("2")) {
+                ManagerView managerView = new ManagerView();
+                managerView.menu();
+            } else {
+                System.out.println("Goodbye");
+            }
+        } while (!input.equals(0));
     }
 }
