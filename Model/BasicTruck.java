@@ -7,8 +7,12 @@ import Model.Container.ContainerType;
 import Model.Vehicle.VehicleType;
 
 public class BasicTruck extends Vehicle {
-    public BasicTruck(String vehicleID, String name, double currentFuel, double carryingCapacity) {
-        super(vehicleID, name, currentFuel, carryingCapacity);
+
+
+    public BasicTruck(String vehicleID, String name, double carryingCapacity, double fuelCapacity) {
+        super(vehicleID, name, carryingCapacity, fuelCapacity);
+
+
 
         if (!vehicleID.matches("^tr\\d+$")) {
             System.out.println("Invalid vehicle ID. It must be tr-number.");

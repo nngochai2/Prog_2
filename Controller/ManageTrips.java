@@ -1,10 +1,14 @@
 package Controller;
 
-import Model.Trip;
-import Model.Port;
+import Model.*;
 
 import java.util.*;
 import java.util.stream.*;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 public class ManageTrips {
     private static ManageTrips instance;
@@ -94,5 +98,31 @@ public class ManageTrips {
         Date seveDaysAgo = new Date(now.getTime() - sevenDays);
         this.trips = trips.stream().filter(trip -> (trip.getArrivalDate().after(seveDaysAgo)))
                 .collect(Collectors.toCollection(ArrayList::new));
+    }
+
+    public void serializeTripsToFile() {
+        try (FileOutputStream fileOutputStream = new FileOutputStream("data/trips.dat");
+                ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream)) {
+
+            objectOutputStream.writeObject(trips);
+
+            System.out.println("Trips have been serialized and saved to data/trips.dat");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deserializeTripsFromFile() {
+        try (FileInputStream fileInputStream = new FileInputStream("data/trips.dat");
+                ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream)) {
+
+            ArrayList<Trip> importedTrips = (ArrayList<Trip>) objectInputStream.readObject();
+
+            trips = importedTrips;
+
+            System.out.println("Trips have been deserialized and imported from data/trips.dat");
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }

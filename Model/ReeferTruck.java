@@ -9,8 +9,6 @@ public class ReeferTruck extends BasicTruck {
     public ReeferTruck(String vehicleID, String name, double carryingCapacity, double fuelCapacity) {
         super(vehicleID, name, carryingCapacity, fuelCapacity);
 
-
-
         if (!vehicleID.matches("^tr\\d+$")) {
             System.out.println("Invalid vehicle ID. It must be tr-number.");
         }
