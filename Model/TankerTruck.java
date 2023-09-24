@@ -9,9 +9,7 @@ import java.util.Map;
 public class TankerTruck extends BasicTruck implements Serializable {
     public TankerTruck(String vehicleID, String name, double carryingCapacity, double fuelCapacity, String portID) {
         super(vehicleID, name, carryingCapacity, fuelCapacity, portID);
-        if (!vehicleID.matches("^tr\\d+$")) {
-            System.out.println("Invalid vehicle ID. It must be tr-number.");
-        }
+
     }
 
     public VehicleType getVehicleType() {
@@ -48,6 +46,13 @@ public class TankerTruck extends BasicTruck implements Serializable {
     public boolean canLoadContainerType(Container.ContainerType type) {
         return type == Container.ContainerType.LIQUID;
     }
+    @Override
+    public String toString() {
+        String portID = getCurretPort() != null ? getCurretPort().getPortID() : "N/A";
+        return "Tanker Truck ID: " + getVehicleID() + ", Name: " + getName() + ", Carrying Capacity: " + getCarryingCapacity() + ", Fuel Capacity: " + getFuelCapacity() + ", Port ID: " + portID;
+    }
+
+
 
     @Override
     public void move(Port destinationPort) {
