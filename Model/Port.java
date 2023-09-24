@@ -16,10 +16,9 @@ public class Port implements IPort {
     private boolean landingAbility;
     private int containersCount;
     private int vehiclesCount;
-    private ArrayList<Trip> pastTrips;
-    private ArrayList<Trip> currentTrips;
     private ArrayList<Model.Container> containers;
     private ArrayList<Vehicle> vehicles;
+    private ArrayList<Trip> currentTrips;
 
     public Port(String portID, String name, double latitude, double longitude, int storingCapacity,
                 boolean landingAbility, int containersCount, int vehiclesCount, ArrayList<Trip> pastTrips,
@@ -40,11 +39,6 @@ public class Port implements IPort {
             this.currentTrips = currentTrips;
             this.containers = new ArrayList<>();
         }
-    }
-
-    public Port(String portID, String name, double latitude, double longitude, int storingCapacity,
-            boolean landingAbility, int containersCount, int vehiclesCount, ArrayList<Trip> pastTrips,
-            ArrayList<Trip> currentTrips) {
     }
 
     // Getter & Setter
@@ -68,7 +62,7 @@ public class Port implements IPort {
         return storingCapacity;
     }
 
-    public int getCurrentTotalWeight() {
+    public double getCurrentTotalWeight() {
         return currentTotalWeight;
     }
 
@@ -98,26 +92,6 @@ public class Port implements IPort {
 
     public void setStoringCapacity(double storingCapacity) {
         this.storingCapacity = storingCapacity;
-    }
-
-    public void setCurrentTotalWeight(int currentTotalWeight) {
-        this.currentTotalWeight = currentTotalWeight;
-    }
-
-    public void setContainersCount(int containersCount) {
-        this.containersCount = containersCount;
-    }
-
-    public void setVehiclesCount(int vehiclesCount) {
-        this.vehiclesCount = vehiclesCount;
-    }
-
-    public void setPastTrips(ArrayList<Trip> pastTrips) {
-        this.pastTrips = pastTrips;
-    }
-
-    public void setCurrentTrips(ArrayList<Trip> currentTrips) {
-        this.currentTrips = currentTrips;
     }
 
     public void setContainers(ArrayList<Model.Container> containers) {
@@ -163,14 +137,11 @@ public class Port implements IPort {
         this.vehicles = vehicles;
     }
 
-    public List<Trip> getPastTrips() {
-        return pastTrips;
-    }
-
     public List<Trip> getCurrentTrips() {
         return currentTrips;
     }
 
+<<<<<<< Updated upstream
     public boolean canLandTrucks() {
         return landingAbility;
     }
@@ -185,6 +156,8 @@ public class Port implements IPort {
         pastTrips.add(trip);
     }
 
+=======
+>>>>>>> Stashed changes
     // Add containers ( optimized cach check enough capacity )
 
 //    public int addContainers(List<Model.Container> containersToAdd) {

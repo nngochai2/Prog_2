@@ -90,13 +90,13 @@ public abstract class Vehicle implements IVehicle {
         this.fuelCapacity = fuelCapacity;
     }
 
-    public void setCurrentPort(String currentPort) {
-        this.currentPort = currentPort;
-    }
-
-    public void setTotalContainers(int totalContainers) {
-        this.totalContainers = totalContainers;
-    }
+//    public void setCurrentPort(String currentPort) {
+//        this.currentPort = currentPort;
+//    }
+//
+//    public void setTotalContainers(int totalContainers) {
+//        this.totalContainers = totalContainers;
+//    }
 
 
     public boolean canLoadContainerType(Container.ContainerType type) {
