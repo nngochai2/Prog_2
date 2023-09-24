@@ -13,6 +13,6 @@ s3979170, Nguyen Chi Nghia
 s3978546, Bui Cong Duy
 
 
-THE LINK TO OUR GITHUB REPO: 
+THE LINK TO OUR GITHUB REPO: https://github.com/nngochai2/Prog_2
 
-LINK TO VIDEO DEMONSTRATION: 
+LINK TO VIDEO DEMONSTRATION: https://youtu.be/nJnHSHS9Ixc
