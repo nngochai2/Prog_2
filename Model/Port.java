@@ -1,12 +1,12 @@
 
 package Model;
-
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Port implements IPort {
+public class Port implements IPort, Serializable {
     private String portID;
     private String name;
     private double latitude;
@@ -23,9 +23,6 @@ public class Port implements IPort {
 
     public Port(String portID, String name, double latitude, double longitude, int storingCapacity,
                 boolean landingAbility) {
-        if (!portID.matches("^p\\d+$")) {
-            System.out.println("Invalid port ID. It must be p-number.");
-        } else {
             this.portID = portID;
             this.name = name;
             this.latitude = latitude;
@@ -35,7 +32,7 @@ public class Port implements IPort {
             this.landingAbility = landingAbility;
             this.containers = new ArrayList<>();
         }
-    }
+
 
     public Port(String portID, String name, double latitude, double longitude, int storingCapacity,
             boolean landingAbility, int containersCount, int vehiclesCount, ArrayList<Trip> pastTrips,

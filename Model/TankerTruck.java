@@ -1,11 +1,12 @@
 package Model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Map;
 
 
 
-public class TankerTruck extends BasicTruck {
+public class TankerTruck extends BasicTruck implements Serializable {
     public TankerTruck(String vehicleID, String name, double carryingCapacity, double fuelCapacity, String portID) {
         super(vehicleID, name, carryingCapacity, fuelCapacity, portID);
         if (!vehicleID.matches("^tr\\d+$")) {

@@ -1,11 +1,11 @@
 
 package Model;
-
+import java.io.Serializable;
 import java.util.Date;
 import java.util.ArrayList;
 
-public class Trip {
-    private String id;
+public class Trip implements Serializable {
+    private String tripid;
     private Vehicle vehicle;
     private ArrayList<Container> containersOnTrip; // List to store containers on the trip
     private Date departureDate;
@@ -15,9 +15,9 @@ public class Trip {
     private tripStatus status;
 
     // Constructor
-    public Trip(String id, Vehicle vehicle, Date departureDate, Date arrivalDate, Port departurePort, Port arrivalPort,
+    public Trip(String tripid, Vehicle vehicle, Date departureDate, Date arrivalDate, Port departurePort, Port arrivalPort,
             tripStatus status) {
-        this.id = id;
+        this.tripid = tripid;
         this.vehicle = vehicle;
         this.containersOnTrip = new ArrayList<>(vehicle.getContainers());
         this.departureDate = departureDate;
@@ -33,7 +33,7 @@ public class Trip {
     }
 
     public void setId(String id) {
-        this.id = id;
+        this.tripid = id;
     }
 
     public void setVehicle(Vehicle vehicle) {
@@ -61,7 +61,7 @@ public class Trip {
     }
 
     public String getId() {
-        return id;
+        return tripid;
     }
 
     public Vehicle getVehicle() {

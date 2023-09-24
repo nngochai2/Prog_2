@@ -1,12 +1,13 @@
 
 package Model;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Map;
 
 import Model.Container.ContainerType;
 import Model.Vehicle.VehicleType;
 
-public class BasicTruck extends Vehicle {
+public class BasicTruck extends Vehicle implements Serializable {
   
     public BasicTruck(String vehicleID, String name, double carryingCapacity, double fuelCapacity, String currentPort) {
         super(vehicleID, name, carryingCapacity, fuelCapacity, currentPort);

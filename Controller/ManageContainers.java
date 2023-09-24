@@ -8,9 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+
 public class ManageContainers {
     private static ManageContainers instance;
-    private List<Container> containerList;
+    private ArrayList<Container> containerList;
     private int LastUsedID = 0;
 
     public ManageContainers() {
@@ -39,19 +40,17 @@ public class ManageContainers {
         return this.containerList.stream().anyMatch(container -> container.getContainerID().equals(containerID));
     }
 
-    public Container addContainer(Container.ContainerType type, double weight) {
-        Container container = new Container(this.generateUniqueContainerID(), weight, type);
-        containerList.add(container);
+    public void addContainer(double weight, Container.ContainerType type) {
+        String containerID = generateUniqueContainerID();
+        Container container = new Container(containerID, type, weight, ""); // Initialize Container
+        containerList.add(container); // Add to containerList
+        serializeContainersToFile("data/containers.dat");
 
-
-
-//        this.serializeContainersToFile();
-
-        return container;
     }
 
+
     public boolean removeContainer(String containerID) {
-        List<Container> newList = new ArrayList<>();
+        ArrayList<Container> newList = new ArrayList<>();
         boolean found = false;
 
         for (Container container : containerList) {
@@ -64,7 +63,7 @@ public class ManageContainers {
 
         if (found) {
             containerList = newList; // Update the original list without the removed element
-            serializeContainersToFile();
+            serializeContainersToFile("data/containers.dat");
 
             return true;
         }
@@ -76,63 +75,101 @@ public class ManageContainers {
         for (int i = 0; i < containerList.size(); i++) {
             if (containerList.get(i).getContainerID().equals(id)) {
                 containerList.set(i, container);
-                serializeContainersToFile();
+                serializeContainersToFile("data/containers.dat");
                 break;
             }
         }
     }
 
 
-    public void serializeContainersToFile() {
-        try (FileOutputStream fileOutputStream = new FileOutputStream("data/ports.dat");
-             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream)) {
+    public void serializeContainersToFile(String filePath) {
+        try {
+            File file = new File(filePath);
+            file.getParentFile().mkdirs(); // Create parent directories if they don't exist
+            FileOutputStream fileOutputStream = new FileOutputStream(file);
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
 
             objectOutputStream.writeObject(containerList);
 
-            System.out.println("Ports have been serialized and saved to data/ports.dat");
+            System.out.println("Containers have been saved to " + filePath);
         } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Error: Unable to save containers to " + filePath);
+        }
+    }
+
+
+
+    public void deserializeContainersFromFile() {
+        try (FileInputStream fileInputStream = new FileInputStream("data/containers.dat");
+             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream)) {
+
+            Object importedObject = objectInputStream.readObject();
+
+            if (importedObject instanceof ArrayList) {
+                ArrayList<?> importedData = (ArrayList<?>) importedObject;
+
+                if (!importedData.isEmpty() && importedData.get(0) instanceof Container) {
+                    containerList = (ArrayList<Container>) importedData;
+
+                    System.out.println("Containers have been deserialized and imported from data/containers.dat");
+                } else {
+                    System.out.println("Error: Unexpected data format in the file.");
+                }
+            } else {
+                System.out.println("Error: Unexpected data format in the file.");
+            }
+        } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
 
 
-//    public void deserializeContainersFromFile() {
-//        try (FileInputStream fileInputStream = new FileInputStream("data/ports.dat");
-//             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream)) {
-//
-//            ArrayList<Container> importedContainers = (ArrayList<Container>) objectInputStream.readObject();
-//
-//            containerList = importedContainers;
-//
-//            System.out.println("Ports have been deserialized and imported from data/ports.dat");
-//        } catch (IOException | ClassNotFoundException e) {
-//            e.printStackTrace();
-//        }
-//    }
-
 
     private synchronized String generateUniqueContainerID() {
         LastUsedID++;
-        return "C-" + LastUsedID;
+        return "c-" + LastUsedID;
     }
 
 
+    @Override
     public String toString() {
-        StringBuilder stringBuilder = new StringBuilder("ManageContainers:\n");
+        StringBuilder result = new StringBuilder("Container List:\n");
 
-        for (Container container : containerList) {
-            stringBuilder.append("Container ID: ").append(container.getContainerID())
-                    .append(", Weight: ").append(container.getWeight())
-                    .append(", Type: ").append(container.getType())
-                    .append("\n");
+        if (containerList.isEmpty()) {
+            result.append("No containers available.\n");
+        } else {
+            for (Container container : containerList) {
+                result.append("Container ID: ").append(container.getContainerID()).append("\n")
+                        .append("Type: ").append(container.getType()).append("\n")
+                        .append("Weight: ").append(container.getWeight()).append(" kg\n")
+                        .append("--------------------\n");
+            }
         }
 
-        return stringBuilder.toString();
+        return result.toString();
     }
 
 
-    // public static void main(String[] args) {
-    // ManageContainers manageContainers = ManageContainers.getInstance();
-    // manageContainers.addContainer(78.9, Container.ContainerType.LIQUID);
-    // }
+    public static void main(String[] args) {
+        // Create an instance of ManageContainers
+        ManageContainers manageContainers = ManageContainers.getInstance();
+
+        // Now you can use the manageContainers instance to perform operations
+        // For example, you can add containers, list containers, etc.
+
+        // Example: Adding containers
+        manageContainers.addContainer(90, Container.ContainerType.DRY_STORAGE);
+        manageContainers.addContainer(910, Container.ContainerType.LIQUID);
+        manageContainers.addContainer(9000, Container.ContainerType.OPEN_SIDE);
+        manageContainers.addContainer(9.0, Container.ContainerType.OPEN_TOP);
+
+        // Example: Listing all containers
+        System.out.println(manageContainers.toString());
+
+        // You can continue using manageContainers for other operations as needed
+
+        // ... Rest of your code ...
+    }
+}
 

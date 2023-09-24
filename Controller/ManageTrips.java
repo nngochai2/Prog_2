@@ -2,18 +2,16 @@ package Controller;
 
 import Model.*;
 
+import java.io.*;
 import java.util.*;
 import java.util.stream.*;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 
 public class ManageTrips {
     private static ManageTrips instance;
 
-    private ArrayList<Trip> trips = new ArrayList<Trip>();
+    private int lastUsedID;
+
+    private ArrayList<Trip> listTrip = new ArrayList<Trip>();
 
     public static ManageTrips getInstance() {
         if (instance == null) {
@@ -22,20 +20,21 @@ public class ManageTrips {
         return instance;
     }
 
-    public void addTrip(Trip trip) {
-        reloadHistory();
-        this.trips.add(trip);
-    }
 
+    public void addTrip(Trip trip){
+        listTrip.add(trip);
+        this.reloadHistory();
+        serializeTripsToFile("data/trips.dat");
+    }
     public ArrayList<Trip> listTrips() {
         reloadHistory();
-        return this.trips;
+        return this.listTrip;
     }
 
     // Both Admin and Manager
     public ArrayList<Trip> listTripsOfPort(Port port) {
         reloadHistory();
-        return trips.stream()
+        return listTrip.stream()
                 .filter(trip -> (trip.getArrivalPort().equals(port) || trip.getDeparturePort().equals(port)))
                 .collect(Collectors.toCollection(ArrayList::new));
     }
@@ -43,7 +42,7 @@ public class ManageTrips {
     // Both Admin and Manager
     public ArrayList<Trip> listTripsOnDate(Port port, Date date) {
         reloadHistory();
-        return trips.stream()
+        return listTrip.stream()
                 .filter(trip -> (trip.getDeparturePort().equals(port)
                         || trip.getArrivalPort().equals(port) && trip.getArrivalDate().equals(date)
                         || trip.getDepartureDate().equals(date)))
@@ -53,7 +52,7 @@ public class ManageTrips {
     // Admin
     public ArrayList<Trip> listTripsOnDate(Date date) {
         reloadHistory();
-        return trips.stream()
+        return listTrip.stream()
                 .filter(trip -> (trip.getArrivalDate().equals(date) || trip.getDepartureDate().equals(date)))
                 .collect(Collectors.toCollection(ArrayList::new));
     }
@@ -61,21 +60,21 @@ public class ManageTrips {
     // Both Admin and Manager
     public ArrayList<Trip> listTripsToPort(Port port) {
         reloadHistory();
-        return trips.stream().filter(trip -> (trip.getArrivalPort().equals(port)))
+        return listTrip.stream().filter(trip -> (trip.getArrivalPort().equals(port)))
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
     // Both Admin and Manager
     public ArrayList<Trip> listTripsFromPort(Port port) {
         reloadHistory();
-        return trips.stream().filter(trip -> (trip.getDeparturePort().equals(port)))
+        return listTrip.stream().filter(trip -> (trip.getDeparturePort().equals(port)))
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
     // Both Admin and Manager
     public ArrayList<Trip> listTripsBetweenDates(Port port, Date date_A, Date date_B) {
         reloadHistory();
-        return trips.stream()
+        return listTrip.stream()
                 .filter(trip -> (trip.getDeparturePort().equals(port) || trip.getArrivalPort().equals(port))
                         && (trip.getDepartureDate().after(date_A) || trip.getDepartureDate().equals(date_A)) &&
                         trip.getArrivalDate().before(date_B) || trip.getArrivalDate().equals(date_B))
@@ -85,7 +84,7 @@ public class ManageTrips {
     // Admin
     public ArrayList<Trip> listTripsBetweenDates(Date date_A, Date date_B) {
         reloadHistory();
-        return trips.stream()
+        return listTrip.stream()
                 .filter(trip -> (trip.getDepartureDate().after(date_A) || trip.getDepartureDate().equals(date_A)) &&
                         trip.getArrivalDate().before(date_B) || trip.getArrivalDate().equals(date_B))
                 .collect(Collectors.toCollection(ArrayList::new));
@@ -96,33 +95,52 @@ public class ManageTrips {
         Date now = new Date();
         long sevenDays = 1000 * 60 * 60 * 24 * 7;
         Date seveDaysAgo = new Date(now.getTime() - sevenDays);
-        this.trips = trips.stream().filter(trip -> (trip.getArrivalDate().after(seveDaysAgo)))
+        this.listTrip = listTrip.stream().filter(trip -> (trip.getArrivalDate().after(seveDaysAgo)))
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
-    public void serializeTripsToFile() {
-        try (FileOutputStream fileOutputStream = new FileOutputStream("data/trips.dat");
-                ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream)) {
 
-            objectOutputStream.writeObject(trips);
+    public void serializeTripsToFile(String filePath) {
+        try {
+            File file = new File(filePath);
+            file.getParentFile().mkdirs(); // Create parent directories if they don't exist
+            FileOutputStream fileOutputStream = new FileOutputStream(file);
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
 
-            System.out.println("Trips have been serialized and saved to data/trips.dat");
+            objectOutputStream.writeObject(listTrip);
+
+            System.out.println("Containers have been saved to " + filePath);
         } catch (IOException e) {
             e.printStackTrace();
+            System.err.println("Error: Unable to save containers to " + filePath);
         }
     }
 
     public void deserializeTripsFromFile() {
         try (FileInputStream fileInputStream = new FileInputStream("data/trips.dat");
-                ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream)) {
+             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream)) {
 
-            ArrayList<Trip> importedTrips = (ArrayList<Trip>) objectInputStream.readObject();
+            Object importedObject = objectInputStream.readObject();
 
-            trips = importedTrips;
+            if (importedObject instanceof ArrayList) {
+                ArrayList<?> importedData = (ArrayList<?>) importedObject;
 
-            System.out.println("Trips have been deserialized and imported from data/trips.dat");
+                if (!importedData.isEmpty() && importedData.get(0) instanceof Port) {
+                    listTrip = (ArrayList<Trip>) importedData;
+
+                    System.out.println("Containers have been deserialized and imported from data/containers.dat");
+                } else {
+                    System.out.println("Error: Unexpected data format in the file.");
+                }
+            } else {
+                System.out.println("Error: Unexpected data format in the file.");
+            }
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
+    }
+    private synchronized int generateTripID() {
+        lastUsedID++;
+        return lastUsedID;
     }
 }
