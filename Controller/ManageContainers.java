@@ -40,7 +40,11 @@ public class ManageContainers {
         Container container = new Container(this.generateUniqueContainerID(), weight, type);
         containerList.add(container);
 
+<<<<<<< Updated upstream
         this.saveContainers();
+=======
+//        this.serializeContainersToFile();
+>>>>>>> Stashed changes
         return container;
     }
 
@@ -103,6 +107,7 @@ public class ManageContainers {
             }
         }
     }
+<<<<<<< Updated upstream
     public void deserializeContainersFromFile() {
         try (FileInputStream fileInputStream = new FileInputStream("data/containers.dat");
                 ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream)) {
@@ -116,15 +121,53 @@ public class ManageContainers {
             e.printStackTrace();
         }
     }
+=======
+
+
+//    public void deserializeContainersFromFile() {
+//        try (FileInputStream fileInputStream = new FileInputStream("data/ports.dat");
+//             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream)) {
+//
+//            ArrayList<Container> importedContainers = (ArrayList<Container>) objectInputStream.readObject();
+//
+//            containerList = importedContainers;
+//
+//            System.out.println("Ports have been deserialized and imported from data/ports.dat");
+//        } catch (IOException | ClassNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//    }
+>>>>>>> Stashed changes
 
     private synchronized String generateUniqueContainerID() {
         LastUsedID++;
         return "C-" + LastUsedID;
     }
 
+<<<<<<< Updated upstream
     // public static void main(String[] args) {
     // ManageContainers manageContainers = ManageContainers.getInstance();
     // manageContainers.addContainer(78.9, Container.ContainerType.LIQUID);
     // }
+=======
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder("ManageContainers:\n");
+
+        for (Container container : containerList) {
+            stringBuilder.append("Container ID: ").append(container.getContainerID())
+                    .append(", Weight: ").append(container.getWeight())
+                    .append(", Type: ").append(container.getType())
+                    .append("\n");
+        }
+
+        return stringBuilder.toString();
+    }
+
+     public static void main(String[] args) {
+     ManageContainers manageContainers = ManageContainers.getInstance();
+     manageContainers.addContainer(Container.ContainerType.DRY_STORAGE, 9);
+         System.out.println( manageContainers.containerList.toString());
+     }
+>>>>>>> Stashed changes
 
 }

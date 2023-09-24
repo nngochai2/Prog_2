@@ -54,6 +54,7 @@ public class ContainersView {
         // Menu - Containers - All Containers
         System.out.println("__________________________MENU - CONTAINERS - All Containers__________________________");
         System.out.println("There are currently " + manageContainers.getAllContainers().size() + " containers \n");
+        System.out.println(manageContainers.toString());
         
         // Go back
         this.containers();
@@ -136,6 +137,9 @@ public class ContainersView {
     public static void main(String[] args) {
         ManageContainers manageContainers = new ManageContainers();
         manageContainers.addContainer(Container.ContainerType.DRY_STORAGE, 90);
+        manageContainers.addContainer(Container.ContainerType.LIQUID, 910);
+        manageContainers.addContainer(Container.ContainerType.OPEN_SIDE, 9000);
+        manageContainers.addContainer(Container.ContainerType.OPEN_TOP, 9.0);
 
         ContainersView containersView = new ContainersView(manageContainers);
         containersView.containersList();
