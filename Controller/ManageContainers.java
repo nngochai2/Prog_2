@@ -29,6 +29,11 @@ public class ManageContainers {
         return containerList;
     }
 
+    public boolean validateContainerId(String containerId) {
+        String regex = "c-[0-9a-zA-Z]+";
+        return containerId.matches(regex);
+    }
+
     public Optional<Container> getContainerByID(String containerID) {
         return this.containerList.stream()
                 .filter(port -> port.getContainerID().equals(containerID))
@@ -40,12 +45,12 @@ public class ManageContainers {
         return this.containerList.stream().anyMatch(container -> container.getContainerID().equals(containerID));
     }
 
-    public void addContainer(double weight, Container.ContainerType type) {
+    public boolean addContainer(double weight, Container.ContainerType type) {
         String containerID = generateUniqueContainerID();
         Container container = new Container(containerID, type, weight, ""); // Initialize Container
         containerList.add(container); // Add to containerList
         serializeContainersToFile("data/containers.dat");
-
+        return true;
     }
 
 

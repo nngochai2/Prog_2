@@ -1,8 +1,11 @@
 package View;
+import Controller.ManageVehicles;
+
 import java.util.Scanner;
 
 public class VehiclesView {
     // shared by admins and managers
+    ManageVehicles manageVehicles = ManageVehicles.getInstance();
     public void vehicles(){
         // Menu - Vehicles
         Scanner scanner = new Scanner(System.in);
@@ -22,7 +25,8 @@ public class VehiclesView {
             input = scanner.nextLine().trim();
             switch (input) {
                 case "0":
-//                    menu();
+                    // Go back
+                    break;
                 case "1":
                     this.vehiclesList();
                     break;
@@ -39,7 +43,6 @@ public class VehiclesView {
                     System.out.println("Invalid input");
             }
         } while(!input.equals("0"));
-        // Go back
     }
 
     public void vehiclesList() {
