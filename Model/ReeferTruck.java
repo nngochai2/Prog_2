@@ -6,9 +6,8 @@ import Model.Vehicle.VehicleType;
 
 
 public class ReeferTruck extends BasicTruck {
-    public ReeferTruck(String vehicleID, String name, double carryingCapacity, double fuelCapacity) {
-        super(vehicleID, name, carryingCapacity, fuelCapacity);
-
+    public ReeferTruck(String vehicleID, String name, double carryingCapacity, double fuelCapacity, String currentPort) {
+        super(vehicleID, name, carryingCapacity, fuelCapacity, currentPort);
         if (!vehicleID.matches("^tr\\d+$")) {
             System.out.println("Invalid vehicle ID. It must be tr-number.");
         }
@@ -39,6 +38,17 @@ public class ReeferTruck extends BasicTruck {
         return type == Container.ContainerType.REFRIGERATED;
     }
 
+    @Override
+    public double estimatedFuelConsumption(double distance) {
+        double fuelConsumption = 0.0;
+
+        for (Container container : containers) {
+            double containerFuelConsumption = container.calculateFuelConsumption(VehicleType.TANKER_TRUCK, distance);
+            fuelConsumption += containerFuelConsumption;
+        }
+
+        return fuelConsumption;
+    }
     @Override
     public void move(Port destinationPort) {
         super.move(destinationPort);
