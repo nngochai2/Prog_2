@@ -12,11 +12,11 @@ public class Trip {
     private Date arrivalDate;
     private Port departurePort;
     private Port arrivalPort;
-    private String status;
+    private tripStatus status;
 
     // Constructor
     public Trip(String id, Vehicle vehicle, Date departureDate, Date arrivalDate, Port departurePort, Port arrivalPort,
-            String status) {
+            tripStatus status) {
         this.id = id;
         this.vehicle = vehicle;
         this.containersOnTrip = new ArrayList<>(vehicle.getContainers());
@@ -25,6 +25,11 @@ public class Trip {
         this.departurePort = departurePort;
         this.arrivalPort = arrivalPort;
         this.status = status;
+    }
+
+    public enum tripStatus {
+        IN_PROGRESS,
+        COMPLETED
     }
 
     public void setId(String id) {
@@ -51,7 +56,7 @@ public class Trip {
         this.arrivalPort = arrivalPort;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(tripStatus status) {
         this.status = status;
     }
 
@@ -88,7 +93,7 @@ public class Trip {
         return arrivalPort;
     }
 
-    public String getStatus() {
+    public tripStatus getStatus() {
         return status;
     }
 }

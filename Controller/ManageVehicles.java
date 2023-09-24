@@ -59,9 +59,9 @@ public class ManageVehicles {
             if (vehicle.getVehicleType().equals(Vehicle.VehicleType.BASIC_TRUCK)
                     && vehicle.getVehicleType().equals(Vehicle.VehicleType.REEFER_TRUCK)
                     && vehicle.getVehicleType().equals(Vehicle.VehicleType.TANKER_TRUCK)) {
-                return "TR- " + lastAssignedNumber;
+                return "tr- " + lastAssignedNumber; // Truck IDs must follow this format
             } else if (vehicle.getVehicleType().equals(Vehicle.VehicleType.SHIP)) {
-                return "SH-" + lastAssignedNumber;
+                return "sh-" + lastAssignedNumber; // Ship IDs must follow this format
             }
         }
         return null;
@@ -94,7 +94,7 @@ public class ManageVehicles {
     }
   
     // Add a ship to the list and save to a file
-    public Ship addShip(String name, double carryingCapacity, double fuelCapacity, String PortID) {
+    public Ship addShip(String name, double carryingCapacity, double fuelCapacity, String portID) {
         Ship vehicle = new Ship(this.generateUniqueVehicleID(), name, carryingCapacity, fuelCapacity, portID);
         vehicles.add(vehicle);
         this.serializeVehiclesToFile();
