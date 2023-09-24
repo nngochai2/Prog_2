@@ -10,6 +10,8 @@ public class ManagePorts {
     private static ManagePorts instance;
     private ArrayList<Port> portsList = new ArrayList<>();
 
+    private int LastUsedID = 0;
+
     public static ManagePorts getInstance() {
         if (instance == null) {
             instance = new ManagePorts();
@@ -34,6 +36,23 @@ public class ManagePorts {
             }
         }
         return port;
+    }
+
+    public void addPort(String name, double latitude, double longitude, int storingCapacity, boolean landingAbility){
+        Port port = new Port("p-"+generateUniquePortID(),name, latitude, longitude, storingCapacity, landingAbility);
+        this.portsList.add(port);
+        serializePortsToFile();
+    }
+
+    public boolean removePort(String portID) {
+        for (Port port : portsList) {
+            if (port.getPortID().equals(portID)) {
+                portsList.remove(port);
+                serializePortsToFile();
+                return true;
+            }
+        }
+        return false;
     }
 
     public void serializePortsToFile() {
@@ -61,5 +80,8 @@ public class ManagePorts {
             e.printStackTrace();
         }
     }
-
+    private synchronized String generateUniquePortID() {
+        LastUsedID++;
+        return "P-" + LastUsedID;
+    }
 }

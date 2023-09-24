@@ -1,5 +1,7 @@
 package Controller;
 import Model.Container;
+import Model.Port;
+
 import java.util.UUID;
 import java.io.*;
 import java.util.ArrayList;
@@ -32,6 +34,7 @@ public class ManageContainers {
                 .findFirst();
     }
 
+
     public boolean contains(String containerID) {
         return this.containerList.stream().anyMatch(container -> container.getContainerID().equals(containerID));
     }
@@ -40,11 +43,10 @@ public class ManageContainers {
         Container container = new Container(this.generateUniqueContainerID(), weight, type);
         containerList.add(container);
 
-<<<<<<< Updated upstream
-        this.saveContainers();
-=======
+
+
 //        this.serializeContainersToFile();
->>>>>>> Stashed changes
+
         return container;
     }
 
@@ -62,7 +64,7 @@ public class ManageContainers {
 
         if (found) {
             containerList = newList; // Update the original list without the removed element
-            saveContainers();
+            serializeContainersToFile();
 
             return true;
         }
@@ -74,54 +76,24 @@ public class ManageContainers {
         for (int i = 0; i < containerList.size(); i++) {
             if (containerList.get(i).getContainerID().equals(id)) {
                 containerList.set(i, container);
-                saveContainers();
+                serializeContainersToFile();
                 break;
             }
         }
     }
 
 
-    public void saveContainers() {
-        FileOutputStream fileOutputStream = null;
-        ObjectOutputStream objectOutputStream = null;
-
-        try {
-            fileOutputStream = new FileOutputStream("dataFile/containers.ser");
-            objectOutputStream = new ObjectOutputStream(fileOutputStream);
+    public void serializeContainersToFile() {
+        try (FileOutputStream fileOutputStream = new FileOutputStream("data/ports.dat");
+             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream)) {
 
             objectOutputStream.writeObject(containerList);
 
-            System.out.println("Containers have been saved to dataFile/containers.ser");
+            System.out.println("Ports have been serialized and saved to data/ports.dat");
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
-            try {
-                if (objectOutputStream != null) {
-                    objectOutputStream.close();
-                }
-                if (fileOutputStream != null) {
-                    fileOutputStream.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
     }
-<<<<<<< Updated upstream
-    public void deserializeContainersFromFile() {
-        try (FileInputStream fileInputStream = new FileInputStream("data/containers.dat");
-                ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream)) {
-
-            ArrayList<Container> importedContainers = (ArrayList<Container>) objectInputStream.readObject();
-
-            containerList = importedContainers;
-
-            System.out.println("Containers have been deserialized and imported from data/containers.dat");
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
-=======
 
 
 //    public void deserializeContainersFromFile() {
@@ -137,19 +109,14 @@ public class ManageContainers {
 //            e.printStackTrace();
 //        }
 //    }
->>>>>>> Stashed changes
+
 
     private synchronized String generateUniqueContainerID() {
         LastUsedID++;
         return "C-" + LastUsedID;
     }
 
-<<<<<<< Updated upstream
-    // public static void main(String[] args) {
-    // ManageContainers manageContainers = ManageContainers.getInstance();
-    // manageContainers.addContainer(78.9, Container.ContainerType.LIQUID);
-    // }
-=======
+
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder("ManageContainers:\n");
 
@@ -163,11 +130,9 @@ public class ManageContainers {
         return stringBuilder.toString();
     }
 
-     public static void main(String[] args) {
-     ManageContainers manageContainers = ManageContainers.getInstance();
-     manageContainers.addContainer(Container.ContainerType.DRY_STORAGE, 9);
-         System.out.println( manageContainers.containerList.toString());
-     }
->>>>>>> Stashed changes
 
-}
+    // public static void main(String[] args) {
+    // ManageContainers manageContainers = ManageContainers.getInstance();
+    // manageContainers.addContainer(78.9, Container.ContainerType.LIQUID);
+    // }
+
