@@ -135,7 +135,11 @@ public class ContainersView {
 
     public static void main(String[] args) {
         ManageContainers manageContainers = new ManageContainers();
-        manageContainers.addContainer(Container.ContainerType.DRY_STORAGE, 90);
+
+        manageContainers.addContainer(90, Container.ContainerType.DRY_STORAGE);
+        manageContainers.addContainer(910, Container.ContainerType.LIQUID);
+        manageContainers.addContainer(9000, Container.ContainerType.OPEN_SIDE);
+        manageContainers.addContainer(9.0, Container.ContainerType.OPEN_TOP);
 
         ContainersView containersView = new ContainersView(manageContainers);
         containersView.containersList();

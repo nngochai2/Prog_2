@@ -38,50 +38,69 @@ public class ManagePorts {
         return port;
     }
 
-    public void addPort(String name, double latitude, double longitude, int storingCapacity, boolean landingAbility){
-        Port port = new Port("p-"+generateUniquePortID(),name, latitude, longitude, storingCapacity, landingAbility);
-        this.portsList.add(port);
-        serializePortsToFile();
+    public void addPorts (String name, double latitude, double longitude, int storingCapacity, boolean landingAbility) {
+        String portID = generateUniquePortID();
+        Port port = new Port(generateUniquePortID(),name, latitude, longitude, storingCapacity, landingAbility);
+        portsList.add(port); // Add to containerList
+
+        serializePortsToFile("data/containers.dat");
     }
+
+
 
     public boolean removePort(String portID) {
         for (Port port : portsList) {
             if (port.getPortID().equals(portID)) {
                 portsList.remove(port);
-                serializePortsToFile();
+                serializePortsToFile("data/ports.dat");
                 return true;
             }
         }
         return false;
     }
 
-    public void serializePortsToFile() {
-        try (FileOutputStream fileOutputStream = new FileOutputStream("data/ports.dat");
-                ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream)) {
+    public void serializePortsToFile(String filePath) {
+        try {
+            File file = new File(filePath);
+            file.getParentFile().mkdirs(); // Create parent directories if they don't exist
+            FileOutputStream fileOutputStream = new FileOutputStream(file);
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
 
             objectOutputStream.writeObject(portsList);
 
-            System.out.println("Ports have been serialized and saved to data/ports.dat");
+            System.out.println("Containers have been saved to " + filePath);
         } catch (IOException e) {
             e.printStackTrace();
+            System.err.println("Error: Unable to save containers to " + filePath);
         }
     }
 
+
     public void deserializePortsFromFile() {
         try (FileInputStream fileInputStream = new FileInputStream("data/ports.dat");
-                ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream)) {
+             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream)) {
 
-            ArrayList<Port> importedPorts = (ArrayList<Port>) objectInputStream.readObject();
+            Object importedObject = objectInputStream.readObject();
 
-            portsList = importedPorts;
+            if (importedObject instanceof ArrayList) {
+                ArrayList<?> importedData = (ArrayList<?>) importedObject;
 
-            System.out.println("Ports have been deserialized and imported from data/ports.dat");
+                if (!importedData.isEmpty() && importedData.get(0) instanceof Port) {
+                    portsList = (ArrayList<Port>) importedData;
+
+                    System.out.println("Containers have been deserialized and imported from data/containers.dat");
+                } else {
+                    System.out.println("Error: Unexpected data format in the file.");
+                }
+            } else {
+                System.out.println("Error: Unexpected data format in the file.");
+            }
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
     private synchronized String generateUniquePortID() {
         LastUsedID++;
-        return "P-" + LastUsedID;
+        return "p-" + LastUsedID;
     }
 }

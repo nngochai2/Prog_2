@@ -2,11 +2,7 @@ package Controller;
 
 import Model.*;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -15,13 +11,19 @@ public class ManageVehicles {
     // Apply Singleton instance
     private static ManageVehicles instance;
     // Create a list to store vehicles
-    private List<Vehicle> vehicles;
+    private List<Vehicle> listVehicle;
     // Counter for generating unique vehicle IDs
-    private int LastUsedID = 0;
+
+    private int lastUsedID = 0;
+
+    public List<Vehicle> getAllVehicles() {
+        return listVehicle;
+    }
+
 
     // Private constructor for Singleton patter
     private ManageVehicles() {
-        vehicles = new ArrayList<>();
+        listVehicle = new ArrayList<>();
     }
 
 
@@ -34,7 +36,7 @@ public class ManageVehicles {
 
     // Get all vehicles
     public Optional<Vehicle> getVehicleByID(String vehicleID) {
-        for (Vehicle vehicle : vehicles) {
+        for (Vehicle vehicle : listVehicle) {
             if (vehicle.getVehicleID().equals(vehicleID)) {
                 return Optional.of(vehicle);
             }
@@ -44,7 +46,7 @@ public class ManageVehicles {
 
     // Check if a vehicle with a given ID exists
     public boolean contains(String vehicleID) {
-        for (Vehicle vehicle : vehicles) {
+        for (Vehicle vehicle : listVehicle) {
             if (vehicle.getVehicleID().equals(vehicleID)) {
                 return true;
             }
@@ -54,32 +56,40 @@ public class ManageVehicles {
 
     // Generate a unique vehicle ID based on existing IDs
     private synchronized String generateUniqueVehicleID() {
-        LastUsedID++;
-        for (Vehicle vehicle : vehicles) {
+
+
+        lastUsedID++;
+
+        for (Vehicle vehicle : listVehicle) {
             if (vehicle.getVehicleType().equals(Vehicle.VehicleType.BASIC_TRUCK)
                     && vehicle.getVehicleType().equals(Vehicle.VehicleType.REEFER_TRUCK)
                     && vehicle.getVehicleType().equals(Vehicle.VehicleType.TANKER_TRUCK)) {
 
-                return "tr- " + lastAssignedNumber; // Truck IDs must follow this format
+                return "tr- " + lastUsedID; // Truck IDs must follow this format
             } else if (vehicle.getVehicleType().equals(Vehicle.VehicleType.SHIP)) {
-                return "sh-" + lastAssignedNumber; // Ship IDs must follow this format
+                return "sh-" + lastUsedID; // Ship IDs must follow this format
             }
         }
         return null;
 
     }
+    public void serializeVehiclesToFile(String filePath) {
+        try {
+            File file = new File(filePath);
+            file.getParentFile().mkdirs(); // Create parent directories if they don't exist
+            FileOutputStream fileOutputStream = new FileOutputStream(file);
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
 
-    public void serializeVehiclesToFile() {
-        try (FileOutputStream fileOutputStream = new FileOutputStream("dataFile/vehicles.dat");
-                ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream)) {
+            objectOutputStream.writeObject(listVehicle);
 
-            objectOutputStream.writeObject(vehicles);
-
-            System.out.println("Vehicles have been serialized and saved to dataFile/ports.dat");
+            System.out.println("Containers have been saved to " + filePath);
         } catch (IOException e) {
             e.printStackTrace();
+            System.err.println("Error: Unable to save containers to " + filePath);
         }
     }
+
+
 
     public void deserializeVehiclesFromFile() {
         try (FileInputStream fileInputStream = new FileInputStream("data/vehicles.dat");
@@ -87,7 +97,7 @@ public class ManageVehicles {
 
             ArrayList<Vehicle> importedVehicles = (ArrayList<Vehicle>) objectInputStream.readObject();
 
-            vehicles = importedVehicles;
+            listVehicle = importedVehicles;
             System.out.println("Vehicles have been deserialized and imported from data/vehicles.dat");
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
@@ -96,11 +106,19 @@ public class ManageVehicles {
   
     // Add a ship to the list and save to a file
     public Ship addShip(String name, double carryingCapacity, double fuelCapacity, String portID) {
-        Ship vehicle = new Ship(this.generateUniqueVehicleID(), name, carryingCapacity, fuelCapacity, portID);
-        vehicles.add(vehicle);
-        this.serializeVehiclesToFile();
-        return vehicle;
+        String uniqueVehicleID = generateUniqueVehicleID(); // Generate a unique vehicle ID
+        if (uniqueVehicleID != null) {
+            Ship vehicle = new Ship(uniqueVehicleID, name, carryingCapacity, fuelCapacity, portID);
+            listVehicle.add(vehicle);
+            this.serializeVehiclesToFile("data/vehicles.dat");
+            return vehicle;
+        } else {
+            System.err.println("Error: Unable to generate a unique vehicle ID.");
+            return null;
+        }
     }
+
+
 
     // Add a truck to the list and save to a file
     public BasicTruck addTruck(String name, double carryingCapacity, double fuelCapacity, String type, String portID) {
@@ -116,8 +134,8 @@ public class ManageVehicles {
             return null; // Return null or throw an exception as needed
         }
 
-        vehicles.add(vehicle);
-        this.serializeVehiclesToFile();
+        listVehicle.add(vehicle);
+        this.serializeVehiclesToFile("data/vehicles.dat");
         return vehicle;
     }
 }

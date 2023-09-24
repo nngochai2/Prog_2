@@ -3,10 +3,11 @@ package Model;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.List;
+import java.io.Serializable;
 
 
 
-public class Container {
+public class Container implements Serializable {
     private String containerID;
     private ContainerType type;
     private double weight;
@@ -28,9 +29,6 @@ public class Container {
     }
 
     public Container(String containerID, ContainerType type, double weight, String location) {
-        if (!containerID.matches("^c\\d+$")) {
-            System.out.println("Invalid container ID. It must be c-number.");
-        }
         this.containerID = containerID;
         this.type = type;
         this.weight = weight;

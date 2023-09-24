@@ -1,11 +1,12 @@
 package Model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Map;
 import Model.Vehicle.VehicleType;
 
 
-public class ReeferTruck extends BasicTruck {
+public class ReeferTruck extends BasicTruck implements Serializable {
     public ReeferTruck(String vehicleID, String name, double carryingCapacity, double fuelCapacity, String currentPort) {
         super(vehicleID, name, carryingCapacity, fuelCapacity, currentPort);
         if (!vehicleID.matches("^tr\\d+$")) {

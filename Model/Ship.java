@@ -1,10 +1,11 @@
 
 package Model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Map;
 
-public class Ship extends Vehicle {
+public class Ship extends Vehicle implements Serializable {
     public Ship(String vehicleID, String name, double currentFuel, double carryingCapacity, String currentPort) {
         super(vehicleID, name, currentFuel, carryingCapacity, currentPort);
         if (!vehicleID.matches("^sh\\d+$")) {
