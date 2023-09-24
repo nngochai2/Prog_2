@@ -12,7 +12,7 @@ public interface IManager {
 
     void viewPortDetails(); // Common method to view port details
 
-    void calculateDailyFuelUsage(Date date); // Common method to generate daily fuel usage report
+    void calculateDailyFuelUsage(Date date, Vehicle vehicle); // Common method to generate daily fuel usage report
 
     void calculateContainerWeights(); // model.Admin can calculate the weight of their targeted port(s) or the total weight
                                       // of every ports
