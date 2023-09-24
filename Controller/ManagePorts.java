@@ -27,6 +27,10 @@ public class ManagePorts {
     public int getPortsCount() {
         return portsList.size();
     }
+    public boolean validatePortId(String portId) {
+        String regex = "p-[0-9a-zA-Z]+";
+        return portId.matches(regex);
+    }
 
     public Port getPortByID(String portID) {
         Port port = null;
@@ -38,12 +42,11 @@ public class ManagePorts {
         return port;
     }
 
-    public void addPorts (String name, double latitude, double longitude, double storingCapacity, boolean landingAbility) {
-        String portID = generateUniquePortID();
+    public boolean addPorts (String name, double latitude, double longitude, double storingCapacity, boolean landingAbility) {
         Port port = new Port(generateUniquePortID(),name, latitude, longitude, storingCapacity, landingAbility);
         portsList.add(port); // Add to containerList
-
         serializePortsToFile("data/containers.dat");
+        return true;
     }
 
 
