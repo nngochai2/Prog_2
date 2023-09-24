@@ -11,7 +11,7 @@ public class ManageContainers {
     private List<Container> containerList;
     private int LastUsedID = 0;
 
-    private ManageContainers() {
+    public ManageContainers() {
         containerList = new ArrayList<>();
     }
 
@@ -36,7 +36,7 @@ public class ManageContainers {
         return this.containerList.stream().anyMatch(container -> container.getContainerID().equals(containerID));
     }
 
-    public Container addContainer(double weight, Container.ContainerType type) {
+    public Container addContainer(Container.ContainerType type, double weight) {
         Container container = new Container(this.generateUniqueContainerID(), weight, type);
         containerList.add(container);
 
