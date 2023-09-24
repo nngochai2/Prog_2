@@ -22,8 +22,7 @@ public class Port implements IPort {
     private ArrayList<Vehicle> vehicles;
 
     public Port(String portID, String name, double latitude, double longitude, int storingCapacity,
-                boolean landingAbility, int containersCount, int vehiclesCount, ArrayList<Trip> pastTrips,
-                ArrayList<Trip> currentTrips, ArrayList<Model.Container> containers, ArrayList<Vehicle> vehicles) {
+                boolean landingAbility) {
         if (!portID.matches("^p\\d+$")) {
             System.out.println("Invalid port ID. It must be p-number.");
         } else {
@@ -34,10 +33,6 @@ public class Port implements IPort {
             this.storingCapacity = storingCapacity;
             this.currentTotalWeight = 0;
             this.landingAbility = landingAbility;
-            this.containersCount = containersCount;
-            this.vehiclesCount = vehiclesCount;
-            this.pastTrips = pastTrips;
-            this.currentTrips = currentTrips;
             this.containers = new ArrayList<>();
         }
     }
