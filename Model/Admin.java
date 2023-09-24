@@ -123,44 +123,8 @@ public class Admin extends User implements IAdmin {
         return (Admin) super.login(username, password);
     }
 
-    // Calculate the total amount of fuel used in one day ( dung duoc )
-//    public void calculateDailyFuelUsage(Date date) {
-//        // This method is responsible for calculating daily fuel usage
-//        double dailyFuelUsage = 0;
-//
-//        // Calculate the number of milliseconds in a day
-//        long millisecondsInADay = 24 * 60 * 60 * 1000;
-//
-//        for (Trip trip : trips) {
-//            Date tripDepartureDate = trip.getDepartureDate();
-//            Date tripArrivalDate = trip.getArrivalDate();
-//
-//            // Check if the trip overlaps with the specified date
-//            if ((date.equals(tripDepartureDate) || date.equals(tripArrivalDate)) ||
-//                    (date.after(tripDepartureDate) && date.before(tripArrivalDate))) {
-//
-//                Vehicle vehicle = trip.getVehicle();
-//                List<Container> containers = trip.getContainersOnTrip();
-//
-//                // Calculate the distance traveled during the trip
-//                double distance = trip.getDeparturePort().calculateDistance(trip.getArrivalPort());
-//
-//                // Calculate the fuel consumption for the trip
-//                for (Container container : containers) {
-//                    double fuelRate = container.calculateFuelConsumption(vehicle);
-//                    dailyFuelUsage += fuelRate;
-//                }
-//
-//                // Calculate the duration of the trip in days
-//                long tripDurationInDays = (tripArrivalDate.getTime() - tripDepartureDate.getTime()) / millisecondsInADay;
-//
-//                // Calculate daily fuel consumption for this trip
-//                dailyFuelUsage += (dailyFuelUsage / distance) * tripDurationInDays;
-//            }
-//        }
-//
-//        System.out.println("Total fuel used on " + date + " is: " + dailyFuelUsage + " gallons");
-//    }
+     //Calculate the total amount of fuel used in one day ( dung duoc )
+
 
     // =========================================TRIP FUNCTIONS==========================================================
 
