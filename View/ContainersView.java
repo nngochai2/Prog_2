@@ -1,15 +1,13 @@
 package View;
 import Controller.ManageContainers;
 import Model.Container;
+import Model.Port;
 
+import java.util.Optional;
 import java.util.Scanner;
 
 public class ContainersView {
-    ManageContainers manageContainers;
-
-    public ContainersView(ManageContainers manageContainers) {
-        this.manageContainers = manageContainers;
-    }
+    ManageContainers manageContainers = ManageContainers.getInstance();
 
     public void containers(){
         // Menu - Containers
@@ -30,7 +28,8 @@ public class ContainersView {
             input = scanner.nextLine().trim();
             switch (input) {
                 case "0":
-//                    menu();
+                    // Go back
+                    break;
                 case "1":
                     this.containersList();
                     break;
@@ -47,7 +46,6 @@ public class ContainersView {
                     System.out.println("Invalid input");
             }
         } while(!input.equals("0"));
-        // Go back
     }
 
     public void containersList() {
@@ -70,6 +68,19 @@ public class ContainersView {
             System.out.println("(Enter ! to cancel)");
             System.out.println("Enter Container ID: ");
             input = scanner.nextLine().trim();
+
+            if (manageContainers.validateContainerId(input)) {
+                Optional<Container> container = manageContainers.getContainerByID(input);
+                if (container.isPresent()) {
+                    System.out.println("Container ID - type - weight - location");
+                    System.out.println(container.get().getContainerID() + " - " + container.get().getType() + " - " +
+                            container.get().getWeight() + " - " + container.get().getLocation());
+                } else {
+                    System.out.println("No container found\n");
+                }
+            } else {
+                System.out.println("Invalid input!\n");
+            }
         } while(!input.equals("!"));
         // Go back
         this.containers();
@@ -82,10 +93,10 @@ public class ContainersView {
 
         String input;
         do {
-            System.out.println("There are currently [number] containers");
+            System.out.println("There are currently " + manageContainers.getAllContainers().size() + " containers \n");
             System.out.println("(Enter ! to cancel)");
             System.out.println("Separate values by \" , \" ");
-            System.out.println("Enter Container's ID, type, weight, location: ");
+            System.out.println("Enter Container's type (DRY_STORAGE, OPEN_TOP, OPEN_SIDE, REFRIGERATED, LIQUID), weight: ");
             input = scanner.nextLine().trim();
 
             if (input.equals("!")) {
@@ -94,18 +105,17 @@ public class ContainersView {
 
             try {
                 String[] values = input.split(",");
-                String ID = values[0];
-                String type = values[1];
-                double weight = Double.parseDouble(values[2]);
-                String location = values[3];
-                // Add container
-//                manageContainers.addContainer()
-
-                System.out.println("Container added successfully!");
+                String type = values[0].toUpperCase();
+                double weight = Double.parseDouble(values[1]);
+                if (manageContainers.addContainer(weight, Container.ContainerType.valueOf(type))) {
+                    System.out.println("Container added successfully!\n");
+                } else {
+                    System.out.println("Failed to add container\n");
+                }
             } catch (NumberFormatException e) {
-                System.out.println("Invalid input!");
+                System.out.println("Invalid input!\n");
             } catch (IndexOutOfBoundsException e) {
-                System.out.println("Not enough values entered!");
+                System.out.println("Not enough values entered!\n");
             }
         } while (true);
         // Go back
@@ -120,29 +130,26 @@ public class ContainersView {
         String input;
         do {
             System.out.println("(Enter ! to cancel)");
-            System.out.println("Enter Container ID: ");
+            System.out.println("Enter Port ID: ");
             input = scanner.nextLine().trim();
 
-//            try {
-//                // validate
-//                // deleteContainer(input)
-//            } catch (IllegalArgumentException e) {
-//                System.out.println(e.getMessage());
-//            }
+            if (manageContainers.validateContainerId(input)) {
+                Optional<Container> container = manageContainers.getContainerByID(input);
+                if (manageContainers.removeContainer(input)) {
+                    System.out.println("Removed container successfully\n");
+                } else {
+                    System.out.println("No port was found.\n");
+                }
+            } else {
+                System.out.println("Invalid input!\n");
+            }
         } while(!input.equals("!"));
         // Go back
         this.containers();
     }
 
     public static void main(String[] args) {
-        ManageContainers manageContainers = new ManageContainers();
-
-
-        manageContainers.addContainer(90, Container.ContainerType.DRY_STORAGE);
-        manageContainers.addContainer(910, Container.ContainerType.LIQUID);
-        manageContainers.addContainer(9000, Container.ContainerType.OPEN_SIDE);
-        manageContainers.addContainer(9.0, Container.ContainerType.OPEN_TOP);
-        ContainersView containersView = new ContainersView(manageContainers);
-        containersView.containersList();
+        ContainersView containersView = new ContainersView();
+        containersView.containers();
     }
 }

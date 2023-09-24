@@ -29,8 +29,8 @@ public class AdminView {
                     VehiclesView vehiclesView = new VehiclesView();
                     vehiclesView.vehicles();
                 case "3":
-//                    ContainersView containersView = new ContainersView();
-//                    containersView.containers();
+                    ContainersView containersView = new ContainersView();
+                    containersView.containers();
                 case "4":
                     break;
                 default:
@@ -139,7 +139,7 @@ public class AdminView {
                 if (managePorts.addPorts(name, latitude, longitude, storingCapacity, landingAbility)) {
                     System.out.println("Port added successfully!\n");
                 } else {
-                    System.out.println("Unexpected error occurred\n");
+                    System.out.println("Failed to add port\n");
                 }
             } catch (NumberFormatException e) {
                 System.out.println("Invalid input! Please enter a valid number for the latitude, longitude, storing capacity, and landing ability fields.\n");
