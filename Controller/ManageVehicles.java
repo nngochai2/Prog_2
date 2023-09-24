@@ -1,9 +1,24 @@
 package Controller;
 
-public class ManageVehicles {
+import Model.*;
 
-<<<<<<< Updated upstream
-=======
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+public class ManageVehicles {
+    // Apply Singleton instance
+    private static ManageVehicles instance;
+    // Create a list to store vehicles
+    private List<Vehicle> vehicles;
+    // Counter for generating unique vehicle IDs
+    private int lastAssignedNumber = 0;
+
     // Private constructor for Singleton patter
     private ManageVehicles() {
         vehicles = new ArrayList<>();
@@ -35,34 +50,6 @@ public class ManageVehicles {
             }
         }
         return false;
-    }
-
-    // Add a ship to the list and save to a file
-    public Ship addShip(String name, double carryingCapacity, double fuelCapacity, String currentPort) {
-        Ship vehicle = new Ship(this.generateUniqueVehicleID(), name, carryingCapacity, fuelCapacity, currentPort);
-        vehicles.add(vehicle);
-        this.serializeVehiclesToFile();
-        ;
-        return vehicle;
-    }
-
-    // Add a truck to the list and save to a file
-    public BasicTruck addTruck(String name, double carryingCapacity, double fuelCapacity, String type, String portID) {
-        BasicTruck vehicle;
-
-        if ("TankerTruck".equalsIgnoreCase(type)) {
-            vehicle = new TankerTruck(this.generateUniqueVehicleID(), name, carryingCapacity, fuelCapacity, portID);
-        } else if ("ReeferTruck".equalsIgnoreCase(type)) {
-            vehicle = new ReeferTruck(this.generateUniqueVehicleID(), name, carryingCapacity, fuelCapacity, portID);
-        } else {
-            // Handle invalid truck type
-            System.err.println("Invalid truck type: " + type);
-            return null; // Return null or throw an exception as needed
-        }
-
-        vehicles.add(vehicle);
-        this.serializeVehiclesToFile();
-        return vehicle;
     }
 
     // Generate a unique vehicle ID based on existing IDs
@@ -100,11 +87,36 @@ public class ManageVehicles {
             ArrayList<Vehicle> importedVehicles = (ArrayList<Vehicle>) objectInputStream.readObject();
 
             vehicles = importedVehicles;
-
             System.out.println("Vehicles have been deserialized and imported from data/vehicles.dat");
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
->>>>>>> Stashed changes
+  
+    // Add a ship to the list and save to a file
+    public Ship addShip(String name, double carryingCapacity, double fuelCapacity, String PortID) {
+        Ship vehicle = new Ship(this.generateUniqueVehicleID(), name, carryingCapacity, fuelCapacity, portID);
+        vehicles.add(vehicle);
+        this.serializeVehiclesToFile();
+        return vehicle;
+    }
+
+    // Add a truck to the list and save to a file
+    public BasicTruck addTruck(String name, double carryingCapacity, double fuelCapacity, String type, String portID) {
+        BasicTruck vehicle;
+
+        if ("TankerTruck".equalsIgnoreCase(type)) {
+            vehicle = new TankerTruck(this.generateUniqueVehicleID(), name, carryingCapacity, fuelCapacity, portID);
+        } else if ("ReeferTruck".equalsIgnoreCase(type)) {
+            vehicle = new ReeferTruck(this.generateUniqueVehicleID(), name, carryingCapacity, fuelCapacity, portID);
+        } else {
+            // Handle invalid truck type
+            System.err.println("Invalid truck type: " + type);
+            return null; // Return null or throw an exception as needed
+        }
+
+        vehicles.add(vehicle);
+        this.serializeVehiclesToFile();
+        return vehicle;
+    }
 }

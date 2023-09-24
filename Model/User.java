@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Date;
 import java.util.ArrayList;
 import java.text.SimpleDateFormat;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 public abstract class User {
     private String userID;
@@ -16,6 +19,7 @@ public abstract class User {
         this.username = username;
         this.password = password;
         this.role = role;
+
     }
 
     public enum UserRole {
@@ -62,6 +66,27 @@ public abstract class User {
         }
         return null;
     }
+
+    public String encrypt (String password) {
+
+            try {
+                MessageDigest digest = MessageDigest.getInstance("SHA-256");
+                byte[] hashBytes = digest.digest(password.getBytes(StandardCharsets.UTF_8));
+
+                // convert the byte to hexadecimal
+                StringBuilder hexString = new StringBuilder();
+                for (byte hashByte : hashBytes) {
+                    String hex = Integer.toHexString(0xff & hashByte);
+                    if (hex.length() == 1) hexString.append('0');
+                    hexString.append(hex);
+                }
+
+                return hexString.toString();
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            }
+            return "";
+        }
 
     //    public boolean login(String username, String password) {
 //        // This method is responsible for verifying the username and password

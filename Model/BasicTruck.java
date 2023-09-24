@@ -1,24 +1,15 @@
 
 package Model;
-
 import java.util.ArrayList;
 import java.util.Map;
-
 
 import Model.Container.ContainerType;
 import Model.Vehicle.VehicleType;
 
 public class BasicTruck extends Vehicle {
-
-<<<<<<< Updated upstream
-    public BasicTruck(String vehicleID, String name, double carryingCapacity, double fuelCapacity) {
-        super(vehicleID, name, carryingCapacity, fuelCapacity);
-
-
-=======
+  
     public BasicTruck(String vehicleID, String name, double carryingCapacity, double fuelCapacity, String currentPort) {
         super(vehicleID, name, carryingCapacity, fuelCapacity, currentPort);
->>>>>>> Stashed changes
         if (!vehicleID.matches("^tr\\d+$")) {
             System.out.println("Invalid vehicle ID. It must be tr-number.");
         }

@@ -2,10 +2,16 @@ package Model;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import Model.Container.ContainerType;
 import Model.User.UserRole;
 import Model.Vehicle.VehicleType;
+
 
 public class Admin extends User implements IAdmin {
 
@@ -26,8 +32,7 @@ public class Admin extends User implements IAdmin {
         this.trips = trips;
     }
 
-    // =================================GETTER AND SETTER
-    // METHODS=======================================================
+    // =================================GETTER AND SETTER=======================================================
     public ArrayList<Port> getPorts() {
         return this.ports;
     }
@@ -67,6 +72,32 @@ public class Admin extends User implements IAdmin {
     public void setTrips(ArrayList<Trip> trips) {
         this.trips = trips;
     }
+    public boolean verifyUser (String username, String password) {
+        String encryptPassword = this.encrypt(password); // Hash the input password
+        // If the username and password after hashing are correct
+
+        return username.equals("admin");
+    }
+
+    public void getUserInfo() throws IOException {
+        List<String[]> users = new ArrayList<>();
+
+        try (BufferedReader br = new BufferedReader(new FileReader("./dataFile/users.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] userData = line.split(",");
+                if (userData.length >= 9) { // Check if there are at least 9 fields in the line
+                    String ID = userData[0].trim();
+                    String name = userData[1].trim();
+                    String username = userData[2].trim();
+                    String password = userData[6].trim();
+                    String role = userData[8].trim();
+                    String[] data = {ID, name, username, password, role};
+                    users.add(data);
+                }
+            }
+        }
+    }
 
     // Display the menu for the admin
     public void displayMenu() {
@@ -92,37 +123,46 @@ public class Admin extends User implements IAdmin {
         return (Admin) super.login(username, password);
     }
 
-    // Calculate the total amount of fuel used in one day
-    @Override
-    public void calculateDailyFuelUsage(Date date) {
-        // This method is responsible for calculating daily fuel usage
-        double dailyFuelUsage = 0;
-        for (Trip trip : trips) {
-            if ((date.after(trip.getDepartureDate()) && date.before(trip.getArrivalDate()))
-                    || (date.equals(trip.getDepartureDate())) || (date.equals(trip.getArrivalDate()))) {
-                Vehicle vehicle = trip.getVehicle();
-                ArrayList<Container> containers = trip.getContainersOnTrip();
-                // Get the distance traveled during the trip
-                double distance = trip.getDeparturePort().calculateDistance(trip.getArrivalPort());
+    // Calculate the total amount of fuel used in one day ( dung duoc )
+//    public void calculateDailyFuelUsage(Date date) {
+//        // This method is responsible for calculating daily fuel usage
+//        double dailyFuelUsage = 0;
+//
+//        // Calculate the number of milliseconds in a day
+//        long millisecondsInADay = 24 * 60 * 60 * 1000;
+//
+//        for (Trip trip : trips) {
+//            Date tripDepartureDate = trip.getDepartureDate();
+//            Date tripArrivalDate = trip.getArrivalDate();
+//
+//            // Check if the trip overlaps with the specified date
+//            if ((date.equals(tripDepartureDate) || date.equals(tripArrivalDate)) ||
+//                    (date.after(tripDepartureDate) && date.before(tripArrivalDate))) {
+//
+//                Vehicle vehicle = trip.getVehicle();
+//                List<Container> containers = trip.getContainersOnTrip();
+//
+//                // Calculate the distance traveled during the trip
+//                double distance = trip.getDeparturePort().calculateDistance(trip.getArrivalPort());
+//
+//                // Calculate the fuel consumption for the trip
+//                for (Container container : containers) {
+//                    double fuelRate = container.calculateFuelConsumption(vehicle);
+//                    dailyFuelUsage += fuelRate;
+//                }
+//
+//                // Calculate the duration of the trip in days
+//                long tripDurationInDays = (tripArrivalDate.getTime() - tripDepartureDate.getTime()) / millisecondsInADay;
+//
+//                // Calculate daily fuel consumption for this trip
+//                dailyFuelUsage += (dailyFuelUsage / distance) * tripDurationInDays;
+//            }
+//        }
+//
+//        System.out.println("Total fuel used on " + date + " is: " + dailyFuelUsage + " gallons");
+//    }
 
-                // Calculate the fuel consumption for the trip
-                for (Container container : containers) {
-                    double fuelRate = container.calculateFuelConsumption(vehicle);
-                    dailyFuelUsage += fuelRate;
-                }
-                // Calculate the number of days the trip lasts
-                long millisecondsInADay = 24 * 60 * 60 * 1000;
-                long tripDurationInDays = (trip.getDepartureDate().getTime() - trip.getArrivalDate().getTime())
-                        / millisecondsInADay;
-                // Calculate daily fuel consumption for this trip
-                dailyFuelUsage *= distance / tripDurationInDays;
-            }
-        }
-        System.out.println("Total fuel used on " + date + " is: " + dailyFuelUsage + " gallons");
-    }
-
-    // =========================================TRIP
-    // FUNCTIONS==========================================================
+    // =========================================TRIP FUNCTIONS==========================================================
 
     @Override
     public void listTripsFromDateToDate() {
@@ -201,58 +241,57 @@ public class Admin extends User implements IAdmin {
         // Might be unnecessary
     }
 
-    // =========================================PORT
-    // FUNCTIONS==========================================================
+    // =========================================PORT FUNCTIONS==========================================================
 
     // Calculate the total weight of containers (in one port/in all ports)
-    @Override
-    public void calculateContainerWeights() {
-        Scanner scanner = new Scanner(System.in);
-
-        // Offer choices for the admin
-        System.out.println("Choose an option:");
-        System.out.println("1. Calculate total container weights for all ports");
-        System.out.println("2. Calculate total container weight for a specific port by entering its ID");
-
-        int choice = scanner.nextInt();
-
-        // Handle the options
-        switch (choice) {
-            case 1 -> {
-                System.out.println("Container Weights for All Ports:");
-
-                // Calculate and print container weights for all ports
-                for (Port port : this.ports) {
-                    double totalWeight = port.calculateTotalWeight();
-                    System.out.println("Port ID: " + port.getPortID() + " - Total Container Weight: " + totalWeight);
-                }
-            }
-            case 2 -> {
-                System.out.println("Enter the ID of the port:");
-                String portID = scanner.next();
-
-                // Find the port with the specified ID
-                Port specificPort = null;
-                for (Port port : this.ports) {
-                    if (port.getPortID().equals(portID)) {
-                        specificPort = port;
-                        break;
-                    }
-                }
-
-                // If the ID is correct, proceed to calculate the weight of targeted port
-                if (specificPort != null) {
-                    double totalWeight = specificPort.calculateTotalWeight();
-                    System.out.println("Total Container Weight for Port ID " + portID + ": " + totalWeight);
-                } else {
-                    System.out.println("Port with ID " + portID + " not found.");
-                }
-            }
-            default -> System.out.println("Invalid choice.");
-        }
-
-        scanner.close();
-    }
+//    @Override (dung duoc)
+//    public void calculateContainerWeights() {
+//        Scanner scanner = new Scanner(System.in);
+//
+//        // Offer choices for the admin
+//        System.out.println("Choose an option:");
+//        System.out.println("1. Calculate total container weights for all ports");
+//        System.out.println("2. Calculate total container weight for a specific port by entering its ID");
+//
+//        int choice = scanner.nextInt();
+//
+//        // Handle the options
+//        switch (choice) {
+//            case 1 -> {
+//                System.out.println("Container Weights for All Ports:");
+//
+//                // Calculate and print container weights for all ports
+//                for (Port port : this.ports) {
+//                    double totalWeight = port.calculateTotalWeight();
+//                    System.out.println("Port ID: " + port.getPortID() + " - Total Container Weight: " + totalWeight);
+//                }
+//            }
+//            case 2 -> {
+//                System.out.println("Enter the ID of the port:");
+//                String portID = scanner.next();
+//
+//                // Find the port with the specified ID
+//                Port specificPort = null;
+//                for (Port port : this.ports) {
+//                    if (port.getPortID().equals(portID)) {
+//                        specificPort = port;
+//                        break;
+//                    }
+//                }
+//
+//                // If the ID is correct, proceed to calculate the weight of targeted port
+//                if (specificPort != null) {
+//                    double totalWeight = specificPort.calculateTotalWeight();
+//                    System.out.println("Total Container Weight for Port ID " + portID + ": " + totalWeight);
+//                } else {
+//                    System.out.println("Port with ID " + portID + " not found.");
+//                }
+//            }
+//            default -> System.out.println("Invalid choice.");
+//        }
+//
+//        scanner.close();
+//    }
 
     // View details of all ports/a specific port
     @Override
@@ -308,6 +347,16 @@ public class Admin extends User implements IAdmin {
         } else {
             System.out.println("Invalid choice.");
         }
+    }
+
+    @Override
+    public void calculateDailyFuelUsage(Date date) {
+
+    }
+
+    @Override
+    public void calculateContainerWeights() {
+
     }
 
     // List all the ships in a specific port
@@ -681,6 +730,7 @@ public class Admin extends User implements IAdmin {
 //        // Add the new vehicle to the list of vehicles
 //        vehicles.add(newVehicle);
 //        System.out.println("New vehicle with ID " + vehicleID + " has been added successfully.");
+
     }
 
 
