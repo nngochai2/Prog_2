@@ -1,5 +1,7 @@
 package Controller;
 import Model.Container;
+import Model.Port;
+
 import java.util.UUID;
 import java.io.*;
 import java.util.ArrayList;
@@ -32,6 +34,7 @@ public class ManageContainers {
                 .findFirst();
     }
 
+
     public boolean contains(String containerID) {
         return this.containerList.stream().anyMatch(container -> container.getContainerID().equals(containerID));
     }
@@ -40,7 +43,7 @@ public class ManageContainers {
         Container container = new Container(this.generateUniqueContainerID(), weight, type);
         containerList.add(container);
 
-        this.saveContainers();
+        this.serializeContainersToFile();
         return container;
     }
 
@@ -58,7 +61,7 @@ public class ManageContainers {
 
         if (found) {
             containerList = newList; // Update the original list without the removed element
-            saveContainers();
+            serializeContainersToFile();
 
             return true;
         }
@@ -70,48 +73,35 @@ public class ManageContainers {
         for (int i = 0; i < containerList.size(); i++) {
             if (containerList.get(i).getContainerID().equals(id)) {
                 containerList.set(i, container);
-                saveContainers();
+                serializeContainersToFile();
                 break;
             }
         }
     }
 
 
-    public void saveContainers() {
-        FileOutputStream fileOutputStream = null;
-        ObjectOutputStream objectOutputStream = null;
-
-        try {
-            fileOutputStream = new FileOutputStream("dataFile/containers.ser");
-            objectOutputStream = new ObjectOutputStream(fileOutputStream);
+    public void serializeContainersToFile() {
+        try (FileOutputStream fileOutputStream = new FileOutputStream("data/ports.dat");
+             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream)) {
 
             objectOutputStream.writeObject(containerList);
 
-            System.out.println("Containers have been saved to dataFile/containers.ser");
+            System.out.println("Ports have been serialized and saved to data/ports.dat");
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
-            try {
-                if (objectOutputStream != null) {
-                    objectOutputStream.close();
-                }
-                if (fileOutputStream != null) {
-                    fileOutputStream.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
     }
+
+
     public void deserializeContainersFromFile() {
-        try (FileInputStream fileInputStream = new FileInputStream("data/containers.dat");
-                ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream)) {
+        try (FileInputStream fileInputStream = new FileInputStream("data/ports.dat");
+             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream)) {
 
             ArrayList<Container> importedContainers = (ArrayList<Container>) objectInputStream.readObject();
 
             containerList = importedContainers;
 
-            System.out.println("Containers have been deserialized and imported from data/containers.dat");
+            System.out.println("Ports have been deserialized and imported from data/ports.dat");
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }

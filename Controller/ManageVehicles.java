@@ -17,14 +17,14 @@ public class ManageVehicles {
     // Create a list to store vehicles
     private List<Vehicle> vehicles;
     // Counter for generating unique vehicle IDs
-    private int lastAssignedNumber = 0;
+    private int LastUsedID = 0;
 
     // Private constructor for Singleton patter
     private ManageVehicles() {
         vehicles = new ArrayList<>();
     }
 
-    // Get the Singleton instance
+
     public static ManageVehicles getInstance() {
         if (instance == null) {
             instance = new ManageVehicles();
@@ -52,7 +52,7 @@ public class ManageVehicles {
         return false;
     }
 
-    // Add a ship to the list and save to a file
+
     public Ship addShip(String name, double carryingCapacity, double fuelCapacity) {
         Ship vehicle = new Ship(this.generateUniqueVehicleID(), name, carryingCapacity, fuelCapacity);
         vehicles.add(vehicle);
@@ -71,14 +71,14 @@ public class ManageVehicles {
 
     // Generate a unique vehicle ID based on existing IDs
     private synchronized String generateUniqueVehicleID() {
-        lastAssignedNumber++;
+        LastUsedID++;
         for (Vehicle vehicle : vehicles) {
             if (vehicle.getVehicleType().equals(Vehicle.VehicleType.BASIC_TRUCK)
                     && vehicle.getVehicleType().equals(Vehicle.VehicleType.REEFER_TRUCK)
                     && vehicle.getVehicleType().equals(Vehicle.VehicleType.TANKER_TRUCK)) {
-                return "TR- " + lastAssignedNumber;
+                return "TR- " + LastUsedID;
             } else if (vehicle.getVehicleType().equals(Vehicle.VehicleType.SHIP)) {
-                return "SH-" + lastAssignedNumber;
+                return "SH-" + LastUsedID;
             }
         }
         return null;
