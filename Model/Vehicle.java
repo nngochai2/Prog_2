@@ -157,51 +157,51 @@ public abstract class Vehicle implements IVehicle {
 //        return weightForEachType;
 //    }
 
-//    // Calculate total weight ( dung duoc )
-//    public double calculateTotalWeight(Container.ContainerType containerType) {
-//        // Calculate the total weight for the given container type
-//        double totalWeight = 0.0;
-//        for (Container container : containers) {
-//            if (container.getType() == containerType) {
-//                totalWeight += container.getWeight();
-//            }
-//        }
-//        return totalWeight;
-//    }
+    // Calculate total weight
+    public double calculateTotalWeight(Container.ContainerType containerType) {
+        // Calculate the total weight for the given container type
+        double totalWeight = 0.0;
+        for (Container container : containers) {
+            if (container.getType() == containerType) {
+                totalWeight += container.getWeight();
+            }
+        }
+        return totalWeight;
+    }
 
 
     // Estimate the fuel consumption based on the containers carried by a vehicle, will be implemented differently by each type of vehicle
     public abstract double estimatedFuelConsumption(double distance);
 
     // Check whether a vehicle can start a trip or not
-//    public boolean canMove() {
-//        if (currentFuel == 0) {
-//
-//            System.out.println("model.Vehicle is out of fuel!");
-//
-//            return false;
-//        }
-//
-//        // Calculate total weight of all containers on a vehicle
-//        double totalWeight = calculateTotalWeight();
-//
-//        // Check if the total weight exceeds the carrying capacity
-//        if (totalWeight > carryingCapacity) {
-//
-//            System.out.println("model.Vehicle is overloaded.");
-//
-//            return false;
-//        }
-//
-//        // Calculate estimated fuel consumption
-//        double estimatedFuelConsumption = estimatedFuelConsumption(currentPort);
-//
-//        if (currentFuel < estimatedFuelConsumption) {
-//            System.out.println("This vehicle can't leave. Not enough fuel!");
-//            return false;
-//        }
-//        return true;
-//    }
+    public boolean canMove(Port currentPort, Port destinationPort) {
+        // Check if the ID is valid
+        if (!currentPort.getPortID().equals(destinationPort.getPortID())) {
+            if (currentFuel == 0) {
+                System.out.println("Vehicle is out of fuel!");
+                return false;
+            }
+
+            // Calculate total weight of all containers on a vehicle
+            double totalWeight = calculateTotalWeight();
+
+            // Check if the total weight exceeds the carrying capacity
+            if (totalWeight > carryingCapacity) {
+                System.out.println("Vehicle is overloaded.");
+                return false;
+            }
+
+            // Calculate estimated fuel consumption
+            double estimatedFuelConsumption = estimatedFuelConsumption(destinationPort.calculateDistance(destinationPort));
+
+            // Check if the current fuel is enough
+            if (currentFuel < estimatedFuelConsumption) {
+                System.out.println("This vehicle can't leave. Not enough fuel!");
+                return false;
+            }
+        }
+        return false;
+    }
 
     // Add or update a container count in the map
     public void updateContainerCount(Container.ContainerType type, int count) {
