@@ -350,7 +350,7 @@ public class Admin extends User implements IAdmin {
     }
 
     @Override
-    public void calculateDailyFuelUsage(Date date) {
+    public void calculateDailyFuelUsage(Date date, Vehicle vehicle) {
 
     }
 
