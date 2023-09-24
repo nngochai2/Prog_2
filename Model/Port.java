@@ -21,7 +21,7 @@ public class Port implements IPort, Serializable {
     private ArrayList<Model.Container> containers;
     private ArrayList<Vehicle> vehicles;
 
-    public Port(String portID, String name, double latitude, double longitude, int storingCapacity,
+    public Port(String portID, String name, double latitude, double longitude, double storingCapacity,
                 boolean landingAbility) {
             this.portID = portID;
             this.name = name;
@@ -34,7 +34,7 @@ public class Port implements IPort, Serializable {
         }
 
 
-    public Port(String portID, String name, double latitude, double longitude, int storingCapacity,
+    public Port(String portID, String name, double latitude, double longitude, double storingCapacity,
             boolean landingAbility, int containersCount, int vehiclesCount, ArrayList<Trip> pastTrips,
             ArrayList<Trip> currentTrips) {
     }

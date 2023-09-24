@@ -11,9 +11,7 @@ public class BasicTruck extends Vehicle implements Serializable {
   
     public BasicTruck(String vehicleID, String name, double carryingCapacity, double fuelCapacity, String currentPort) {
         super(vehicleID, name, carryingCapacity, fuelCapacity, currentPort);
-        if (!vehicleID.matches("^tr\\d+$")) {
-            System.out.println("Invalid vehicle ID. It must be tr-number.");
-        }
+
     }
 
     @Override
@@ -63,4 +61,16 @@ public class BasicTruck extends Vehicle implements Serializable {
 
         return fuelConsumption;
     }
+
+    public void setVehicleType(VehicleType vehicleType) {
+    }
+
+    @Override
+    public String toString() {
+        String portID = getCurretPort() != null ? getCurretPort().getPortID() : "N/A";
+        return "Basic Truck ID: " + getVehicleID() + ", Name: " + getName() + ", Carrying Capacity: " + getCarryingCapacity() + ", Fuel Capacity: " + getFuelCapacity() + ", Port ID: " + portID;
+    }
+
+
+
 }

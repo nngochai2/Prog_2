@@ -9,9 +9,7 @@ import Model.Vehicle.VehicleType;
 public class ReeferTruck extends BasicTruck implements Serializable {
     public ReeferTruck(String vehicleID, String name, double carryingCapacity, double fuelCapacity, String currentPort) {
         super(vehicleID, name, carryingCapacity, fuelCapacity, currentPort);
-        if (!vehicleID.matches("^tr\\d+$")) {
-            System.out.println("Invalid vehicle ID. It must be tr-number.");
-        }
+
     }
 
     @Override
@@ -50,6 +48,14 @@ public class ReeferTruck extends BasicTruck implements Serializable {
 
         return fuelConsumption;
     }
+    @Override
+    public String toString() {
+        String portID = getCurretPort() != null ? getCurretPort().getPortID() : "N/A";
+        return "Reefer Truck ID: " + getVehicleID() + ", Name: " + getName() + ", Carrying Capacity: " + getCarryingCapacity() + ", Fuel Capacity: " + getFuelCapacity() + ", Port ID: " + portID;
+    }
+
+
+
     @Override
     public void move(Port destinationPort) {
         super.move(destinationPort);

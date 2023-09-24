@@ -1,21 +1,15 @@
 
 package Model;
 
+
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Map;
 
 public class Ship extends Vehicle implements Serializable {
-    public Ship(String vehicleID, String name, double currentFuel, double carryingCapacity, String currentPort) {
-        super(vehicleID, name, currentFuel, carryingCapacity, currentPort);
-        if (!vehicleID.matches("^sh\\d+$")) {
-            // '^': the pattern must start from th beginning of the ID
-            // 'sh': force the ID to start with 'sh'
-            // '\\d+': ensures that there is at least 1 digit following the 'sh'
-            // '$': the pattern must reach the end of the ID
-            System.out.println("Invalid vehicle ID. It must be sh-number.");
+    public Ship(String vehicleID, String name, double currentFuel, double carryingCapacity, String portID) {
+        super(vehicleID, name, currentFuel, carryingCapacity, String.valueOf(portID));
         }
-    }
+
 
     @Override
     public VehicleType getVehicleType() {
@@ -62,6 +56,12 @@ public class Ship extends Vehicle implements Serializable {
 //        double distance = currentPort.calculateDistance(destinationPort);
 //        // Calculate the fuel consumption
     }
+    @Override
+    public String toString() {
+        String portID = getCurretPort() != null ? getCurretPort().getPortID() : "N/A";
+        return "Ship ID: " + getVehicleID() + ", Name: " + getName() + ", Carrying Capacity: " + getCarryingCapacity() + ", Fuel Capacity: " + getFuelCapacity() + ", Port ID: " + portID;
+    }
+
 
 
 }

@@ -38,7 +38,7 @@ public class ManagePorts {
         return port;
     }
 
-    public void addPorts (String name, double latitude, double longitude, int storingCapacity, boolean landingAbility) {
+    public void addPorts (String name, double latitude, double longitude, double storingCapacity, boolean landingAbility) {
         String portID = generateUniquePortID();
         Port port = new Port(generateUniquePortID(),name, latitude, longitude, storingCapacity, landingAbility);
         portsList.add(port); // Add to containerList
