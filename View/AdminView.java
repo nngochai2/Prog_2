@@ -20,7 +20,6 @@ public class AdminView {
             input = scanner.nextLine().trim();
             switch (input) {
                 case "0":
-                    // main()
                     break;
                 case "1":
                     this.ports();
