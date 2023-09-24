@@ -16,6 +16,7 @@ public class ManageVehicles {
 
     private int lastUsedID = 0;
 
+
     public List<Vehicle> getAllVehicles() {
         return listVehicle;
     }
@@ -57,14 +58,12 @@ public class ManageVehicles {
     // Generate a unique vehicle ID based on existing IDs
     private synchronized String generateUniqueVehicleID() {
 
-
         lastUsedID++;
 
         for (Vehicle vehicle : listVehicle) {
             if (vehicle.getVehicleType().equals(Vehicle.VehicleType.BASIC_TRUCK)
                     && vehicle.getVehicleType().equals(Vehicle.VehicleType.REEFER_TRUCK)
                     && vehicle.getVehicleType().equals(Vehicle.VehicleType.TANKER_TRUCK)) {
-
                 return "tr- " + lastUsedID; // Truck IDs must follow this format
             } else if (vehicle.getVehicleType().equals(Vehicle.VehicleType.SHIP)) {
                 return "sh-" + lastUsedID; // Ship IDs must follow this format
