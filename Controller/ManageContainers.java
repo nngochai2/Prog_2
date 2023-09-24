@@ -112,6 +112,19 @@ public class ManageContainers {
         return "C-" + LastUsedID;
     }
 
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder("ManageContainers:\n");
+
+        for (Container container : containerList) {
+            stringBuilder.append("Container ID: ").append(container.getContainerID())
+                    .append(", Weight: ").append(container.getWeight())
+                    .append(", Type: ").append(container.getType())
+                    .append("\n");
+        }
+
+        return stringBuilder.toString();
+    }
+
     // public static void main(String[] args) {
     // ManageContainers manageContainers = ManageContainers.getInstance();
     // manageContainers.addContainer(78.9, Container.ContainerType.LIQUID);
